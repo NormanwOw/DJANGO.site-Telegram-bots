@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/style_about.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="logo-wrapper">
+    <div class="logo-container">
+        <div class="header-container">{{ title }}</div>
+        <div class="tech-content-wrapper">
+            <div class="tech-content first-content">
+                <h2>Телеграм бот –</h2>
+                <p>удобный</p>
+                <p>сервис для</p>
+                <p>оформления</p>
+                <p>заказов</p>
+            </div>
+            <div class="second-content tech-content">
+                <p>Бот представляет возможность взаимодействия с клиентами через набирающий популярность мессенджер <img src="{% static 'images/tg.png' %}" alt=""><b>Telegram</b>. Что делает процесс заказа удобным и доступным</p>
+            </div>
+            <div class="tech-content">
+                <p>Телеграм бот имеет интуитивно понятный интерфейс, который позволяет пользователям удобно выбирать и заказывать товары</p>
+            </div>
+            <div class="tech-content">
+                <p>Бот может сохранять информацию о клиентах и их предпочтениях, что позволяет предлагать персонализированные предложения и рекомендации</p>
+            </div>
+            <div class="tech-content">
+                <p>Имеется встроенный функционал создания рассылок, с помощью которых можно уведомлять клиентов о новых акциях</p>
+            </div>
+            <div class="tech-content">
+                <p>Телеграм бот имеет возможность работать через интернет-эквайринг платёжных систем СбербанкPay, ЮКасса и Робокасса, что позволяет вашим клиентам безопасно совершать оплату заказов</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

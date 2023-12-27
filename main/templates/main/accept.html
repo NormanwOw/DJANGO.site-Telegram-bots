@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/style_new_order.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="logo-wrapper">
+    <div class="logo-container">
+        <div class="form-header form-font">
+            Заказ №{{ data.order_number }}
+        </div>
+        <div class="form-container form-font">
+            <p>{{ data.total_price }}</p>
+            <p>{{ data.email }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

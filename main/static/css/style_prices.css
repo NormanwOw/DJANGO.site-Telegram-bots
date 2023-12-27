@@ -1,0 +1,48 @@
+.logo-wrapper {
+    margin-top: 6em;
+}
+
+table {
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+}
+
+th {
+    padding-bottom: 10px;
+    border-bottom: 3.5px rgb(0, 152, 204) dashed;
+    border-right: 1px black solid;
+}
+
+th:last-child {
+    border-right: none;
+}
+
+td {
+    border-right: 1px black solid;
+    padding: 10px;
+    padding-inline: 15px;
+}
+
+td:first-child {
+    text-align: right;
+}
+
+td:nth-child(2) {
+    text-align: left;
+}
+
+td:nth-child(4) {
+    text-align: left;
+    border: none;
+}
+
+tr:last-child {
+    border-bottom: 2.5px rgb(0, 152, 204) solid;
+}
+
+@media (min-width: 2000px){
+    th, td {
+        font-size: 1.5em;
+    }
+}

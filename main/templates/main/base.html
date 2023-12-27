@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block css %}{% endblock %}
+    <title>{{ title }}</title>
+</head>
+<body>
+    <div class="bd">
+        <div class="main">
+            <div class="nav-wrapper">
+                <div class="drop">
+                    <button class="menu-button">&#9776;</button>
+                    <div class="nav-buttons">
+                        <div class="border-first-btn"></div>
+                        {% for item in menu %}
+                            <a href="{% url item.url %}">{{ item.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="logo">
+                    <a href="{% url 'home' %}">Telegram bots</a>
+                    <p>
+                        <a href="{% url 'home' %}"><img src="{% static 'images/tg.png' %}" alt="telegram-logo"></a>
+                    </p>
+                </div>
+            </div>
+            {% block content %}{% endblock %}
+            {% block content-2 %}{% endblock %}
+            <div class="footer-space"></div>
+        </div>
+        <footer>
+            <div class="footer-wrapper-1">
+                <div class="footer-container">
+                    <p>МЕНЮ</p>
+                    <ul>
+                        {% for item in menu %}
+                            <li><a href="{% url item.url %}">{{ item.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="footer-container">
+                    <p>КОНТАКТЫ</p>
+                    <p>&#128382 Телефон: ...</p>
+                    <p>&#128386 E-mail: ...</p>
+                </div>
+            </div>
+            <div class="footer-wrapper-2">
+                <p>© Telegram-bots 2023 г.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
