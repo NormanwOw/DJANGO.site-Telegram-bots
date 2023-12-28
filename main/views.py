@@ -1,9 +1,9 @@
 from django.shortcuts import render
 
-menu = [{'name': 'О технологии', 'url': 'about'},
-        {'name': 'Цены', 'url': 'prices'},
-        {'name': 'Сделать заказ', 'url': 'new-order'},
-        {'name': 'Контакты', 'url': 'contacts'}]
+menu = [{'name': 'О технологии', 'url': 'main:about'},
+        {'name': 'Цены', 'url': 'main:prices'},
+        {'name': 'Сделать заказ', 'url': 'main:new-order'},
+        {'name': 'Контакты', 'url': 'main:contacts'}]
 
 
 def index(request):
