@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from main.models import Product
 
 
 menu = [{'name': 'О технологии', 'url': 'main:about'},
@@ -16,7 +17,13 @@ def about(request):
 
 
 def prices(request):
-    return render(request, 'main/prices.html')
+    price_list = Product.objects.all()
+    context = {
+        'title': 'Цены',
+        'menu': menu,
+        'price_list': price_list
+    }
+    return render(request, 'main/prices.html', context)
 
 
 def new_order(request):

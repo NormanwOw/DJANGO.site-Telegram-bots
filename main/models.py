@@ -21,6 +21,7 @@ class Product(models.Model):
     product = models.CharField(verbose_name='Товар')
     price = models.IntegerField(verbose_name='Цена')
     title = models.CharField(verbose_name='Название')
+    description = models.CharField(verbose_name='Описание', default='...')
 
     class Meta:
         db_table = 'product'
