@@ -2,36 +2,27 @@ from django.db import models
 
 
 class Order(models.Model):
-    order_id = models.IntegerField()
-    email = models.CharField()
-    phone_number = models.CharField()
-    bot_shop = models.IntegerField()
-    admin_panel = models.IntegerField()
-    database = models.IntegerField()
-    total_price = models.IntegerField()
-    date = models.DateTimeField()
+    order_id = models.IntegerField(verbose_name='Номер заказа')
+    email = models.EmailField(verbose_name='Email')
+    phone_number = models.CharField(verbose_name='Телефон')
+    bot_shop = models.IntegerField(verbose_name='Бот магазин')
+    admin_panel = models.IntegerField(verbose_name='Админ панель')
+    database = models.IntegerField(verbose_name='База данных')
+    total_price = models.IntegerField('Общая цена')
+    date = models.DateTimeField(verbose_name='Дата')
 
     class Meta:
         db_table = 'order'
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
 
 
 class Product(models.Model):
-    product = models.CharField()
-    price = models.IntegerField()
-    title = models.CharField()
+    product = models.CharField(verbose_name='Товар')
+    price = models.IntegerField(verbose_name='Цена')
+    title = models.CharField(verbose_name='Название')
 
     class Meta:
         db_table = 'product'
-
-
-class User(models.Model):
-    phone_number = models.CharField()
-    email = models.CharField()
-    hashed_password = models.CharField(max_length=1024)
-    registered = models.DateTimeField(blank=True, null=True)
-    is_active = models.BooleanField()
-    is_superuser = models.BooleanField()
-    is_verified = models.BooleanField()
-
-    class Meta:
-        db_table = 'user'
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'

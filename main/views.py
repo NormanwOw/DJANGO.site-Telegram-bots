@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+
 menu = [{'name': 'О технологии', 'url': 'main:about'},
         {'name': 'Цены', 'url': 'main:prices'},
         {'name': 'Сделать заказ', 'url': 'main:new-order'},
