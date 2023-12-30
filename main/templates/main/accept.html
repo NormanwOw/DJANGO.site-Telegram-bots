@@ -10,11 +10,19 @@
 <div class="logo-wrapper">
     <div class="logo-container">
         <div class="form-header form-font">
-            Заказ №{{ data.order_number }}
+            Заказ №{{ data.order_id }}
         </div>
         <div class="form-container form-font">
-            <p>{{ data.total_price }}</p>
-            <p>{{ data.email }}</p>
+            <table>
+                {% for key, value in data.items %}
+                    {% if key != "order_id" %}
+                    <tr>
+                        <td>{{ key }}</td>
+                        <td>{{ value }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
         </div>
     </div>
 </div>

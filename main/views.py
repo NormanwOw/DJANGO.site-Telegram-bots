@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from main.models import Product
-
+from main.forms import NewOrderForm
+from main.utils import UtilsOrder
 
 menu = [{'name': 'О технологии', 'url': 'main:about'},
         {'name': 'Цены', 'url': 'main:prices'},
         {'name': 'Сделать заказ', 'url': 'main:new-order'},
         {'name': 'Контакты', 'url': 'main:contacts'}]
+
+price_list = Product.objects.all()
 
 
 def index(request):
@@ -17,7 +20,6 @@ def about(request):
 
 
 def prices(request):
-    price_list = Product.objects.all()
     context = {
         'title': 'Цены',
         'menu': menu,
@@ -27,7 +29,24 @@ def prices(request):
 
 
 def new_order(request):
-    return render(request, 'main/new-order.html')
+    form = NewOrderForm(request.POST)
+    if request.method == 'POST' and form.is_valid():
+        context = {
+            'data': UtilsOrder.get_updated_userdata(form.cleaned_data),
+            'menu': menu,
+        }
+
+        return render(request, 'main/accept.html', context)
+    else:
+        form = NewOrderForm()
+
+    context = {
+        'title': 'Новый заказ',
+        'menu': menu,
+        'price_list': price_list,
+        'form': form
+    }
+    return render(request, 'main/new-order.html', context)
 
 
 def contacts(request):
