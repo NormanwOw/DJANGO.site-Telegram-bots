@@ -21,7 +21,7 @@ class UtilsOrder:
         return str(order_number)
 
     @classmethod
-    def get_updated_userdata(cls, data: dict) -> dict:
+    def get_order(cls, data: dict) -> Order:
         data['order_id'] = cls.get_order_number()
         data['bot_shop'] = True
 
@@ -33,5 +33,6 @@ class UtilsOrder:
                 total_price += item.price
 
         data['total_price'] = total_price
+        order = Order(**data)
 
-        return data
+        return order

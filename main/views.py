@@ -1,5 +1,8 @@
 from django.shortcuts import render
-from main.models import Product
+from django.forms.models import model_to_dict
+import app.settings as settings
+
+from main.models import Product, Order
 from main.forms import NewOrderForm
 from main.utils import UtilsOrder
 
@@ -31,11 +34,13 @@ def prices(request):
 def new_order(request):
     form = NewOrderForm(request.POST)
     if request.method == 'POST' and form.is_valid():
+        order = UtilsOrder.get_order(form.cleaned_data)
+        order_dict = model_to_dict(order, exclude=['date'])
+        request.session.update({'order': order_dict})
         context = {
-            'data': UtilsOrder.get_updated_userdata(form.cleaned_data),
+            'new_order': order,
             'menu': menu,
         }
-
         return render(request, 'main/accept.html', context)
     else:
         form = NewOrderForm()
@@ -49,6 +54,20 @@ def new_order(request):
     return render(request, 'main/new-order.html', context)
 
 
+def accept(request):
+    order_dict = request.session['order']
+
+    if not settings.DEBUG:
+        Order.objects.create(**order_dict)
+
+    email = request.session['order']['email']
+    context = {
+        'email': email,
+        'menu': menu
+    }
+    return render(request, 'main/accept.html', context)
+
+
 def contacts(request):
     return render(request, 'main/contacts.html', {'title': 'Контакты', 'menu': menu})
 
@@ -58,4 +77,4 @@ def order_page(request):
 
 
 def page_not_found(request, exception):
-    return render(request, 'main/page404.html')
+    return render(request, 'page404.html')

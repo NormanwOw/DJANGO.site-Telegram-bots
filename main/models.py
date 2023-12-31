@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 
 class Order(models.Model):
@@ -9,7 +10,7 @@ class Order(models.Model):
     admin_panel = models.BooleanField(verbose_name='Админ-панель')
     database = models.BooleanField(verbose_name='База данных')
     total_price = models.IntegerField('Общая цена')
-    date = models.DateTimeField(verbose_name='Дата')
+    date = models.DateTimeField(verbose_name='Дата', default=datetime.utcnow)
 
     class Meta:
         db_table = 'order'
@@ -18,6 +19,12 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.order_id)
+
+    def __iter__(self):
+        for field in self._meta.fields:
+            title = field.verbose_name
+            if title not in ['ID', 'Дата', 'Номер заказа']:
+                yield title, field.value_to_string(self)
 
 
 class Product(models.Model):
