@@ -1,10 +1,11 @@
 from django.db import models
 from datetime import datetime
+from django.contrib.auth.models import User
 
 
 class Order(models.Model):
     order_id = models.IntegerField(verbose_name='Номер заказа')
-    email = models.EmailField(verbose_name='Email')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     phone_number = models.CharField(verbose_name='Телефон')
     bot_shop = models.BooleanField(verbose_name='Бот-магазин', default=True)
     admin_panel = models.BooleanField(verbose_name='Админ-панель')
@@ -40,3 +41,23 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Menu(models.Model):
+    name = models.CharField(verbose_name='Название')
+    url = models.CharField(verbose_name='Ссылка')
+
+    class Meta:
+        db_table = 'menu'
+        verbose_name = 'Меню'
+
+
+class Contact(models.Model):
+    title = models.CharField()
+    str_image = models.CharField()
+    value = models.CharField()
+
+    class Meta:
+        db_table = 'contact'
+        verbose_name = 'Контакт'
+        verbose_name_plural = 'Контакты'

@@ -1,4 +1,6 @@
 {% load static %}
+{% load main_tags %}
+{% menu as menu %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,8 +45,12 @@
                 </div>
                 <div class="footer-container">
                     <p>КОНТАКТЫ</p>
-                    <p>&#128382 Телефон: ...</p>
-                    <p>&#128386 E-mail: ...</p>
+                    {% contact_list as contacts %}
+                    {% for contact in contacts %}
+                        {% autoescape off %}
+                        <p>{{ contact.str_image }} {{ contact.title }}: {{ contact.value }}</p>
+                        {% endautoescape %}
+                    {% endfor %}
                 </div>
             </div>
             <div class="footer-wrapper-2">

@@ -6,26 +6,21 @@ from main.models import Product, Order
 from main.forms import NewOrderForm
 from main.utils import UtilsOrder
 
-menu = [{'name': 'О технологии', 'url': 'main:about'},
-        {'name': 'Цены', 'url': 'main:prices'},
-        {'name': 'Сделать заказ', 'url': 'main:new-order'},
-        {'name': 'Контакты', 'url': 'main:contacts'}]
 
 price_list = Product.objects.all()
 
 
 def index(request):
-    return render(request, 'main/index.html', {'title': 'Telegram bots', 'menu': menu})
+    return render(request, 'main/index.html', {'title': 'Telegram bots'})
 
 
 def about(request):
-    return render(request, 'main/about.html', {'title': 'О технологии', 'menu': menu})
+    return render(request, 'main/about.html', {'title': 'О технологии'})
 
 
 def prices(request):
     context = {
         'title': 'Цены',
-        'menu': menu,
         'price_list': price_list
     }
     return render(request, 'main/prices.html', context)
@@ -39,7 +34,6 @@ def new_order(request):
         request.session.update({'order': order_dict})
         context = {
             'new_order': order,
-            'menu': menu,
         }
         return render(request, 'main/accept.html', context)
     else:
@@ -47,7 +41,6 @@ def new_order(request):
 
     context = {
         'title': 'Новый заказ',
-        'menu': menu,
         'price_list': price_list,
         'form': form
     }
@@ -56,20 +49,19 @@ def new_order(request):
 
 def accept(request):
     order_dict = request.session['order']
-
+    order_dict['user'] = request.user
     if not settings.DEBUG:
         Order.objects.create(**order_dict)
 
-    email = request.session['order']['email']
+    email = request.user.email
     context = {
         'email': email,
-        'menu': menu
     }
     return render(request, 'main/accept.html', context)
 
 
 def contacts(request):
-    return render(request, 'main/contacts.html', {'title': 'Контакты', 'menu': menu})
+    return render(request, 'main/contacts.html', {'title': 'Контакты'})
 
 
 def order_page(request):
