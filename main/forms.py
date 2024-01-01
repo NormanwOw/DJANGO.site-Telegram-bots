@@ -6,7 +6,7 @@ class NewOrderForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ['phone_number', 'admin_panel', 'database']
+        fields = ['phone_number', 'bot_shop', 'admin_panel', 'database']
         widgets = {
             'phone_number': forms.TextInput(attrs={'placeholder': 'Телефон'}),
         }

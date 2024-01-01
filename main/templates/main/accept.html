@@ -29,8 +29,8 @@
                                 </tr>
                             {% endfor %}
                         </table>
-                        <button formaction="{% url 'main:new-order' %}" class="form-button btn-back form-font">Назад</button>
                         <button type="submit" class="form-button btn-next form-font">Оплатить</button>
+                        <button formaction="{% url 'main:new-order' %}" class="form-button btn-next form-font">Назад</button>
                     </form>
                 </div>
         {% endif %}

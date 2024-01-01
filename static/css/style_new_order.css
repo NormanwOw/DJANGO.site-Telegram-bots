@@ -22,6 +22,7 @@
 	width: 75%;
 	align-items: end;
 	margin-top: 2em;
+	margin-right: 1em;
 	margin-bottom: 2em;
 }
 
@@ -30,11 +31,7 @@
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
-	padding-top: 0.5em;
-}
-
-.form-buttons-wrapper>div, .form-buttons-wrapper>p {
-	padding-left: 2em;
+	margin-right: -0.5em;
 }
 
 .form-buttons-container {
@@ -45,18 +42,23 @@
 	display: flex;
 	flex-direction: column;
 	align-items: end;
-	padding-top: 2px;
+	padding-top: 5px;
 }
 
 .title-container>p {
 	display: flex;
 	flex-direction: column;
 	padding-right: 1em;
+	padding-bottom: 3px;
 	font-size: 0.9em;
 }
 
 .form-func-title {
+    color: white;
+    background-color: rgb(0, 152, 204);
 	font-style: italic;
+	padding: 0.5em;
+	padding-inline: 1em;
 }
 
 .buttons {
@@ -85,12 +87,7 @@
 }
 
 .btn-next {
-	left: 30px;
-	top: 10px;
-}
-
-.btn-back {
-	left: 0px;
+	left: 45px;
 	top: 10px;
 }
 
@@ -106,7 +103,8 @@
 .checkbox-green {
 	display: inline-block;    
 	height: 14px;    
-	line-height: 14px;  
+	line-height: 14px;
+	padding-top: 2px;
 	margin-right: 10px;      
 	position: relative;
 	vertical-align: middle;
@@ -223,10 +221,14 @@
 		width: 300px;
 	}
 
+	.form-container form {
+        margin-right: 0em;
+    }
+
 	form>p {
 		position: relative;
-		left: 15px;
-		padding-left: 15px;
+		left: 25px;
+		padding-left: 25px;
 	}
 
 
@@ -237,17 +239,20 @@
 	}
 
 	.form-func-title {
+	    padding-inline: 0.5em;
 		font-size: 0.8em;
-	}
-
-	.form-buttons-wrapper>div, .form-buttons-wrapper>p {
-		padding-left: 0;
 	}
 
 	.btn-next {
 		position: relative;
 		width: 100%;
-		top: 0.7em;
-		left: 0;
+		left: 0px;
+		margin-top: 0.5em;
 	}
+
+	.buttons>p {
+	    padding-top: 0.4em;
+	    padding-bottom: 0.9em;
+	}
+
 }
