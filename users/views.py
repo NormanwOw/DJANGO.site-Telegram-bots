@@ -1,6 +1,9 @@
 from django.shortcuts import render
 
 
-# Create your views here.
 def my_orders(request):
-    return render(request, 'users/my-orders.html')
+    pages = ['1', '2', '3', '4']
+    context = {
+        'pages': pages,
+    }
+    return render(request, 'users/my-orders.html', context)

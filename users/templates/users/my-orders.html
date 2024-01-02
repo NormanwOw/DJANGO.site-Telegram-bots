@@ -1,12 +1,32 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load users_tags %}
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
-<link rel="stylesheet" href="{% static 'css/style_about.css' %}">
+<link rel="stylesheet" href="{% static 'css/style_my_orders.css' %}">
 {% endblock %}
 
 {% block content %}
+<div class="container">
+  <ul class="pagination">
+    <li>
+      <a href="#">Prev</a>
+    </li>
+    {% for page in pages %}
+      {% if request.GET.page == None and forloop.counter == 1 %}
+        <li class="active">
+      {% else %}
+        <li class="{% if request.GET.page == page %} active {% endif %}">
+      {% endif %}
+          <a href="{% change_params page=page %}">{{ forloop.counter }}</a>
+        </li>
+    {% endfor %}
+    <li>
+      <a href="#">Next</a>
+    </li>
+  </ul>
+</div>
 {% endblock %}
 
 
