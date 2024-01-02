@@ -42,3 +42,11 @@
 .container .pagination li.active a {
   background: rgba(18, 187, 243, 0.582);
 }
+
+.container .pagination li:first-child a:hover {
+  border-radius: 10px 0 0 10px;
+}
+
+.container .pagination li:last-child a:hover {
+  border-radius: 0 10px 10px 0;
+}

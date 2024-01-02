@@ -9,21 +9,24 @@
 
 {% block content %}
 <div class="container">
+  {% for order in pages %}
+    <div class="">{{ order.order_id }}</div>
+  {% endfor %}
   <ul class="pagination">
     <li>
-      <a href="#">Prev</a>
+      <a href="{% if pages.has_previous %}{% change_params page=pages.previous_page_number %}{% else %}#{% endif %}">Prev</a>
     </li>
-    {% for page in pages %}
+    {% for page in pages.paginator.page_range %}
       {% if request.GET.page == None and forloop.counter == 1 %}
         <li class="active">
       {% else %}
-        <li class="{% if request.GET.page == page %} active {% endif %}">
+        <li class="{% if pages.number == page %} active {% endif %}">
       {% endif %}
           <a href="{% change_params page=page %}">{{ forloop.counter }}</a>
         </li>
     {% endfor %}
     <li>
-      <a href="#">Next</a>
+      <a href="{% if pages.has_next %}{% change_params page=pages.next_page_number %}{% else %}#{% endif %}">Next</a>
     </li>
   </ul>
 </div>
