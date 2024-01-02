@@ -213,6 +213,7 @@ body {
 
 .footer-wrapper-1 {
   display: flex;
+  margin-top: 2em;
   background: linear-gradient(0deg,  rgb(46, 42, 36) 92%, rgb(242, 238, 239) 100%);
   height: max-content;
 }

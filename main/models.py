@@ -7,9 +7,9 @@ class Order(models.Model):
     order_id = models.IntegerField(verbose_name='Номер заказа')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     phone_number = models.CharField(verbose_name='Телефон')
-    bot_shop = models.BooleanField(verbose_name='Бот-магазин', default=True)
-    admin_panel = models.BooleanField(verbose_name='Админ-панель')
-    database = models.BooleanField(verbose_name='База данных')
+    bot_shop = models.IntegerField(verbose_name='Бот-магазин')
+    admin_panel = models.IntegerField(verbose_name='Админ-панель')
+    database = models.IntegerField(verbose_name='База данных')
     total_price = models.IntegerField('Общая цена')
     date = models.DateTimeField(verbose_name='Дата', default=datetime.utcnow)
 

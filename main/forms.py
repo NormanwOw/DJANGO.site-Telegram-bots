@@ -1,12 +1,13 @@
 from django import forms
-from main.models import Order
 
 
-class NewOrderForm(forms.ModelForm):
+class NewOrderForm(forms.Form):
+    phone_number = forms.CharField(label='Телефон')
+    bot_shop = forms.BooleanField(label='Бот-магазин', required=False)
+    admin_panel = forms.BooleanField(label='Админ-панель', required=False)
+    database = forms.BooleanField(label='База данных', required=False)
 
     class Meta:
-        model = Order
-        fields = ['phone_number', 'bot_shop', 'admin_panel', 'database']
         widgets = {
             'phone_number': forms.TextInput(attrs={'placeholder': 'Телефон'}),
         }

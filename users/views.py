@@ -7,9 +7,8 @@ def my_orders(request):
 
     page = request.GET.get('page', 1)
     orders = Order.objects.filter(user=1)
-    paginator = Paginator(orders, 3)
+    paginator = Paginator(orders, 5)
     current_page = paginator.page(int(page))
-
     context = {
         'pages': current_page,
     }
