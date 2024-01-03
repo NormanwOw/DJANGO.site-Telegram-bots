@@ -4,5 +4,5 @@ from users import views
 app_name = 'users'
 
 urlpatterns = [
-    path('my-orders/', views.my_orders, name='my-orders'),
+    path('orders/', views.my_orders, name='orders'),
 ]

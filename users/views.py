@@ -4,7 +4,6 @@ from main.models import Order
 
 
 def my_orders(request):
-
     page = request.GET.get('page', 1)
     orders = Order.objects.filter(user=1)
     paginator = Paginator(orders, 5)
@@ -12,4 +11,4 @@ def my_orders(request):
     context = {
         'pages': current_page,
     }
-    return render(request, 'users/my-orders.html', context)
+    return render(request, 'users/orders.html', context)

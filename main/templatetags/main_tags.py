@@ -11,7 +11,7 @@ def menu():
 
 
 @register.simple_tag()
-def price_list():
+def product_list():
     return Product.objects.all()
 
 

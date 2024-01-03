@@ -29,11 +29,11 @@ class UtilsOrder:
 
         total_price = 0
         for item in product_list:
-            if data[item.product]:
+            if data[item.name]:
                 total_price += item.price
-                data[item.product] = item.price
+                data[item.name] = item.price
             else:
-                data[item.product] = 0
+                data[item.name] = 0
 
         data['total_price'] = total_price
         order = Order(**data)

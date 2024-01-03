@@ -3,6 +3,21 @@ from datetime import datetime
 from django.contrib.auth.models import User
 
 
+class Product(models.Model):
+    name = models.CharField(verbose_name='Товар')
+    price = models.IntegerField(verbose_name='Цена')
+    title = models.CharField(verbose_name='Название')
+    description = models.CharField(verbose_name='Описание', default='...')
+
+    class Meta:
+        db_table = 'product'
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'
+
+    def __str__(self):
+        return self.title
+
+
 class Order(models.Model):
     order_id = models.IntegerField(verbose_name='Номер заказа')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -12,6 +27,8 @@ class Order(models.Model):
     database = models.IntegerField(verbose_name='База данных')
     total_price = models.IntegerField('Общая цена')
     date = models.DateTimeField(verbose_name='Дата', default=datetime.utcnow)
+
+    product_list = Product.objects.all()
 
     class Meta:
         db_table = 'order'
@@ -27,20 +44,8 @@ class Order(models.Model):
             if title not in ['ID', 'Дата', 'Номер заказа']:
                 yield title, field.value_to_string(self)
 
-
-class Product(models.Model):
-    product = models.CharField(verbose_name='Товар')
-    price = models.IntegerField(verbose_name='Цена')
-    title = models.CharField(verbose_name='Название')
-    description = models.CharField(verbose_name='Описание', default='...')
-
-    class Meta:
-        db_table = 'product'
-        verbose_name = 'Товар'
-        verbose_name_plural = 'Товары'
-
-    def __str__(self):
-        return self.title
+    def get_products(self) -> list:
+        return [(product.title, getattr(self, product.name)) for product in self.product_list]
 
 
 class Menu(models.Model):
