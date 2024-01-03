@@ -23,6 +23,13 @@
                     </div>
                 </div>
                 <div class="logo">
+                    <div class="auth-button">
+                        <img src="{% static 'images/user.png' %}">
+                        <div class="nav-buttons auth-drop">
+                            <a href="#">Вход</a>
+                            <a href="#">Регистрация</a>
+                        </div>
+                    </div>
                     <a href="{% url 'main:home' %}">Telegram bots</a>
                     <p>
                         <a href="{% url 'main:home' %}"><img src="{% static 'images/tg.png' %}" alt="telegram-logo"></a>

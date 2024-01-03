@@ -206,53 +206,59 @@
 
 @media (max-width: 530px) {
 
-	#id_phone_number::placeholder, 
-	#id_email::placeholder, 
-	#id_name::placeholder {
-		opacity: 100%;
-		font-family: Arial, Helvetica, sans-serif;
+    #id_phone_number {
+      margin-right: 7px;
+    }
+
+    .form-buttons-wrapper {
+      margin-right: 2px;
+    }
+
+	#id_phone_number::placeholder {
+	  opacity: 70%;
+	  font-family: Arial, Helvetica, sans-serif;
 	}
 
 	form label {
-		display: none;
+	  display: none;
 	}
 
 	.form-container {
-		width: 300px;
+	  width: 300px;
 	}
 
 	.form-container form {
-        margin-right: 0em;
+      margin-right: 0em;
     }
 
 	form>p {
-		position: relative;
-		left: 25px;
-		padding-left: 25px;
+	  position: relative;
+	  left: 25px;
+	  padding-left: 25px;
 	}
 
 
 	#id_phone_number:focus::placeholder, 
 	#id_email:focus::placeholder, 
 	#id_name:focus::placeholder {
-		opacity: 0;
+	  opacity: 0;
 	}
 
 	.form-func-title {
-	    padding-inline: 0.5em;
-		font-size: 0.8em;
+	  padding-inline: 0.5em;
+	  font-size: 0.8em;
 	}
 
 	.btn-next {
-		position: relative;
-		width: 100%;
-		left: 0px;
-		margin-top: 0.5em;
+	  position: relative;
+	  width: 100%;
+	  left: 0px;
+	  margin-top: 0.5em;
 	}
 
 	.buttons>p {
-	    padding-top: 0.4em;
-	    padding-bottom: 0.9em;
+	  padding-top: 0.4em;
+	  padding-bottom: 0.9em;
 	}
 
 }

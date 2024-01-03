@@ -1,12 +1,8 @@
 from django.shortcuts import render
 from django.forms.models import model_to_dict
 
-from main.models import Product
 from main.forms import NewOrderForm
 from main.utils import UtilsOrder
-
-
-product_list = Product.objects.all()
 
 
 def index(request):
@@ -18,11 +14,7 @@ def about(request):
 
 
 def prices(request):
-    context = {
-        'title': 'Цены',
-        'product_list': product_list
-    }
-    return render(request, 'main/prices.html', context)
+    return render(request, 'main/prices.html', {'title': 'Цены'})
 
 
 def new_order(request):
@@ -32,9 +24,11 @@ def new_order(request):
         order = UtilsOrder.get_order(form.cleaned_data)
         order_dict = model_to_dict(order, exclude=['date'])
         request.session.update({'order': order_dict})
+
         context = {
             'new_order': order,
         }
+
         return render(request, 'main/accept.html', context)
     else:
         form = NewOrderForm()

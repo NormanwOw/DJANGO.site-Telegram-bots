@@ -1,5 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load main_tags %}
+
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -16,12 +18,13 @@
                 <th>Цена, руб.</th>
                 <th>Описание</th>
             </tr>
-            {% for item in price_list %}
+            {% product_list as products %}
+            {% for product in products %}
             <tr>
-                <td>{{ item.id }}</td>
-                <td>{{ item.title }}</td>
-                <td>{{ item.price }}</td>
-                <td>{{ item.description }}</td>
+                <td>{{ product.id }}</td>
+                <td>{{ product.title }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.description }}</td>
             </tr>
             {% endfor %}  
         </table>
