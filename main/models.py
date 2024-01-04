@@ -34,6 +34,7 @@ class Order(models.Model):
         db_table = 'order'
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
+        ordering = ['-date']
 
     def __str__(self):
         return str(self.order_id)

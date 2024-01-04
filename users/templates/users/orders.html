@@ -8,8 +8,19 @@
 {% endblock %}
 
 {% block content %}
+<div class="search">
+  <button class="search-button"></button>
+  <form class="search-form" action="{% url 'users:orders' %}" method="get">
+    <input type="number" name="search" placeholder="Номер заказа" id="id_search">
+    <button class="search-submit-button" type="submit">Поиск</button>
+  </form>
+</div>
+
 <div class="logo-wrapper">
   <div class="logo-container">
+    {% if search_error %}
+      <p>{{ search_error }}</p>
+    {% endif %}
     {% if pages %}
       {% for order in pages %}
         <div class="card-container">
