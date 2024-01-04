@@ -5,4 +5,7 @@ app_name = 'users'
 
 urlpatterns = [
     path('orders/', views.my_orders, name='orders'),
+    path('login/', views.login, name='login'),
+    path('registration/', views.registration, name='registration'),
+    path('logout/', views.logout, name='logout'),
 ]

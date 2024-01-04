@@ -21,13 +21,13 @@ class UtilsOrder:
         return str(order_number)
 
     @classmethod
-    def get_order(cls, data: dict) -> Order:
+    def get_order(cls, data: dict) -> dict:
         data['order_id'] = cls.get_order_number()
         data['bot_shop'] = True
 
         product_list = Product.objects.all()
-
         total_price = 0
+
         for item in product_list:
             if data[item.name]:
                 total_price += item.price
@@ -36,6 +36,5 @@ class UtilsOrder:
                 data[item.name] = 0
 
         data['total_price'] = total_price
-        order = Order(**data)
 
-        return order
+        return data

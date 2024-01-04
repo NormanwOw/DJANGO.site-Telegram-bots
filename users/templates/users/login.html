@@ -6,11 +6,9 @@
 {% endblock %}
 
 {% block content %}
-<div class="logo-wrapper">
-    <div class="logo-container">
-        <p class="logo-title-1">Контакты</p>
-    </div>
-</div>
+<form action="{% url 'users:login' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Войти</button>
+</form>
 {% endblock %}
-
-
