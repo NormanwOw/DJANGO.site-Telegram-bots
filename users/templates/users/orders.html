@@ -10,46 +10,50 @@
 {% block content %}
 <div class="logo-wrapper">
   <div class="logo-container">
-    {% for order in pages %}
-      <div class="card-container">
-        <div class="order-data">
-          <div class="order-number">Заказ №{{ order.order_id }}</div>
-            <div class="order">
-              <ul>
-                {% for title, price in order.get_products %}
-                  {% if price %}
-                    <li>{{ title }} - {{ price }} руб.</li>
-                  {% endif %}
-                {% endfor %}
-              </ul>
-            </div>
-          <div class="order-date">{{ order.date }}</div>
+    {% if pages %}
+      {% for order in pages %}
+        <div class="card-container">
+          <div class="order-data">
+            <div class="order-number">Заказ №{{ order.order_id }}</div>
+              <div class="order">
+                <ul>
+                  {% for title, price in order.get_products %}
+                    {% if price %}
+                      <li>{{ title }} - {{ price }} руб.</li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+              </div>
+            <div class="order-date">{{ order.date }}</div>
+          </div>
+          <div class="order-price">
+            <p>{{ order.total_price }} &#x20bd;</p>
+          </div>
         </div>
-        <div class="order-price">
-          <p>{{ order.total_price }} &#x20bd;</p>
+      {% endfor %}
+      {% if pages.paginator.count > 5 %}
+        <div class="orders-container">
+          <ul class="pagination">
+            <li>
+              <a href="{% if pages.has_previous %}{% change_params page=pages.previous_page_number %}{% else %}#{% endif %}">Пред.</a>
+            </li>
+            {% for page in pages.paginator.page_range %}
+              {% if request.GET.page == None and forloop.counter == 1 %}
+                <li class="active">
+              {% else %}
+                <li class="{% if pages.number == page %} active {% endif %}">
+              {% endif %}
+                  <a href="{% change_params page=page %}">{{ forloop.counter }}</a>
+                </li>
+            {% endfor %}
+            <li>
+              <a href="{% if pages.has_next %}{% change_params page=pages.next_page_number %}{% else %}#{% endif %}">След.</a>
+            </li>
+          </ul>
         </div>
-      </div>
-    {% endfor %}
-    {% if pages.paginator.count > 5 %}
-      <div class="orders-container">
-        <ul class="pagination">
-          <li>
-            <a href="{% if pages.has_previous %}{% change_params page=pages.previous_page_number %}{% else %}#{% endif %}">Пред.</a>
-          </li>
-          {% for page in pages.paginator.page_range %}
-            {% if request.GET.page == None and forloop.counter == 1 %}
-              <li class="active">
-            {% else %}
-              <li class="{% if pages.number == page %} active {% endif %}">
-            {% endif %}
-                <a href="{% change_params page=page %}">{{ forloop.counter }}</a>
-              </li>
-          {% endfor %}
-          <li>
-            <a href="{% if pages.has_next %}{% change_params page=pages.next_page_number %}{% else %}#{% endif %}">След.</a>
-          </li>
-        </ul>
-      </div>
+      {% endif %}
+    {% else %}
+      <h1>Заказы не найдены</h1>
     {% endif %}
   </div>
 </div>

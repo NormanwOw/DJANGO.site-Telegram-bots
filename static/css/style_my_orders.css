@@ -1,9 +1,16 @@
+
 .logo-wrapper {
   margin-top: 20px;
 }
 
 .logo-container {
   width: 600px;
+}
+
+.logo-container>h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 3em;
+  padding-top: 1.5em;
 }
 
 .orders-container {
@@ -109,9 +116,6 @@
   text-align: start;
 }
 
-.order-number {
-}
-
 .order {
   font-size: 0.5em;
   padding-left: 2em;
@@ -122,4 +126,30 @@
 .order-date {
   font-size: 0.5em;
   font-style: italic;
+}
+
+
+@media (max-width: 700px) {
+  .logo-container>h1 {
+    font-size: 2em;
+  }
+
+  .card-container {
+    height: 80px;
+    border-radius: 0.4em 1.5em 1.5em 0.4em;
+  }
+
+  .order-number {
+    font-size: 0.8em;
+  }
+
+  .order {
+    font-size: 0.4em;
+  }
+
+  .order-price {
+    font-size: 1.5em;
+    height: 3em;
+    margin-right: 0.18em;
+  }
 }
