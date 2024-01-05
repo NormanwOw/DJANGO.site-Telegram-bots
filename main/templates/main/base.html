@@ -26,8 +26,12 @@
                     <div class="auth-button">
                         <img src="{% static 'images/user.png' %}">
                         <div class="nav-buttons auth-drop">
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'users:logout' %}">Выход</a>
+                            {% else %}
                             <a href="{% url 'users:login' %}">Вход</a>
                             <a href="{% url 'users:registration' %}">Регистрация</a>
+                            {% endif %}
                         </div>
                     </div>
                     <a href="{% url 'main:home' %}">Telegram bots</a>

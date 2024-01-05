@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.core.paginator import Paginator
-from django.shortcuts import render, HttpResponseRedirect, reverse
+from django.shortcuts import render, redirect, reverse
 from django.contrib import auth
 
 from main.models import Order
@@ -36,7 +36,7 @@ def login(request):
             user = auth.authenticate(username=username, password=password)
             if user:
                 auth.login(request, user)
-                return HttpResponseRedirect(reverse('main:home'))
+                return redirect(reverse('main:home'))
     else:
         form = LoginForm()
 
@@ -55,4 +55,5 @@ def registration(request):
 
 
 def logout(request):
-    return render(request, 'main/index.html')
+    auth.logout(request)
+    return redirect(reverse('main:home'))
