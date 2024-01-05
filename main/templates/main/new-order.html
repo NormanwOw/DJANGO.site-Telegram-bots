@@ -16,32 +16,39 @@
         <div class="form-container form-font">
             <form action="{% url 'main:new-order' %}" method="post">
                 {% csrf_token %}
-                <p><label for="{{ form.phone_number.id_for_label }}">{{ form.phone_number.label }}: </label>{{ form.phone_number }}</p>
-                <div class="error">{{ form.phone_number.errors.as_text }}</div>
+                <p>
+                    <label for="id_phone_number">Телефон: </label>
+                    <input type="text" name="phone_number" placeholder="Телефон" required="" id="id_phone_number">
+                </p>
+                <div class="error"></div>
                 <div class="form-buttons-wrapper">
                     {% product_list as prices %}
-                    <p>{{ form.bot_shop.label }} {{ prices.0.price }} &#x20bd;</p>
+                    {% for item in prices %}
+                    {% if forloop.first %}
+                    <p>{{ item.title }} {{ item.price }} &#x20bd;</p>
                     <div class="form-func-title">Дополнительные функции</div>
                     <div class="form-buttons-container">
                         <div class="title-container">
-                            <p>{{ form.admin_panel.label }} {{ prices.1.price }} &#x20bd;</p>
-                            <p>{{ form.database.label }} {{ prices.2.price }} &#x20bd;</p>
-                        </div>     
+                    {% else %}
+                            <p>{{ item.title }} {{ item.price }} &#x20bd;</p>
+                    {% endif %}
+                    {% endfor %}
+                        </div>
                         <div class="buttons">
                             <p>
                                 <label class="checkbox-green">
-                                {{ form.admin_panel }}
+                                <input type="checkbox" name="admin_panel" id="id_admin_panel">
                                 <span class="checkbox-green-switch" data-label-on="On" data-label-off="Off"></span>
                                 </label>
                             </p>
                             <p>
                                 <label class="checkbox-green">
-                                {{ form.database }}
+                                <input type="checkbox" name="database" id="id_database">
                                 <span class="checkbox-green-switch" data-label-on="On" data-label-off="Off"></span>
                                 </label>
                             </p>
                         </div>
-                    </div>  
+                    </div>
                 </div>
                 <button type="submit" class="form-button btn-next form-font">Далее</button>
             </form>

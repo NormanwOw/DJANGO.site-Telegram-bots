@@ -7,6 +7,8 @@ class UtilsOrder:
 
     @classmethod
     def get_order_number(cls) -> str:
+        """Generate order number"""
+
         min_id = 10**6
         max_id = 10**7 - 1
         order_number = random.randint(min_id, max_id)
@@ -22,6 +24,8 @@ class UtilsOrder:
 
     @classmethod
     def get_order(cls, data: dict) -> dict:
+        """Update order, set order number and total order price"""
+
         data['order_id'] = cls.get_order_number()
         data['bot_shop'] = True
 

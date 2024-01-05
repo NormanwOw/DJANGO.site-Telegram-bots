@@ -10,5 +10,6 @@
     {% csrf_token %}
     {{ form }}
     <button type="submit">Войти</button>
+    <a href="#">Забыли пароль?</a> | <a href="{% url 'users:registration' %}">Создать аккаунт</a>
 </form>
 {% endblock %}
