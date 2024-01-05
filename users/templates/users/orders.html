@@ -49,13 +49,15 @@
               <a href="{% if pages.has_previous %}{% change_params page=pages.previous_page_number %}{% else %}#{% endif %}">Пред.</a>
             </li>
             {% for page in pages.paginator.page_range %}
+            {% if page >= pages.number|add:-2 and page <= pages.number|add:2 %}
               {% if request.GET.page == None and forloop.counter == 1 %}
-                <li class="active">
+              <li class="active">
               {% else %}
-                <li class="{% if pages.number == page %} active {% endif %}">
+              <li class="{% if pages.number == page %} active {% endif %}">
               {% endif %}
-                  <a href="{% change_params page=page %}">{{ forloop.counter }}</a>
-                </li>
+                <a href="{% change_params page=page %}">{{ page }}</a>
+              </li>
+            {% endif %}
             {% endfor %}
             <li>
               <a href="{% if pages.has_next %}{% change_params page=pages.next_page_number %}{% else %}#{% endif %}">След.</a>
