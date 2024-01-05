@@ -5,7 +5,7 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 
 from main.models import Order
-from users.forms import LoginForm
+from users.forms import LoginForm, RegistrationForm
 
 
 @login_required
@@ -50,8 +50,20 @@ def login(request):
 
 
 def registration(request):
+    if request.method == 'POST':
+        form = RegistrationForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.instance
+            auth.login(request, user)
+
+            return redirect(reverse('main:home'))
+    else:
+        form = RegistrationForm()
+
     context = {
-        'title': 'Регистрация',
+        'title': 'Home - Регистрация',
+        'form': form
     }
     return render(request, 'users/registration.html', context)
 
