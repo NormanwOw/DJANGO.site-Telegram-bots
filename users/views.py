@@ -2,11 +2,13 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, reverse
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 
 from main.models import Order
 from users.forms import LoginForm
 
 
+@login_required
 def my_orders(request):
     page = request.GET.get('page', 1)
     order_number = request.GET.get('search', False)
@@ -54,6 +56,7 @@ def registration(request):
     return render(request, 'users/registration.html', context)
 
 
+@login_required
 def logout(request):
     auth.logout(request)
     return redirect(reverse('main:home'))

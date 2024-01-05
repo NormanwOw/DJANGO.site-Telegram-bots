@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 from main.forms import NewOrderForm
 from main.utils import UtilsOrder
@@ -17,6 +18,7 @@ def prices(request):
     return render(request, 'main/prices.html', {'title': 'Цены'})
 
 
+@login_required
 def new_order(request):
     form = NewOrderForm(request.POST)
 
@@ -40,6 +42,7 @@ def new_order(request):
     return render(request, 'main/new-order.html', context)
 
 
+@login_required
 def accept(request):
     order_dict = request.session['order']
     order_dict['user'] = request.user
@@ -54,10 +57,6 @@ def accept(request):
 
 def contacts(request):
     return render(request, 'main/contacts.html', {'title': 'Контакты'})
-
-
-def order_page(request):
-    return render(request, 'main/order-page.html')
 
 
 def page_not_found(request, exception):
