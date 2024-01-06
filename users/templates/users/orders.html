@@ -11,7 +11,7 @@
 <div class="search">
   <button class="search-button"></button>
   <form class="search-form" action="{% url 'users:orders' %}" method="get">
-    <input type="number" name="search" placeholder="Номер заказа" id="id_search">
+    <input class="search-form-input" type="number" name="search" placeholder="Номер заказа">
     <button class="search-submit-button" type="submit">Поиск</button>
   </form>
 </div>

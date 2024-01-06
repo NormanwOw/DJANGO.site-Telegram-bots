@@ -3,13 +3,33 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_auth.css' %}">
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'users:login' %}" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Войти</button>
-    <a href="#">Забыли пароль?</a> | <a href="{% url 'users:registration' %}">Создать аккаунт</a>
-</form>
+<div class="logo-wrapper">
+    <div class="logo-container">
+        <div class="form-wrapper">
+            <div class="form-header form-font">Вход</div>
+            <div class="form-container form font">
+                <form class="form-font" action="{% url 'users:login' %}" method="post">
+                    {% csrf_token %}
+                    <div class="">
+                        <label for="id_username" class="form-label">Имя пользователя: </label>
+                        <input class="form-input" type="text" name="username" placeholder="Имя пользователя" autofocus="" autocapitalize="none" autocomplete="username" maxlength="32" required="" id="id_username">
+                    </div>
+                    <div class="">
+                        <label for="id_password" class="form-label">Пароль: </label>
+                        <input class="form-input" type="password" name="password" placeholder="Пароль" autocomplete="current-password" required="" id="id_password">
+                    </div>
+                    <div>
+                        <a href="#">Забыли пароль?</a> | <a href="{% url 'users:registration' %}">Создать аккаунт</a>
+                    </div>
+                    <button class="form-button" type="submit">Войти</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'includes/errors.html' %}
 {% endblock %}

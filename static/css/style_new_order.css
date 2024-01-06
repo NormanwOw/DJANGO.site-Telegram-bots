@@ -2,30 +2,6 @@
   margin-bottom: 3em;
 }
 
-#id_phone_number, #id_email, #id_name {
-  border-color: rgb(0, 152, 204);
-  border-radius: 10px;
-  padding: 6px;
-  font-size: 1em;
-  margin-left: 5px;
-}
-
-#id_phone_number::placeholder, 
-#id_email::placeholder, 
-#id_name::placeholder {
-  opacity: 0;
-}
-
-.form-container form {
-  display: flex;
-  flex-direction: column;
-  width: 75%;
-  align-items: end;
-  margin-top: 2em;
-  margin-right: 1em;
-  margin-bottom: 2em;
-}
-
 .form-buttons-wrapper {
   display: flex;
   flex-direction: column;
@@ -74,30 +50,9 @@
   margin-top: -9px;
 }
 
-.form-button {
-  position: relative;
-  color: white;
-  background-color: rgb(0, 152, 204);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  padding: 10px;
-  padding-inline: 15px;
-  transition: 0.3s;
-}
-
 .btn-next {
   left: 45px;
   top: 10px;
-}
-
-.form-button:hover {
-  background: rgb(2, 179, 238);
-}
-
-.form-button:active {
-  color: rgb(189, 204, 209);
-  background: rgb(17, 129, 167);
 }
 
 .checkbox-green {
@@ -183,7 +138,7 @@
   color: white;
   transform: translate3d(20px, 0, 0);
 }
- 
+
 /* Hover */
 .checkbox-green input[type="checkbox"]:not(:disabled) + .checkbox-green-switch:hover {
   cursor: pointer;
@@ -192,73 +147,44 @@
 .checkbox-green input[type="checkbox"]:not(:disabled) + .checkbox-green-switch:hover:after {
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
 }
- 
+
 /* Disabled */
 .checkbox-green input[type=checkbox]:disabled + .checkbox-green-switch {
   opacity: 0.6;
   filter: grayscale(50%);
 }
- 
+
 /* Focus */
 .checkbox-green.focused .checkbox-green-switch:after {
   box-shadow: inset 0px 0px 4px #ff5623;
 }
 
-@media (max-width: 530px) {
+@media (max-width: 600px) {
 
-    #id_phone_number {
-      margin-right: 7px;
-    }
+  .form-buttons-wrapper {
+    margin-right: 2px;
+  }
 
-    .form-buttons-wrapper {
-      margin-right: 2px;
-    }
+  form>p {
+	position: relative;
+	left: 25px;
+	padding-left: 25px;
+  }
 
-	#id_phone_number::placeholder {
-	  opacity: 70%;
-	  font-family: Arial, Helvetica, sans-serif;
-	}
+  .form-func-title {
+	padding-inline: 0.5em;
+	font-size: 0.8em;
+  }
 
-	form label {
-	  display: none;
-	}
+  .btn-next {
+	position: relative;
+	width: 100%;
+	left: 0px;
+	margin-top: 0.5em;
+  }
 
-	.form-container {
-	  width: 300px;
-	}
-
-	.form-container form {
-      margin-right: 0em;
-    }
-
-	form>p {
-	  position: relative;
-	  left: 25px;
-	  padding-left: 25px;
-	}
-
-
-	#id_phone_number:focus::placeholder, 
-	#id_email:focus::placeholder, 
-	#id_name:focus::placeholder {
-	  opacity: 0;
-	}
-
-	.form-func-title {
-	  padding-inline: 0.5em;
-	  font-size: 0.8em;
-	}
-
-	.btn-next {
-	  position: relative;
-	  width: 100%;
-	  left: 0px;
-	  margin-top: 0.5em;
-	}
-
-	.buttons>p {
-	  padding-top: 0.4em;
-	  padding-bottom: 0.9em;
-	}
-
+  .buttons>p {
+	padding-top: 0.4em;
+	padding-bottom: 0.9em;
+  }
 }

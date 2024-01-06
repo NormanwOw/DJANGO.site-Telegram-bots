@@ -1,0 +1,8 @@
+{% load static %}
+
+{% if form.non_field_errors %}
+<div class="" role="alert">
+    {{form.non_field_errors}}
+    <button type="button" class="" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}

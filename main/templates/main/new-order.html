@@ -18,9 +18,11 @@
                 {% csrf_token %}
                 <p>
                     <label for="id_phone_number">Телефон: </label>
-                    <input type="text" name="phone_number" placeholder="Телефон" required="" id="id_phone_number">
+                    <input class="form-input" type="text" name="phone_number" placeholder="Телефон" required="" id="id_phone_number">
                 </p>
-                <div class="error"></div>
+                {% if form.phone_number.errors %}
+                    <div class="">{{ form.phone_number.errors }}</div>
+                {% endif %}
                 <div class="form-buttons-wrapper">
                     {% product_list as prices %}
                     {% for item in prices %}

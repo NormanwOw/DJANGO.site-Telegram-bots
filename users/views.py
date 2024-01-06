@@ -62,7 +62,7 @@ def registration(request):
         form = RegistrationForm()
 
     context = {
-        'title': 'Home - Регистрация',
+        'title': 'Регистрация',
         'form': form
     }
     return render(request, 'users/registration.html', context)

@@ -261,6 +261,19 @@ body {
   font-size: 2em;
 }
 
+.search-form-input {
+  border: 5px solid rgb(0, 152, 204);
+  border-radius: 5px;
+  padding: 6px;
+  font-size: 1em;
+  margin-left: 5px;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+.search-form-input:focus-visible {
+  outline: none;
+}
+
 .form-container {
   display: flex;
   justify-content: center;
@@ -269,6 +282,49 @@ body {
   border:rgb(0, 152, 204) 8px solid;
   border-radius: 0 0 30px 30px;
   box-shadow: 0px 0px 15px 1px rgb(46, 46, 46) inset;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  align-items: end;
+  margin-top: 2em;
+  margin-right: 1em;
+  margin-bottom: 2em;
+}
+
+.form-input {
+  border-color: rgb(0, 152, 204);
+  border-radius: 10px;
+  padding: 6px;
+  font-size: 1em;
+  margin-left: 5px;
+}
+
+.form-input::placeholder {
+  opacity: 0;
+}
+
+.form-button {
+  position: relative;
+  color: white;
+  background-color: rgb(0, 152, 204);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 10px;
+  padding-inline: 15px;
+  transition: 0.3s;
+}
+
+.form-button:hover {
+  background: rgb(2, 179, 238);
+}
+
+.form-button:active {
+  color: rgb(189, 204, 209);
+  background: rgb(17, 129, 167);
 }
 
 .footer-wrapper-1 {
@@ -380,9 +436,11 @@ body {
   .left {
     display: none;
   }
+
   .right {
     display: none;
   }
+
   .sidebar-left {
     display: none;
   }
@@ -407,6 +465,30 @@ body {
     display: block;
   }
 
+  .form-input {
+    margin-right: 7px;
+  }
+
+  .form-input::placeholder {
+	opacity: 70%;
+	font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .form-input:focus::placeholder {
+	opacity: 0;
+  }
+
+  form label {
+	display: none;
+  }
+
+  .form-container {
+	width: 300px;
+  }
+
+  .form-container form {
+    margin-right: 0em;
+  }
 }
 
 @media (max-width: 440px) {

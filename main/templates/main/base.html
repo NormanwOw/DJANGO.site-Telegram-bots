@@ -18,10 +18,7 @@
                     <div class="nav-buttons">
                         <div class="border-first-btn"></div>
                         {% for item in menu %}
-                        {% if not user.is_authenticated and item.name == 'Новый заказ' %}
-                        {% else %}
-                            <a href="{% url item.url %}">{{ item.name }}</a>
-                        {% endif %}
+                            <a href="{% if not user.is_authenticated and item.name == 'Новый заказ' %}{% url 'users:login' %}{% else %}{% url item.url %}{% endif %}">{{ item.name }}</a>
                         {% endfor %}
                     </div>
                 </div>

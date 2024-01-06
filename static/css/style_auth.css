@@ -1,0 +1,22 @@
+.form-font a {
+  font-size: 14px;
+}
+
+.logo-container {
+  width: 616px;
+}
+
+.form-container {
+  width: fit-content;
+}
+
+.form-container form {
+  width: 100%;
+  margin-right: 0em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.form-button {
+  margin-top: 1em;
+}
