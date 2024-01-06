@@ -302,6 +302,10 @@ body {
   margin-left: 5px;
 }
 
+.form-input:focus-visible {
+  outline: none;
+}
+
 .form-input::placeholder {
   opacity: 0;
 }
@@ -414,6 +418,10 @@ body {
   }
 
   .auth-button {
+    display: block;
+  }
+
+  .auth-button:hover .auth-drop>div {
     display: block;
   }
 
