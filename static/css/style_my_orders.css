@@ -142,6 +142,7 @@
 }
 
 .search-button {
+  -webkit-tap-highlight-color: transparent;
   display: none;
 }
 

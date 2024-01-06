@@ -14,16 +14,19 @@ class RegistrationForm(UserCreationForm):
     first_name = forms.CharField(
         min_length=2,
         max_length=20,
+        label='Имя'
     )
     last_name = forms.CharField(
         min_length=2,
         max_length=20,
+        label='Фамилия'
     )
     username = forms.CharField(
         min_length=3,
         max_length=16,
+        label='Имя пользователя'
     )
-    email = forms.EmailField()
+    email = forms.EmailField(label='Email')
     password1 = forms.PasswordInput()
     password2 = forms.PasswordInput()
 

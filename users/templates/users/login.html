@@ -16,24 +16,24 @@
                     {% csrf_token %}
                     <div>
                         <div>
-                            <label for="id_username" class="form-label">Имя пользователя: </label>
-                            <input class="form-input" type="text" name="username" placeholder="Имя пользователя" autofocus="" autocapitalize="none" autocomplete="username" maxlength="32" required="" id="id_username">
+                            <label for="id_username" class="form-label">{{ form.username.label }}:</label>
+                            <input class="form-input" type="text" name="username" placeholder="{{ form.username.label }}" autofocus="" autocapitalize="none" autocomplete="username" maxlength="32" required="" id="id_username">
                         <div class="error">{{ form.username.errors }}</div>
                         </div>
                     </div>
                     <div>
                         <div>
-                            <label for="id_password" class="form-label">Пароль: </label>
-                            <input class="form-input" type="password" name="password" placeholder="Пароль" autocomplete="current-password" required="" id="id_password">
+                            <label for="id_password" class="form-label">{{ form.password.label }}: </label>
+                            <input class="form-input" type="password" name="password" placeholder="{{ form.password.label }}" autocomplete="current-password" required="" id="id_password">
                         </div>
                         <div class="error">{{ form.password.errors }}</div>
                     </div>
                     <div>
-                        <div>
+                        <div class="form-login-urls">
                             <a href="#">Забыли пароль?</a> | <a href="{% url 'users:registration' %}">Создать аккаунт</a>
                         </div>
                     </div>
-                    <button class="form-button" type="submit">Войти</button>
+                    <button class="form-button form-font" type="submit">Войти</button>
                 </form>
             </div>
         </div>
