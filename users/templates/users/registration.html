@@ -11,62 +11,62 @@
     <div class="logo-container">
         <div class="form-wrapper">
             <div class="form-header form-font">Регистрация</div>
-            <div class="form-container form font">
+            <div class="form-container">
                 <form class="form-font" action="{% url 'users:registration' %}" method="post">
                     {% csrf_token %}
-                    <div class="">
-                        <label for="id_first_name" class="form-label">Имя*</label>
-                        <input type="text" class="form-input" id="id_first_name"
-                            value="{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}"
-                            name="first_name" required>
-                        {% if form.first_name.errors %}
-                        <div class="">{{ form.first_name.errors }}</div>
-                        {% endif %}
+                    <div>
+                        <div>
+                            <label for="id_first_name" class="form-label">Имя*</label>
+                            <input type="text" class="form-input" id="id_first_name"
+                                value="{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}"
+                                name="first_name" required>
+                        </div>
+                        <div class="error">{{ form.first_name.errors }}</div>
                     </div>
-                    <div class="">
-                        <label for="id_last_name" class="form-label">Фамилия*</label>
-                        <input type="text" class="form-input" id="id_last_name"
-                            value="{% if form.last_name.value %}{{ form.last_name.value }}{% endif %}"
-                            name="last_name" required>
-                            {% if form.last_name.errors %}
-                            <div class="">{{ form.last_name.errors }}</div>
-                            {% endif %}
+                    <div>
+                        <div>
+                            <label for="id_last_name" class="form-label">Фамилия*</label>
+                            <input type="text" class="form-input" id="id_last_name"
+                                value="{% if form.last_name.value %}{{ form.last_name.value }}{% endif %}"
+                                name="last_name" required>
+                        </div>
+                        <div class="error">{{ form.last_name.errors }}</div>
                     </div>
-                    <div class="">
-                        <label for="id_username" class="form-label">Имя пользователя*</label>
-                        <input type="text" class="form-input" id="id_username"
-                            value="{% if form.username.value %}{{ form.username.value }}{% endif %}"
-                            name="username" required>
-                            {% if form.username.errors %}
-                            <div class="">{{ form.username.errors }}</div>
-                            {% endif %}
+                    <div>
+                        <div>
+                            <label for="id_username" class="form-label">Имя пользователя*</label>
+                            <input type="text" class="form-input" id="id_username"
+                                value="{% if form.username.value %}{{ form.username.value }}{% endif %}"
+                                name="username" required>
+                        </div>
+                        <div class="error">{{ form.username.errors }}</div>
                     </div>
-                    <div class="">
-                        <label for="id_email" class="form-label">Email*</label>
-                        <input type="email" class="form-input" id="id_email"
-                            value="{% if form.email.value %}{{ form.email.value }}{% endif %}"
-                            name="email" required>
-                            {% if form.email.errors %}
-                            <div class="">{{ form.email.errors }}</div>
-                            {% endif %}
+                    <div>
+                        <div>
+                            <label for="id_email" class="form-label">Email*</label>
+                            <input type="email" class="form-input" id="id_email"
+                                value="{% if form.email.value %}{{ form.email.value }}{% endif %}"
+                                name="email" required>
+                        </div>
+                        <div class="error">{{ form.email.errors }}</div>
                     </div>
-                    <div class="">
-                        <label for="id_password1" class="form-label">Пароль*</label>
-                        <input type="password" class="form-input" id="id_password1"
-                            value="{% if form.password1.value %}{{ form.password1.value }}{% endif %}"
-                            name="password1" required>
-                            {% if form.password1.errors %}
-                            <div class="">{{ form.password1.errors }}</div>
-                            {% endif %}
+                    <div>
+                        <div>
+                            <label for="id_password1" class="form-label">Пароль*</label>
+                            <input type="password" class="form-input" id="id_password1"
+                                value="{% if form.password1.value %}{{ form.password1.value }}{% endif %}"
+                                name="password1" required>
+                        </div>
+                        <div class="error">{{ form.password1.errors }}</div>
                     </div>
-                    <div class="">
-                        <label for="id_password2" class="form-label">Подтверждение пароля*</label>
-                        <input type="password" class="form-input" id="id_password2"
-                            value="{% if form.password2.value %}{{ form.password2.value }}{% endif %}"
-                            name="password2" required>
-                            {% if form.password2.errors %}
-                            <div class="">{{ form.password2.errors }}</div>
-                            {% endif %}
+                    <div>
+                        <div>
+                            <label for="id_password2" class="form-label">Подтверждение пароля*</label>
+                            <input type="password" class="form-input" id="id_password2"
+                                value="{% if form.password2.value %}{{ form.password2.value }}{% endif %}"
+                                name="password2" required>
+                        </div>
+                        <div class="error">{{ form.password2.errors }}</div>
                     </div>
                     <button class="form-button" type="submit">Зарегистрироваться</button>
                 </form>

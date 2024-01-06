@@ -284,6 +284,13 @@ body {
   box-shadow: 0px 0px 15px 1px rgb(46, 46, 46) inset;
 }
 
+.form-container>form>div {
+  display: flex;
+  flex-direction: column;
+  align-content: end;
+  align-items: end;
+}
+
 .form-container form {
   display: flex;
   flex-direction: column;
@@ -372,6 +379,21 @@ body {
 
 .footer-container a:hover {
   color: rgb(255, 234, 210);
+}
+
+.error {
+  min-height: 12px;
+  max-width: 400px;
+  width: fit-content;
+  align-self: end;
+}
+
+.errorlist>li {
+  font-size: 0.6em;
+  color: rgb(78, 1, 1);
+  padding-right: 10px;
+  list-style-type: none;
+  text-align: left;
 }
 
 @media (max-width: 1100px) {

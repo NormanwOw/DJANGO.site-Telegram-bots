@@ -42,14 +42,6 @@
   flex-direction: column;
 }
 
-.error {
-  font-size: 0.6em;
-  color: rgb(78, 1, 1);
-  text-decoration: none;
-  height: 15px;
-  margin-top: -9px;
-}
-
 .btn-next {
   left: 45px;
   top: 10px;

@@ -11,19 +11,27 @@
     <div class="logo-container">
         <div class="form-wrapper">
             <div class="form-header form-font">Вход</div>
-            <div class="form-container form font">
+            <div class="form-container">
                 <form class="form-font" action="{% url 'users:login' %}" method="post">
                     {% csrf_token %}
-                    <div class="">
-                        <label for="id_username" class="form-label">Имя пользователя: </label>
-                        <input class="form-input" type="text" name="username" placeholder="Имя пользователя" autofocus="" autocapitalize="none" autocomplete="username" maxlength="32" required="" id="id_username">
-                    </div>
-                    <div class="">
-                        <label for="id_password" class="form-label">Пароль: </label>
-                        <input class="form-input" type="password" name="password" placeholder="Пароль" autocomplete="current-password" required="" id="id_password">
+                    <div>
+                        <div>
+                            <label for="id_username" class="form-label">Имя пользователя: </label>
+                            <input class="form-input" type="text" name="username" placeholder="Имя пользователя" autofocus="" autocapitalize="none" autocomplete="username" maxlength="32" required="" id="id_username">
+                        <div class="error">{{ form.username.errors }}</div>
+                        </div>
                     </div>
                     <div>
-                        <a href="#">Забыли пароль?</a> | <a href="{% url 'users:registration' %}">Создать аккаунт</a>
+                        <div>
+                            <label for="id_password" class="form-label">Пароль: </label>
+                            <input class="form-input" type="password" name="password" placeholder="Пароль" autocomplete="current-password" required="" id="id_password">
+                        </div>
+                        <div class="error">{{ form.password.errors }}</div>
+                    </div>
+                    <div>
+                        <div>
+                            <a href="#">Забыли пароль?</a> | <a href="{% url 'users:registration' %}">Создать аккаунт</a>
+                        </div>
                     </div>
                     <button class="form-button" type="submit">Войти</button>
                 </form>
