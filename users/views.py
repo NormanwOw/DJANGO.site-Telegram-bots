@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 from main.models import Order
 from users.forms import LoginForm, RegistrationForm
+from users.models import User
 
 
 @login_required
@@ -66,6 +67,14 @@ def registration(request):
         'form': form
     }
     return render(request, 'users/registration.html', context)
+
+
+@login_required
+def profile(request):
+    if request.GET.get('remove'):
+        User.objects.filter(id=request.user.id).delete()
+        return redirect(reverse('main:home'))
+    return render(request, 'users/profile.html')
 
 
 @login_required
