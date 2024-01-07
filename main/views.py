@@ -48,9 +48,11 @@ def accept(request):
     order_dict['user'] = request.user
     Order.objects.create(**order_dict)
 
+    order_number = order_dict['order_id']
     email = request.user.email
     context = {
         'email': email,
+        'order_number': order_number
     }
     return render(request, 'main/accept.html', context)
 

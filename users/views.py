@@ -74,7 +74,11 @@ def profile(request):
     if request.GET.get('remove'):
         User.objects.filter(id=request.user.id).delete()
         return redirect(reverse('main:home'))
-    return render(request, 'users/profile.html')
+
+    context = {
+        'title': 'Профиль',
+    }
+    return render(request, 'users/profile.html', context)
 
 
 @login_required

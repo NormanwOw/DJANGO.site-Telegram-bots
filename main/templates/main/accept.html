@@ -10,9 +10,12 @@
 <div class="logo-wrapper">
     <div class="logo-container">
         {% if email %}
-        <div>
-            <p>Спасибо за заказ</p>
-            <p>Вся информация о заказе отправлена Вам на почту <b>{{ email }}</b></p>
+        <div class="accept-wrapper form-font">
+            <div>
+                <p><b>Заказ №{{ order_number }} успешно оформлен</b></p>
+                <p>Вся информация о заказе отправлена на Вашу почту</p>
+                <p><span class="span-email">{{ email }}</span></p>
+            </div>
         </div>
         {% else %}
             <div class="form-header form-font">

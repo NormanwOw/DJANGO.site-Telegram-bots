@@ -51,6 +51,25 @@
   top: 10px;
 }
 
+.accept-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  width: fit-content;
+  color: white;
+  font-weight: normal;
+  padding: 10px;
+  padding-inline: 15px;
+  background-color: rgb(0, 152, 204);
+}
+
+.span-email {
+  font-weight: bold;
+  box-shadow: 0 0px 12px black;
+  padding-inline: 3px;
+}
+
 .checkbox-green {
   display: inline-block;
   height: 14px;
@@ -186,5 +205,9 @@
   .buttons>p {
 	padding-top: 0.4em;
 	padding-bottom: 0.9em;
+  }
+
+  .accept-wrapper {
+    padding-inline: 5px;
   }
 }
