@@ -14,45 +14,20 @@
             Новый заказ
         </div>
         <div class="form-container form-font">
-            <form action="{% url 'main:new-order' %}" method="post">
+            <form action="/new-order/" method="post">
                 {% csrf_token %}
-                <p>
-                    <label for="id_phone_number">Телефон: </label>
-                    <input class="form-input" type="text" name="phone_number" placeholder="Телефон" required="" id="id_phone_number">
-                </p>
-                {% if form.phone_number.errors %}
-                    <div class="">{{ form.phone_number.errors }}</div>
-                {% endif %}
-                <div class="form-buttons-wrapper">
-                    {% product_list as prices %}
-                    {% for item in prices %}
-                    {% if forloop.first %}
-                    <p>{{ item.title }} {{ item.price }} &#x20bd;</p>
-                    <div class="form-func-title">Дополнительные функции</div>
-                    <div class="form-buttons-container">
-                        <div class="title-container">
-                    {% else %}
-                            <p>{{ item.title }} {{ item.price }} &#x20bd;</p>
-                    {% endif %}
-                    {% endfor %}
-                        </div>
-                        <div class="buttons">
-                            <p>
-                                <label class="checkbox-green">
-                                <input type="checkbox" name="admin_panel" id="id_admin_panel">
-                                <span class="checkbox-green-switch" data-label-on="On" data-label-off="Off"></span>
-                                </label>
-                            </p>
-                            <p>
-                                <label class="checkbox-green">
-                                <input type="checkbox" name="database" id="id_database">
-                                <span class="checkbox-green-switch" data-label-on="On" data-label-off="Off"></span>
-                                </label>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="form-button btn-next form-font">Далее</button>
+
+                <label for="id_phone_number">Телефон:</label>
+                <input type="tel" name="phone_number" value="8901733117" required="" id="id_phone_number">
+                <div class="error">{{ form.phone_number.errors }}</div>
+
+                <label for="id_admin_panel">Админ-панель:</label>
+                <input type="checkbox" name="admin_panel" id="id_admin_panel">
+
+                <label for="id_database">База данных:</label>
+                <input type="checkbox" name="database" id="id_database">
+
+                <button type="submit">Далее</button>
             </form>
         </div>
     </div>

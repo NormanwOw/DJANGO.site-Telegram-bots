@@ -20,18 +20,17 @@ def prices(request):
 
 @login_required
 def new_order(request):
-    form = NewOrderForm(request.POST)
+    if request.method == 'POST':
+        form = NewOrderForm(request.POST)
+        if form.is_valid():
+            order_dict = UtilsOrder.get_order(form.cleaned_data)
+            order = Order(**order_dict)
 
-    if request.method == 'POST' and form.is_valid():
-        order_dict = UtilsOrder.get_order(form.cleaned_data)
-        request.session.update({'order': order_dict})
-        order = Order(**order_dict)
+            context = {
+                'new_order': order,
+            }
 
-        context = {
-            'new_order': order,
-        }
-
-        return render(request, 'main/accept.html', context)
+            return render(request, 'main/accept.html', context)
     else:
         form = NewOrderForm()
 

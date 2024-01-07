@@ -1,5 +1,8 @@
 from django.db import models
 from datetime import datetime
+
+from phonenumber_field.modelfields import PhoneNumberField
+
 from users.models import User
 
 
@@ -21,7 +24,7 @@ class Product(models.Model):
 class Order(models.Model):
     order_id = models.IntegerField(verbose_name='Номер заказа')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    phone_number = models.CharField(verbose_name='Телефон')
+    phone_number = PhoneNumberField(region='RU', verbose_name='Телефон')
     bot_shop = models.IntegerField(verbose_name='Бот-магазин')
     admin_panel = models.IntegerField(verbose_name='Админ-панель')
     database = models.IntegerField(verbose_name='База данных')
