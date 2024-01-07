@@ -71,8 +71,9 @@ def registration(request):
 
 @login_required
 def profile(request):
-    if request.GET.get('remove'):
-        User.objects.filter(id=request.user.id).delete()
+    if request.GET.get('remove-user', False):
+        # User.objects.filter(id=request.user.id).delete()
+        print('Профиль удалён')
         return redirect(reverse('main:home'))
 
     context = {
