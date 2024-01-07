@@ -11,6 +11,10 @@ from users.models import User
 
 @login_required
 def my_orders(request):
+    order = request.GET.get('remove-order', False)
+    if order:
+        Order.objects.filter(order_id=order).delete()
+
     page = request.GET.get('page', 1)
     order_number = request.GET.get('search', False)
     query = Q(user=request.user.id)
@@ -72,8 +76,7 @@ def registration(request):
 @login_required
 def profile(request):
     if request.GET.get('remove-user', False):
-        # User.objects.filter(id=request.user.id).delete()
-        print('Профиль удалён')
+        User.objects.filter(id=request.user.id).delete()
         return redirect(reverse('main:home'))
 
     context = {

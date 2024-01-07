@@ -25,7 +25,9 @@
       {% for order in pages %}
         <div class="card-container">
           <div class="order-data">
-            <div class="order-number">Заказ №{{ order.order_id }}</div>
+            <div class="order-number">
+              Заказ №{{ order.order_id }}
+            </div>
               <div class="order">
                 <ul>
                   {% for title, price in order.get_products %}
@@ -36,6 +38,24 @@
                 </ul>
               </div>
             <div class="order-date">{{ order.date }}</div>
+          </div>
+          <a href="#{{ order.order_id }}" class="order-remove"></a>
+          <div id="{{ order.order_id }}" class="modal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title form-font">Вы уверены что хотите удалить заказ №{{ order.order_id }}</h3>
+                  <a href="#close" title="Close" class="close">×</a>
+                </div>
+                <div class="modal-body">
+                  <form action="{% url 'users:orders' %}" method="get">
+                    <input type="hidden" name="remove-order" value="{{ order.order_id }}">
+                    <button type="submit" class="form-button form-font">Да</button>
+                    <a href="#close" class="form-button form-font">Нет</a>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="order-price">
             <p>{{ order.total_price }} &#x20bd;</p>
