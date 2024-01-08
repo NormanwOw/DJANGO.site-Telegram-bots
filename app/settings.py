@@ -9,7 +9,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-# Application definition
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -53,8 +53,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'app.wsgi.application'
 
-
-# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -66,7 +64,7 @@ DATABASES = {
     }
 }
 
-# Password validation
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -82,13 +80,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
 LANGUAGE_CODE = 'ru'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
@@ -103,7 +99,18 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/login/'
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# EMAIL_HOST = settings.SMTP_HOST
+# EMAIL_PORT = settings.SMTP_PORT
+# EMAIL_HOST_USER = settings.SMTP_USER
+# EMAIL_HOST_PASSWORD = settings.SMTP_PASSWORD
+# EMAIL_USE_SSL = True
+#
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# SERVER_EMAIL = EMAIL_HOST_USER
+# EMAIL_ADMIN = EMAIL_HOST_USER

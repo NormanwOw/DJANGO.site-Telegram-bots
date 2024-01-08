@@ -11,5 +11,10 @@ class Settings(BaseSettings):
     DB_PASS: str
     DB_NAME: str
 
+    SMTP_USER: str
+    SMTP_PASSWORD: str
+    SMTP_HOST: str
+    SMTP_PORT: int
+
 
 settings = Settings()
