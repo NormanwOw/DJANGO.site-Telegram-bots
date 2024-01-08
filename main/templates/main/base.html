@@ -27,8 +27,7 @@
                         <img src="{% static 'images/user.png' %}">
                         <div class="nav-buttons auth-drop">
                             {% if user.is_authenticated %}
-                            <div class="nav-buttons"><a href="{% url 'users:orders' %}">Мои заказы</a></div>
-                            <div class="nav-buttons"><a href="{% url 'users:logout' %}">Выход</a></div>
+                            <div class="nav-buttons"><a href="{% url 'users:profile' %}">Профиль</a></div>
                             {% else %}
                             <div class="nav-buttons"><a href="{% url 'users:login' %}">Вход</a></div>
                             <div class="nav-buttons"><a href="{% url 'users:registration' %}">Регистрация</a></div>

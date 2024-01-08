@@ -14,6 +14,10 @@
   align-items: center;
 }
 
+.phone_number_field {
+  margin-bottom: 0;
+}
+
 .form-buttons-container {
   display: flex;
 }

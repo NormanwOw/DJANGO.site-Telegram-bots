@@ -5,33 +5,8 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 
 from main.models import Order
-from users.forms import LoginForm, RegistrationForm
+from users.forms import LoginForm, RegistrationForm, ProfileForm
 from users.models import User
-
-
-@login_required
-def my_orders(request):
-    order = request.GET.get('remove-order', False)
-    if order:
-        Order.objects.filter(order_id=order).delete()
-
-    page = request.GET.get('page', 1)
-    order_number = request.GET.get('search', False)
-    query = Q(user=request.user.id)
-
-    if order_number:
-        query &= Q(order_id=order_number)
-
-    orders = Order.objects.filter(query)
-    paginator = Paginator(orders, 5)
-    current_page = paginator.page(int(page))
-
-    context = {
-        'title': 'Мои заказы',
-        'pages': current_page
-    }
-
-    return render(request, 'users/orders.html', context)
 
 
 def login(request):
@@ -75,12 +50,37 @@ def registration(request):
 
 @login_required
 def profile(request):
+    if request.method == 'POST':
+        form = ProfileForm(data=request.POST, instance=request.user)
+        print(form.errors)
+        if form.is_valid():
+            form.save()
+    else:
+        form = ProfileForm(instance=request.user)
+
     if request.GET.get('remove-user', False):
         User.objects.filter(id=request.user.id).delete()
         return redirect(reverse('main:home'))
 
+    order = request.GET.get('remove-order', False)
+    if order:
+        Order.objects.filter(order_id=order).delete()
+
+    page = request.GET.get('page', 1)
+    order_number = request.GET.get('search', False)
+    query = Q(user=request.user.id)
+
+    if order_number:
+        query &= Q(order_id=order_number)
+
+    orders = Order.objects.filter(query)
+    paginator = Paginator(orders, 3)
+    current_page = paginator.page(int(page))
+
     context = {
         'title': 'Профиль',
+        'pages': current_page,
+        'form': form
     }
     return render(request, 'users/profile.html', context)
 

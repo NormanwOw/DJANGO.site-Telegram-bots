@@ -40,5 +40,6 @@ class UtilsOrder:
                 data[item.name] = 0
 
         data['total_price'] = total_price
+        data['phone_number'] = str(data['phone_number'])
 
         return data

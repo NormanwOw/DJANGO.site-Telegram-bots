@@ -1,0 +1,15 @@
+
+.form-container {
+  width: fit-content;
+  height: fit-content;
+  padding: 2em;
+}
+
+.form-orders-wrapper {
+  display: flex;
+  width: 420px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
