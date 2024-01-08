@@ -11,16 +11,6 @@ class LoginForm(AuthenticationForm):
 
 class RegistrationForm(UserCreationForm):
 
-    first_name = forms.CharField(
-        min_length=2,
-        max_length=20,
-        label='Имя'
-    )
-    last_name = forms.CharField(
-        min_length=2,
-        max_length=20,
-        label='Фамилия'
-    )
     username = forms.CharField(
         min_length=3,
         max_length=16,

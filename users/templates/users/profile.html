@@ -8,24 +8,22 @@
 {% block content %}
 <div class="logo-wrapper">
   <div class="logo-container">
-      <div class="container">
-        <div style="text-align: center;">
-          <a href="#openModal" class="form-button">Удалить учётную запись</a>
-        </div>
-        <div id="openModal" class="modal">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h3 class="modal-title form-font">Вы уверены что хотите удалить учётную запись?</h3>
-                <a href="#close" title="Close" class="close">×</a>
-              </div>
-              <div class="modal-body">
-                <form action="{% url 'users:profile' %}" method="get">
-                  <input type="hidden" name="remove-user" value="true">
-                  <button type="submit" class="form-button form-font">Да</button>
-                  <a href="#close" class="form-button form-font">Нет</a>
-                </form>
-              </div>
+      <div style="text-align: center;">
+        <a href="#openModal" class="form-button">Удалить учётную запись</a>
+      </div>
+      <div id="openModal" class="modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title form-font">Вы уверены что хотите удалить учётную запись?</h3>
+              <a href="#close" title="Close" class="close">×</a>
+            </div>
+            <div class="modal-body">
+              <form action="{% url 'users:profile' %}" method="get">
+                <input type="hidden" name="remove-user" value="true">
+                <button type="submit" class="form-button form-font">Да</button>
+                <a href="#close" class="form-button form-font">Нет</a>
+              </form>
             </div>
           </div>
         </div>
