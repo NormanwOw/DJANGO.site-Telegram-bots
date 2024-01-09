@@ -26,7 +26,7 @@
                           {% csrf_token %}
                           <div>
                               <input type="hidden" name="username" value="{{ user.username }}">
-                              <label for="id_first_name" class="form-label">Имя: </label>
+                              <label for="id_first_name">Имя: </label>
                               <input type="text"
                                      class="form-input"
                                      id="id_first_name"
@@ -37,7 +37,7 @@
                               <div class="error">{{ form.first_name.errors }}</div>
                           </div>
                           <div>
-                              <label for="id_last_name" class="form-label">Фамилия: </label>
+                              <label for="id_last_name">Фамилия: </label>
                               <input type="text"
                                      class="form-input"
                                      id="id_last_name"
@@ -48,7 +48,7 @@
                               <div class="error">{{ form.last_name.errors }}</div>
                           </div>
                           <div>
-                              <label for="id_email" class="form-label">Email: </label>
+                              <label for="id_email">Email: </label>
                               <input type="email"
                                      class="form-input"
                                      id="id_email"

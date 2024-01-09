@@ -21,14 +21,19 @@
   margin-top: 10px;
 }
 
-
 .form-button {
   margin-top: 0.8em;
-  font-size: 1em;
-  height: 50px;
 }
 
 @media (max-width: 600px) {
+  .form-container {
+    width: 370px;
+  }
+
+  .form-header {
+    font-size: 1.5em;
+  }
+
   .error {
     align-self: start;
   }
@@ -38,4 +43,13 @@
     padding-left: 10px;
     text-align: left;
   }
+
+  .form-input {
+    margin-right: 17px;
+  }
+
+  .form-login-urls {
+    margin-right: 21px;
+  }
+
 }

@@ -669,6 +669,7 @@ body {
 
   .form-button {
     width: 90%;
+    height: 45px;
     align-self: center;
   }
 
