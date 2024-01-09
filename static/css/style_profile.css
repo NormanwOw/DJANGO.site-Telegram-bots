@@ -29,6 +29,7 @@
   background-repeat: no-repeat;
   background-size: 75%;
   background-position: center;
+  transition: 0.3s;
 }
 
 .logout-button:hover {
@@ -82,7 +83,7 @@
 }
 
 .empty-order-list {
-  margin-top: 2em;
+  margin-top: 5em;
 }
 
 .empty-order-list p{

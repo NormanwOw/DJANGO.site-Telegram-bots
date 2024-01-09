@@ -25,6 +25,7 @@
                       <form action="{% url 'users:profile' %}" method="post">
                           {% csrf_token %}
                           <div>
+                              <input type="hidden" name="username" value="{{ user.username }}">
                               <label for="id_first_name" class="form-label">Имя: </label>
                               <input type="text"
                                      class="form-input"

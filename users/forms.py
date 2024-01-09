@@ -33,6 +33,15 @@ class RegistrationForm(UserCreationForm):
             'password2',
         )
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        msg = {'email': 'Пользователь с таким Email уже существует.'}
+
+        if email and self._meta.model.objects.filter(email=email).exists():
+            self._update_errors(forms.ValidationError(msg))
+        else:
+            return email
+
     @staticmethod
     def length_msg(min_len, max_len: str) -> dict:
         return {
@@ -42,6 +51,17 @@ class RegistrationForm(UserCreationForm):
 
 
 class ProfileForm(UserChangeForm):
+
     class Meta:
         model = User
         fields = 'first_name', 'last_name', 'email'
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        user = self.data.get('username')
+        msg = {'email': 'Пользователь с таким Email уже существует.'}
+
+        if email and self._meta.model.objects.filter(email=email).exclude(username=user).exists():
+            self._update_errors(forms.ValidationError(msg))
+        else:
+            return email
