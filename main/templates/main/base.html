@@ -33,10 +33,10 @@
                     </div>
                     {% else %}
                     <div class="auth-button form-font">
-                        <a href="{% url 'users:profile' %}">{{ user.username }}</a>
+                        <a href="{% url 'users:profile' %}" title="Профиль">{{ user.username }}</a>
                     </div>
                     {% endif %}
-                    <a href="{% url 'main:home' %}">Telegram bots</a>
+                    <a href="{% url 'main:home' %}" title="Главная">Telegram bots</a>
                     <p>
                         <a class="logo-url" href="{% url 'main:home' %}"><img src="{% static 'images/tg.png' %}" alt="telegram-logo"></a>
                     </p>
