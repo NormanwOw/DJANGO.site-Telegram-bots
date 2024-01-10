@@ -1,8 +1,11 @@
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, reverse
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
 
 from main.models import Order
 from users.forms import LoginForm, RegistrationForm, ProfileForm
@@ -52,7 +55,7 @@ def registration(request):
 def profile(request):
     if request.method == 'POST':
         form = ProfileForm(data=request.POST, instance=request.user)
-        print(form.errors)
+
         if form.is_valid():
             form.save()
     else:
@@ -89,3 +92,9 @@ def profile(request):
 def logout(request):
     auth.logout(request)
     return redirect(reverse('main:home'))
+
+
+class UserPasswordChangeView(PasswordChangeView):
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy('users:password-change-done')
+    template_name = 'users/password-change-form.html'
