@@ -10,7 +10,7 @@
 .form-orders-wrapper {
   display: flex;
   width: 420px;
-  height: 430px;
+  height: 431px;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -59,8 +59,21 @@
   margin: 0;
 }
 
+.profile-form-buttons-wrapper {
+  display: flex;
+}
+
 .remove-user-button {
+  border: #007ea8 1px solid;
   border-radius: 0 0 0 22px;
+  width: 60%;
+}
+
+.change-pw-button {
+  border: #007ea8 1px solid;
+  border-left: none;
+  border-radius: 0;
+  width: 40%;
 }
 
 .form-inner-wrapper {

@@ -39,4 +39,8 @@
   </div>
   <button type="submit" class="form-button">Сохранить</button>
 </form>
+<div class="profile-form-buttons-wrapper">
+    <a href="#openModal" class="form-button remove-user-button">Удалить учётную запись</a>
+    <a href="{% url 'users:password-change' %}" class="form-button change-pw-button">Сменить пароль</a>
+</div>
 {% endblock %}

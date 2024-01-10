@@ -65,24 +65,8 @@ def profile(request):
         User.objects.filter(id=request.user.id).delete()
         return redirect(reverse('main:home'))
 
-    order = request.GET.get('remove-order', False)
-    if order:
-        Order.objects.filter(order_id=order).delete()
-
-    page = request.GET.get('page', 1)
-    order_number = request.GET.get('search', False)
-    query = Q(user=request.user.id)
-
-    if order_number:
-        query &= Q(order_id=order_number)
-
-    orders = Order.objects.filter(query)
-    paginator = Paginator(orders, 3)
-    current_page = paginator.page(int(page))
-
     context = {
         'title': 'Профиль',
-        'pages': current_page,
         'form': form
     }
     return render(request, 'users/profile.html', context)
