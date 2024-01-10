@@ -27,10 +27,6 @@
 }
 
 @media (max-width: 600px) {
-  .form-container {
-    width: 370px;
-  }
-
   .form-header {
     font-size: 1.5em;
   }
@@ -45,12 +41,20 @@
     text-align: left;
   }
 
+  .form-new-password>div>div>input {
+    margin-right: 5px;
+  }
+
   .form-input {
     margin-right: 17px;
   }
 
   .form-login-urls {
     margin-right: 21px;
+  }
+
+  .new-password-button {
+    width: 93%;
   }
 
 }
