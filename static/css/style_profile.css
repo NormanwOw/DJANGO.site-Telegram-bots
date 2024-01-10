@@ -1,10 +1,20 @@
 .bd {
-  height: 73vh;
+  height: 74vh;
 }
 
-.form-container {
+.form-container-profile {
+  display: flex;
+  align-items: end;
+  margin-bottom: 2em;
   width: fit-content;
   height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  border: rgb(0, 152, 204) 8px solid;
+  border-radius: 0 0 30px 30px;
+  box-shadow: 0px 0px 15px 1px rgb(46, 46, 46) inset;
 }
 
 .form-orders-wrapper {
@@ -87,7 +97,7 @@
   width: 100%;
 }
 
-.form-container form {
+.form-profile {
   width: 100%;
   align-self: center;
   padding-right: 1em;
@@ -105,4 +115,110 @@
 
 .empty-order-list a{
   font-size: 1em;
+}
+
+.form-orders-title {
+  display: none;
+  color: white;
+  background: rgb(0, 152, 204);
+  width: 100%;
+  padding-top: 0.7em;
+  padding-bottom: 0.3em;
+}
+
+@media (max-width: 1100px) {
+  .bd {
+    height: auto;
+  }
+
+  .form-container-profile {
+    flex-direction: column;
+  }
+
+  .form-profile {
+    flex-direction: column;
+    margin-bottom: 0;
+    padding-right: 3.6em;
+  }
+
+  .username-container {
+    margin-top: -35px;
+  }
+
+  .form-orders-wrapper {
+    border-left: none;
+    height: fit-content;
+  }
+
+  .form-profile-wrapper {
+    width: 100%;
+  }
+
+  .remove-user-button {
+    border-radius: 0;
+  }
+
+  .form-inner-wrapper {
+    height: 320px;
+  }
+
+  .form-orders-title {
+    display: block;
+  }
+
+  .empty-order-list {
+    margin-top: 1em;
+    margin-bottom: 2em;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-profile-change {
+    position: relative;
+    bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .change-password-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 76%;
+    margin-top: 15px;
+  }
+
+  .change-password-buttons>a {
+    display: block;
+    height: 31px;
+    order: 2;
+    margin-top: 5px;
+    padding: 0;
+    padding-top: 13px;
+  }
+
+  .change-password-buttons>button {
+    order: 1;
+  }
+
+  .change-pw-button {
+    height: 18px;
+  }
+
+  .remove-user-button {
+    height: 18px;
+  }
+
+  .form-profile {
+    align-items: center;
+    padding-right: 0;
+  }
+
+  .form-orders-wrapper {
+    width: 340px;
+  }
+
+  .profile-save-button {
+    width: 69%;
+  }
 }

@@ -1,7 +1,7 @@
 {% extends 'users/base-profile.html' %}
 
 {% block profile-form %}
-<form action="{% url 'users:profile' %}" method="post">
+<form class="form-profile" action="{% url 'users:profile' %}" method="post">
   {% csrf_token %}
   <div>
       <input type="hidden" name="username" value="{{ user.username }}">
@@ -37,7 +37,10 @@
              required>
       <div class="error">{{ form.email.errors }}</div>
   </div>
-  <button type="submit" class="form-button">Сохранить</button>
+  <button type="submit" class="profile-save-button form-button">Сохранить</button>
+  {% if change_pw_msg %}
+  <p>{{ change_pw_msg }}</p>
+  {% endif %}
 </form>
 <div class="profile-form-buttons-wrapper">
     <a href="#openModal" class="form-button remove-user-button">Удалить учётную запись</a>

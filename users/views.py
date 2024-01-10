@@ -1,13 +1,10 @@
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
-from django.db.models import Q
-from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, reverse
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 
-from main.models import Order
 from users.forms import LoginForm, RegistrationForm, ProfileForm
 from users.models import User
 
