@@ -78,21 +78,23 @@
                   <div class="orders-container">
                       <ul class="pagination">
                         <li>
-                          <a href="{% if pages.has_previous %}{% change_params page=pages.previous_page_number %}{% else %}#{% endif %}">Пред.</a>
+                          <a href="{% if pages.has_previous %}{% change_params page=pages.previous_page_number %}{% else %}#{% endif %}"
+                             class="{% if not pages.has_previous %}disabled{% endif %}">Пред.</a>
                         </li>
                         {% for page in pages.paginator.page_range %}
                         {% if page >= pages.number|add:-2 and page <= pages.number|add:2 %}
-                          {% if request.GET.page == None and forloop.counter == 1 %}
+                          {% if request.GET.page == None and forloop.first %}
                           <li class="active">
                           {% else %}
-                          <li class="{% if pages.number == page %} active {% endif %}">
+                          <li class="{% if pages.number == page %} active disabled{% endif %}">
                           {% endif %}
                             <a href="{% change_params page=page %}">{{ page }}</a>
                           </li>
                         {% endif %}
                         {% endfor %}
                         <li>
-                          <a href="{% if pages.has_next %}{% change_params page=pages.next_page_number %}{% else %}#{% endif %}">След.</a>
+                          <a href="{% if pages.has_next %}{% change_params page=pages.next_page_number %}{% else %}#{% endif %}"
+                             class="{% if not pages.has_next %}disabled{% endif %}">След.</a>
                         </li>
                       </ul>
                     </div>

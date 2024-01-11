@@ -18,7 +18,8 @@
                     <div class="nav-buttons">
                         <div class="border-first-btn"></div>
                         {% for item in menu %}
-                            <a href="{% if not user.is_authenticated and item.name == 'Новый заказ' %}{% url 'users:login' %}{% else %}{% url item.url %}{% endif %}">{{ item.name }}</a>
+                            <a href="{% if not user.is_authenticated and item.name == 'Новый заказ' %}{% url 'users:login' %}{% else %}{% url item.url %}{% endif %}"
+                               class="{% if item.name == title %}active disabled{% endif %}">{{ item.name }}</a>
                         {% endfor %}
                     </div>
                 </div>
@@ -27,13 +28,17 @@
                     <div class="auth-button">
                         <img src="{% static 'images/lock.png' %}">
                         <div class="nav-buttons auth-drop">
-                            <div class="nav-buttons"><a href="{% url 'users:login' %}">Вход</a></div>
-                            <div class="nav-buttons"><a href="{% url 'users:registration' %}">Регистрация</a></div>
+                            <div class="nav-buttons"><a href="{% url 'users:login' %}"
+                                                        class="{% if title == 'Авторизация' %}active disabled{% endif %}">Вход</a></div>
+                            <div class="nav-buttons"><a href="{% url 'users:registration' %}"
+                                                        class="{% if title == 'Регистрация' %}active disabled{% endif %}">Регистрация</a></div>
                         </div>
                     </div>
                     {% else %}
-                    <div class="auth-button form-font">
-                        <a href="{% url 'users:profile' %}" title="Профиль">{{ user.username }}</a>
+                    <div class="auth-button form-font{% if title == 'Профиль' %} disabled{% endif %}">
+                        <a href="{% url 'users:profile' %}"
+                           title="Профиль"
+                           class="{% if title == 'Профиль' %}active disabled{% endif %}">{{ user.username }}</a>
                     </div>
                     {% endif %}
                     <a href="{% url 'main:home' %}" title="Главная">Telegram bots</a>
@@ -52,7 +57,8 @@
                     <p>МЕНЮ</p>
                     <ul>
                     {% for item in menu %}
-                        <li><a href="{% url item.url %}">{{ item.name }}</a></li>
+                        <li><a href="{% url item.url %}"
+                               class="{% if title == item.name %}disabled{% endif %}">{{ item.name }}</a></li>
                     {% endfor %}
                     </ul>
                 </div>

@@ -186,11 +186,19 @@ body {
   display: none;
 }
 
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+.active {
+  background: rgba(18, 187, 243, 0.582);
+}
+
 .auth-button {
   position: relative;
   width: fit-content;
   border-inline: #007ea8 2px solid;
-  cursor: pointer;
   transition: 0.3s;
 }
 
@@ -218,10 +226,6 @@ body {
 .auth-drop {
   display: none;
   border-top: #007ea8 1px solid;
-}
-
-.auth-drop div:hover {
-  background: rgb(10, 173, 227);
 }
 
 .auth-button:hover .auth-drop {
