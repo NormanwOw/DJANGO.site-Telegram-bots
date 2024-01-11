@@ -5,8 +5,8 @@ from main.models import Order, Product
 
 class UtilsOrder:
 
-    @classmethod
-    def get_order_number(cls) -> str:
+    @staticmethod
+    def __get_order_number() -> str:
         """Generate order number"""
 
         min_id = 10**6
@@ -22,11 +22,10 @@ class UtilsOrder:
 
         return str(order_number)
 
-    @classmethod
-    def get_order(cls, data: dict) -> dict:
+    def get_order(self, data: dict) -> dict:
         """Update order, set order number and total order price"""
 
-        data['order_id'] = cls.get_order_number()
+        data['order_id'] = self.__get_order_number()
         data['bot_shop'] = True
 
         product_list = Product.objects.all()
