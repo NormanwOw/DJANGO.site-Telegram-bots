@@ -1,6 +1,9 @@
 {% extends 'users/base-profile.html' %}
 
 {% block profile-form %}
+<div class="profile-message">
+    <p>{% if message %}{{ message }}{% endif %}</p>
+</div>
 <form class="form-profile" action="{% url 'users:profile' %}" method="post">
   {% csrf_token %}
   <div>

@@ -103,14 +103,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/login/'
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+else:
+    EMAIL_HOST = settings.SMTP_HOST
+    EMAIL_PORT = settings.SMTP_PORT
+    EMAIL_HOST_USER = settings.SMTP_USER
+    EMAIL_HOST_PASSWORD = settings.SMTP_PASSWORD
+    EMAIL_USE_SSL = True
 
-# EMAIL_HOST = settings.SMTP_HOST
-# EMAIL_PORT = settings.SMTP_PORT
-# EMAIL_HOST_USER = settings.SMTP_USER
-# EMAIL_HOST_PASSWORD = settings.SMTP_PASSWORD
-# EMAIL_USE_SSL = True
-#
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-# SERVER_EMAIL = EMAIL_HOST_USER
-# EMAIL_ADMIN = EMAIL_HOST_USER
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+    SERVER_EMAIL = EMAIL_HOST_USER
+    EMAIL_ADMIN = EMAIL_HOST_USER

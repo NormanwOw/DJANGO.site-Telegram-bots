@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
 
 from main.forms import NewOrderForm
 from main.utils import UtilsOrder
@@ -60,6 +62,14 @@ class AcceptOrderDone(TemplateView, LoginRequiredMixin):
         order_dict['user'] = self.request.user
         order = Order(**order_dict)
         order.save()
+
+        msg = EmailMessage(
+            subject=f'Оформление заказа №{order.order_id}',
+            body=render_to_string('users/order-email.html', context=order_dict),
+            to=(self.request.user.email,)
+        )
+        msg.content_subtype = 'html'
+        msg.send()
 
         context.update(
             {

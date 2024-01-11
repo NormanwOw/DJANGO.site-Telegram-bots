@@ -50,11 +50,16 @@ def registration(request):
 
 @login_required
 def profile(request):
+    msg = ''
     if request.method == 'POST':
         form = ProfileForm(data=request.POST, instance=request.user)
+        user_data = {request.user.email, request.user.first_name, request.user.last_name}
 
         if form.is_valid():
-            form.save()
+            del form.cleaned_data['password']
+            if set(form.cleaned_data.values()) != user_data:
+                form.save()
+                msg = 'Данные успешно изменены'
     else:
         form = ProfileForm(instance=request.user)
 
@@ -64,6 +69,7 @@ def profile(request):
 
     context = {
         'title': 'Профиль',
+        'message': msg,
         'form': form
     }
     return render(request, 'users/profile.html', context)
