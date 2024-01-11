@@ -22,6 +22,12 @@ class Product(models.Model):
 
 
 class Order(models.Model):
+    STATUS = {
+        ('ordered', 'Оформлен'),
+        ('in_progress', 'В работе'),
+        ('completed', 'Исполнен')
+    }
+
     order_id = models.IntegerField(verbose_name='Номер заказа')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
     phone_number = PhoneNumberField(region='RU', verbose_name='Телефон')
@@ -30,6 +36,7 @@ class Order(models.Model):
     database = models.IntegerField(verbose_name='База данных')
     total_price = models.IntegerField('Общая цена')
     date = models.DateTimeField(verbose_name='Дата', default=datetime.utcnow)
+    status = models.CharField(verbose_name='Статус', choices=STATUS, default='ordered')
 
     product_list = Product.objects.all()
 

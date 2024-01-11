@@ -11,7 +11,7 @@ class OrderTabularAdmin(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = 'order_id', 'user', 'phone_number', 'total_price', 'date'
+    list_display = 'order_id', 'user', 'phone_number', 'total_price', 'status', 'date'
     search_fields = ('order_id',)
 
 
