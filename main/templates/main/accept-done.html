@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_new_order.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="logo-wrapper">
+    <div class="logo-container form-font">
+        <div class="accept-wrapper form-font">
+            <div>
+                <p><b>Заказ №{{ order_number }} успешно оформлен</b></p>
+                <p>Вся информация о заказе отправлена на Вашу почту</p>
+                <p><span class="span-email">{{ email }}</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

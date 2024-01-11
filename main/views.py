@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import FormView, TemplateView, RedirectView
+from django.views.generic import FormView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from main.forms import NewOrderForm
@@ -40,8 +40,14 @@ class AcceptOrder(TemplateView, LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
         order_dict = self.request.session['new_order']
         order = Order(**order_dict)
-        context.update({'new_order': order, 'email': self.request.user.email})
 
+        context.update(
+            {
+                'title': 'Оформление заказа',
+                'new_order': order,
+                'email': self.request.user.email
+            }
+        )
         return context
 
 
@@ -54,13 +60,14 @@ class AcceptOrderDone(TemplateView, LoginRequiredMixin):
         order_dict['user'] = self.request.user
         order = Order(**order_dict)
         order.save()
+
         context.update(
             {
+                'title': 'Оформление заказа',
                 'order_number': order.order_id,
                 'email': self.request.user.email
             }
         )
-
         return super().render_to_response(context)
 
 
