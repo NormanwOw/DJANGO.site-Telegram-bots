@@ -4,48 +4,44 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
+from django.views.generic import FormView, CreateView
 
 from users.forms import LoginForm, RegistrationForm, ProfileForm
 from users.models import User
 
 
-def login(request):
-    if request.method == 'POST':
-        form = LoginForm(data=request.POST)
-        if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
-            user = auth.authenticate(username=username, password=password)
-            if user:
-                auth.login(request, user)
-                return redirect(reverse('main:home'))
-    else:
-        form = LoginForm()
+class AuthLogin(FormView):
+    form_class = LoginForm
+    template_name = 'users/login.html'
+    success_url = reverse_lazy('main:home')
+    extra_context = {'title': 'Авторизация'}
 
-    context = {
-        'title': 'Авторизация',
-        'form': form
-    }
-    return render(request, 'users/login.html', context)
+    def form_valid(self, form):
+        valid = super().form_valid(form)
+        username = self.request.POST['username']
+        password = self.request.POST['password']
+        user = auth.authenticate(username=username, password=password)
+        if user:
+            auth.login(self.request, user)
+
+        return valid
 
 
-def registration(request):
-    if request.method == 'POST':
-        form = RegistrationForm(data=request.POST)
-        if form.is_valid():
-            form.save()
-            user = form.instance
-            auth.login(request, user)
+class AuthRegistration(CreateView):
+    form_class = RegistrationForm
+    template_name = 'users/registration.html'
+    success_url = reverse_lazy('main:home')
+    extra_context = {'title': 'Регистрация'}
 
-            return redirect(reverse('main:home'))
-    else:
-        form = RegistrationForm()
+    def form_valid(self, form):
+        valid = super().form_valid(form)
+        new_user = auth.authenticate(
+            username=form.cleaned_data['username'],
+            password=form.cleaned_data['password1'],
+        )
+        auth.login(self.request, new_user)
 
-    context = {
-        'title': 'Регистрация',
-        'form': form
-    }
-    return render(request, 'users/registration.html', context)
+        return valid
 
 
 @login_required

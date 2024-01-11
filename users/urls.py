@@ -8,8 +8,8 @@ from users.views import UserPasswordChangeView
 app_name = 'users'
 
 urlpatterns = [
-    path('login/', views.login, name='login'),
-    path('registration/', views.registration, name='registration'),
+    path('login/', views.AuthLogin.as_view(), name='login'),
+    path('registration/', views.AuthRegistration.as_view(), name='registration'),
     path('logout/', views.logout, name='logout'),
     path('profile/', views.profile, name='profile'),
 
