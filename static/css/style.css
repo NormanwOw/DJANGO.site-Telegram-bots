@@ -147,7 +147,8 @@ a:hover {
 }
 
 .content {
-  height: 800px;
+  height: fit-content;
+  width: 600px;
   background-image: url(../images/center_main.gif);
   flex-grow: 1;
 }
@@ -191,6 +192,24 @@ a:hover {
   font-weight: bold;
   padding: 0.2em;
   padding-right: 0.6em;
+}
+
+.carousel-indicators {
+  bottom: -14px;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  padding: 10px;
+  background-color: rgb(0, 152, 204);
+  border-radius: 15px;
+}
+
+.carousel-control-prev {
+  left: -150px;
+}
+
+.carousel-control-next {
+  right: -150px;
 }
 
 .menu-button {
@@ -441,6 +460,47 @@ a:hover {
 .login-error {
   margin-top: 10px;
   margin-bottom: -10px;
+}
+
+.modal-dialog {
+  margin-top: 8em;
+}
+
+.modal-header {
+  align-items: start;
+}
+
+.modal-form {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.modal-form button {
+  font-size: 1em;
+  width: 50px;
+}
+
+.modal-footer a, button {
+  font-size: 1em;
+}
+
+.modal-footer a {
+  display: block;
+  width: 27px;
+}
+
+.close {
+  border: none;
+  width: 30px;
+  height: 30px;
+}
+
+.close>span {
+  position: relative;
+  bottom: 3px;
+  font-size: 1.5em;
+  padding-bottom: 5px;
 }
 
 @media (max-width: 1250px) {

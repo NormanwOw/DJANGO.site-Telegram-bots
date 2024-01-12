@@ -50,24 +50,26 @@
                           </div>
                         <div class="order-date">{{ order.date }}</div>
                       </div>
-                      <a href="#{{ order.order_id }}" class="order-remove" title="Удалить заказ"></a>
-                      <div id="{{ order.order_id }}" class="modal">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h3 class="modal-title form-font">Вы уверены что хотите удалить заказ №{{ order.order_id }}</h3>
-                              <a href="#close" title="Close" class="close">×</a>
-                            </div>
-                            <div class="modal-body">
-                              <form class="modal-form" action="{% url 'users:profile' %}" method="get">
-                                <input type="hidden" name="remove-order" value="{{ order.order_id }}">
-                                <button type="submit" class="form-button form-font">Да</button>
-                                <a href="#close" class="form-button form-font">Нет</a>
-                              </form>
+                      <a href="#orderModal" class="order-remove" data-toggle="modal" title="Удалить"></a>
+                      <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Вы уверены что хотите удалить заказ?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-footer">
+                                  <form class="modal-form" action="{% url 'users:profile' %}" method="get">
+                                    <input type="hidden" name="remove-order" value="{{ order.order_id }}">
+                                    <button type="submit" class="form-button">Да</button>
+                                    <button type="button" class="form-button" data-dismiss="modal">Нет</button>
+                                  </form>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
                       <div class="order-price">
                         <p>{{ order.total_price }} &#x20bd;</p>
                       </div>
@@ -107,25 +109,7 @@
                   {% endif %}
                 </div>
               </div>
-              <div id="openModal" class="modal">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h3 class="modal-title form-font">Вы уверены что хотите удалить учётную запись?</h3>
-                      <a href="#close" title="Close" class="close">×</a>
-                    </div>
-                    <div class="modal-body">
-                      <form class="modal-form" action="{% url 'users:profile' %}" method="get">
-                        <input type="hidden" name="remove-user" value="true">
-                        <button type="submit" class="form-button form-font">Да</button>
-                        <a href="#close" class="form-button form-font">Нет</a>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
           </div>
       </div>
   </div>
-</div>
 {% endblock %}
