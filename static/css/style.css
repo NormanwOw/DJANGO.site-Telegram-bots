@@ -143,7 +143,7 @@ body {
 
 .content-container {
   display: flex;
-  box-shadow: 0px 0px 15px rgb(110, 112, 112);
+  box-shadow: 0 0 15px rgb(110, 112, 112);
   margin-bottom: 2em;
 }
 
@@ -203,7 +203,12 @@ body {
 }
 
 .auth-button:hover {
+  cursor: pointer;
   background: rgba(18, 187, 243, 0.582);
+}
+
+.auth-button:hover .auth-drop {
+  cursor: default;
 }
 
 .auth-button img {
@@ -233,7 +238,7 @@ body {
   position: absolute;
   top: 80px;
   left: -20px;
-  box-shadow: 0px 1px 5px black;
+  box-shadow: 0 1px 5px black;
 }
 
 .auth-drop>div>a {
@@ -244,13 +249,13 @@ body {
   align-items: center;
   justify-content: center;
   border: none;
-  padding: 0px;
+  padding: 0;
 }
 
 .auth-drop>div {
   width: 160px;
   height: 45px;
-  margin: 0px;
+  margin: 0;
   background: rgb(0, 152, 204);
   border-bottom: #007ea8 1px solid;
   border-inline: #007ea8 1px solid;
@@ -288,7 +293,7 @@ body {
   padding: 6px;
   font-size: 1em;
   margin-left: 5px;
-  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
 }
 
 .search-form-input:focus-visible {
@@ -302,7 +307,7 @@ body {
   width: 500px;
   border:rgb(0, 152, 204) 8px solid;
   border-radius: 0 0 30px 30px;
-  box-shadow: 0px 0px 15px 1px rgb(46, 46, 46) inset;
+  box-shadow: 0 0 15px 1px rgb(46, 46, 46) inset;
 }
 
 .form-container>form>div {
@@ -495,7 +500,6 @@ body {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: start;
-  -webkit-align-items: start;
   -ms-flex-align: start;
   align-items: start;
   -webkit-box-pack: justify;
@@ -683,7 +687,7 @@ body {
   }
 
   .form-container form {
-    margin-right: 0em;
+    margin-right: 0;
   }
 
   .form-button {

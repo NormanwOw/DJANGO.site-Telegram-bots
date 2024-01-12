@@ -8,6 +8,7 @@ from django.core.mail import EmailMessage
 from main.forms import NewOrderForm
 from main.utils import UtilsOrder
 from main.models import Order
+from app.settings import DEBUG
 
 
 def index(request):
@@ -69,7 +70,8 @@ class AcceptOrderDone(TemplateView, LoginRequiredMixin):
             to=(self.request.user.email,)
         )
         msg.content_subtype = 'html'
-        msg.send()
+        if not DEBUG:
+            msg.send()
 
         context.update(
             {
