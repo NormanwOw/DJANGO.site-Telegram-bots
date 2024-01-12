@@ -127,7 +127,7 @@
   align-content: space-between;
   width: 65%;
   height: 90%;
-  padding-left: 1em;
+  padding-left: 0.5em;
   padding-bottom: 5px;
   font-size: 1.5em;
   color: white;
@@ -139,9 +139,13 @@
 
 .order {
   font-size: 0.5em;
-  padding-left: 2em;
+  padding-left: 0;
   flex-grow: 1;
+  height: fit-content;
+}
 
+.order>ul {
+  padding-left: 2em;
 }
 
 .order-date {
