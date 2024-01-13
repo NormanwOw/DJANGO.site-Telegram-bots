@@ -22,6 +22,10 @@
   margin-top: 10px;
 }
 
+.form-login-urls>a:hover {
+  color: #5114c3;
+}
+
 .form-button {
   margin-top: 0.8em;
 }
@@ -43,14 +47,6 @@
 
   .form-new-password>div>div>input {
     margin-right: 5px;
-  }
-
-  .form-input {
-    margin-right: 17px;
-  }
-
-  .form-login-urls {
-    margin-right: 21px;
   }
 
   .new-password-button {

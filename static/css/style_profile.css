@@ -164,9 +164,8 @@
 
   .form-profile {
     flex-direction: column;
-    margin-bottom: 0;
     padding-right: 3.6em;
-    margin-bottom: 2em;
+    margin-bottom: 1.85em;
   }
 
   .form-profile-change {
@@ -223,7 +222,6 @@
     height: 30px;
     order: 2;
     margin-top: 5px;
-    padding: 0;
     padding-top: 15px;
     width: 250px;
   }

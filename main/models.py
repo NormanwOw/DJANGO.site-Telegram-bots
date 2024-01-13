@@ -24,9 +24,9 @@ class Product(models.Model):
 
 class Order(models.Model):
     STATUS = {
-        ('ordered', 'Оформлен'),
-        ('in_progress', 'В работе'),
-        ('completed', 'Исполнен')
+        ('Оформлен', 'Оформлен'),
+        ('В работе', 'В работе'),
+        ('Исполнен', 'Исполнен')
     }
 
     order_id = models.IntegerField(verbose_name='Номер заказа')
@@ -42,7 +42,7 @@ class Order(models.Model):
     database = models.IntegerField(verbose_name='База данных')
     total_price = models.IntegerField('Общая цена')
     date = models.DateTimeField(verbose_name='Дата', default=datetime.utcnow)
-    status = models.CharField(verbose_name='Статус', choices=STATUS, default='ordered')
+    status = models.CharField(verbose_name='Статус', choices=STATUS, default='Оформлен')
 
     product_list = Product.objects.all()
 

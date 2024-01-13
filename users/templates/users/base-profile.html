@@ -48,7 +48,10 @@
                               {% endfor %}
                             </ul>
                           </div>
-                        <div class="order-date">{{ order.date }}</div>
+                        <div class="order-date">
+                            <p>{{ order.date }}</p>
+                            <p class="order-status">{{ order.status }}</p>
+                        </div>
                       </div>
                       <a href="#orderModal" class="order-remove" data-toggle="modal" title="Удалить"></a>
                       <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -61,7 +64,7 @@
                                 </button>
                               </div>
                               <div class="modal-footer">
-                                  <form class="modal-form" action="{% url 'users:profile' %}" method="get">
+                                  <form class="modal-form" action="{% url 'users:profile' user.pk %}" method="get">
                                     <input type="hidden" name="remove-order" value="{{ order.order_id }}">
                                     <button type="submit" class="form-button">Да</button>
                                     <button type="button" class="form-button" data-dismiss="modal">Нет</button>

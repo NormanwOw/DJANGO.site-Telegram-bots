@@ -109,6 +109,7 @@
 
   .last-content {
     position: static;
+    align-items: center;
     width: auto;
   }
 

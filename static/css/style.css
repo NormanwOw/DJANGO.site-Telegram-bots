@@ -426,7 +426,7 @@ a:hover {
   list-style: none;
 }
 
-.footer-container li, p {
+.footer-container li, .footer-container p {
   margin-bottom: 0.5em;
   transition: 0.3s;
 }

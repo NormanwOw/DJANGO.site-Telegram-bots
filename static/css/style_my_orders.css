@@ -149,6 +149,19 @@
 }
 
 .order-date {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.order-status {
+  position: relative;
+  left: 20px;
+}
+
+.order-date p{
+  margin-bottom: 0;
   font-size: 0.5em;
   font-style: italic;
 }
