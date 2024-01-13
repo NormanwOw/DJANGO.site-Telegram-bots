@@ -565,6 +565,34 @@ a:hover {
   }
 }
 
+@media (max-width: 1000px) {
+  .right {
+    display: none;
+  }
+
+  .left {
+    display: none;
+  }
+
+  .carousel-control-next {
+    right: -10px;
+  }
+
+  .carousel-control-prev {
+    left: -10px;
+  }
+
+  .carousel-control-next-icon, .carousel-control-prev-icon {
+    display: inline-block;
+    width: 1em;
+    height: 4em;
+  }
+
+  .content {
+    display: block;
+    width: auto;
+  }
+}
 
 @media (max-width: 600px) {
   .logo>a {
@@ -640,6 +668,10 @@ a:hover {
 
   .error {
     max-width: 260px;
+  }
+
+  .carousel-indicators {
+    bottom: -17px;
   }
 }
 
