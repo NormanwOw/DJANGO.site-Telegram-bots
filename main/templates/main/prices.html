@@ -2,7 +2,6 @@
 {% load static %}
 {% load main_tags %}
 
-
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/style_prices.css' %}">
@@ -11,23 +10,21 @@
 {% block content %}
 <div class="logo-wrapper">
     <div class="logo-container">
-        <table>
-            <tr>
-                <th>№</th>
-                <th>Наименование</th>
-                <th>Цена, руб.</th>
-                <th>Описание</th>
-            </tr>
+        <div class="container">
+            <div class="package-container">
             {% product_list as products %}
             {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.title }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.description }}</td>
-            </tr>
-            {% endfor %}  
-        </table>
+              <div class="packages">
+                <h1>{{ product.title }}</h1>
+                <h2 class="text">{{ product.price|stringformat:"i"|add:".00" }} &#x20bd;</h2>
+                <div class="list">
+                  <p>{{ product.description }}</p>
+                </div>
+                <a href="{% url 'main:new-order' %}" class="button">Оформить заказ</a>
+              </div>
+            {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
