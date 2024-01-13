@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView, CreateView
 
 from users.forms import LoginForm, RegistrationForm, ProfileForm
-from users.models import User
+
 
 
 class AuthLogin(FormView):
@@ -60,7 +60,8 @@ def profile(request):
         form = ProfileForm(instance=request.user)
 
     if request.GET.get('remove-user', False):
-        User.objects.filter(id=request.user.id).delete()
+        request.user.delete()
+
         return redirect(reverse('main:home'))
 
     context = {

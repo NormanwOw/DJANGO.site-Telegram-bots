@@ -29,7 +29,12 @@ class Order(models.Model):
     }
 
     order_id = models.IntegerField(verbose_name='Номер заказа')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name='Пользователь',
+        related_name='orders'
+    )
     phone_number = PhoneNumberField(region='RU', verbose_name='Телефон')
     bot_shop = models.IntegerField(verbose_name='Бот-магазин')
     admin_panel = models.IntegerField(verbose_name='Админ-панель')
