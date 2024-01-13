@@ -2,9 +2,15 @@
 
 {% block profile-form %}
 <div class="profile-message">
-    <p>{% if message %}{{ message }}{% endif %}</p>
+
+{% for message in messages %}
+    {% if message.tags == 'success' %}
+        <p>{{ message }}</p>
+    {% endif %}
+{% endfor %}
+
 </div>
-<form class="form-profile" action="{% url 'users:profile' %}" method="post">
+<form class="form-profile" action="{% url 'users:profile' user.pk %}" method="post">
   {% csrf_token %}
   <div>
       <input type="hidden" name="username" value="{{ user.username }}">
@@ -59,7 +65,7 @@
         </button>
       </div>
       <div class="modal-footer">
-          <form class="modal-form" action="{% url 'users:profile' %}" method="get">
+          <form class="modal-form" action="{% url 'users:profile' user.pk %}" method="get">
             <input type="hidden" name="remove-user" value="true">
             <button type="submit" class="form-button">Да</button>
             <button type="button" class="form-button" data-dismiss="modal">Нет</button>

@@ -1,16 +1,18 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
-from django.shortcuts import render, redirect, reverse
-from django.contrib import auth
+from django.shortcuts import redirect, reverse
+from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
-from django.views.generic import FormView, CreateView
+from django.views.generic import FormView, CreateView, UpdateView
 
+from main.views import page_not_found
 from users.forms import LoginForm, RegistrationForm, ProfileForm
+from users.models import User
 
 
-
-class AuthLogin(FormView):
+class AuthLoginView(FormView):
     form_class = LoginForm
     template_name = 'users/login.html'
     success_url = reverse_lazy('main:home')
@@ -27,7 +29,7 @@ class AuthLogin(FormView):
         return valid
 
 
-class AuthRegistration(CreateView):
+class AuthRegistrationView(CreateView):
     form_class = RegistrationForm
     template_name = 'users/registration.html'
     success_url = reverse_lazy('main:home')
@@ -44,32 +46,28 @@ class AuthRegistration(CreateView):
         return valid
 
 
-@login_required
-def profile(request):
-    msg = ''
-    if request.method == 'POST':
-        form = ProfileForm(data=request.POST, instance=request.user)
-        user_data = {request.user.email, request.user.first_name, request.user.last_name}
+class UserProfileView(UpdateView, LoginRequiredMixin):
+    model = User
+    form_class = ProfileForm
+    template_name = 'users/profile.html'
+    extra_context = {'title': 'Профиль'}
 
-        if form.is_valid():
-            del form.cleaned_data['password']
-            if set(form.cleaned_data.values()) != user_data:
-                form.save()
-                msg = 'Данные успешно изменены'
-    else:
-        form = ProfileForm(instance=request.user)
+    def form_valid(self, form, **kwargs):
+        messages.success(self.request, 'Данные успешно изменены')
 
-    if request.GET.get('remove-user', False):
-        request.user.delete()
+        return super().form_valid(form)
 
-        return redirect(reverse('main:home'))
+    def get(self, request, *args, **kwargs):
+        if kwargs['pk'] != str(self.request.user.pk):
+            return page_not_found(request, 'page404.html')
 
-    context = {
-        'title': 'Профиль',
-        'message': msg,
-        'form': form
-    }
-    return render(request, 'users/profile.html', context)
+        if request.GET.get('remove-user'):
+            self.request.user.delete()
+
+        return super().get(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('users:profile', kwargs={'pk': self.request.user.pk})
 
 
 @login_required

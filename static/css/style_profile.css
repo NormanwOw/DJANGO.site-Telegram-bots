@@ -73,7 +73,7 @@
   display: flex;
 }
 
-.profile-message p {
+.profile-message {
   height: 1em;
 }
 
@@ -123,7 +123,7 @@
   width: 100%;
   align-self: center;
   padding-right: 2em;
-  margin-bottom: 7.35em;
+  margin-bottom: 7.45em;
 }
 
 .empty-order-list {

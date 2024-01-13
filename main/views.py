@@ -23,7 +23,7 @@ def prices(request):
     return render(request, 'main/prices.html', {'title': 'Цены'})
 
 
-class NewOrder(FormView, LoginRequiredMixin, UtilsOrder):
+class NewOrderView(FormView, LoginRequiredMixin, UtilsOrder):
     form_class = NewOrderForm
     template_name = 'main/new-order.html'
     success_url = reverse_lazy('main:accept')
@@ -36,7 +36,7 @@ class NewOrder(FormView, LoginRequiredMixin, UtilsOrder):
         return super().form_valid(form)
 
 
-class AcceptOrder(TemplateView, LoginRequiredMixin):
+class AcceptOrderView(TemplateView, LoginRequiredMixin):
     template_name = 'main/accept.html'
 
     def get_context_data(self, **kwargs):
@@ -54,7 +54,7 @@ class AcceptOrder(TemplateView, LoginRequiredMixin):
         return context
 
 
-class AcceptOrderDone(TemplateView, LoginRequiredMixin):
+class AcceptOrderDoneView(TemplateView, LoginRequiredMixin):
     template_name = 'main/accept-done.html'
 
     def post(self, request, **kwargs):

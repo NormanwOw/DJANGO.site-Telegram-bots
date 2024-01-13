@@ -37,7 +37,7 @@
                     </div>
                     {% else %}
                     <div class="auth-button form-font{% if title == 'Профиль' %} disabled{% endif %}">
-                        <a href="{% url 'users:profile' %}"
+                        <a href="{% url 'users:profile' user.pk %}"
                            title="Профиль"
                            class="{% if title == 'Профиль' %}active disabled{% endif %}">{{ user.username }}</a>
                     </div>
