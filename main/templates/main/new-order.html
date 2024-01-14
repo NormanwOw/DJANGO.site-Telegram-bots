@@ -16,10 +16,25 @@
         <div class="form-container form-font">
             <form action="/new-order/" method="post">
                 {% csrf_token %}
-                <p class="phone_number_field">
-                    <label for="id_phone_number">Телефон:</label>
-                    <input class="form-input" type="tel" name="phone_number" value="" required="" id="id_phone_number" placeholder="Телефон">
-                </p>
+                <div class="input-wrapper">
+                    <div class="input-label-container">
+                        <p class="phone_number_field">
+                            <label for="id_phone_number">Телефон:</label>
+                        </p>
+                            <div class="input-container">
+                                <div>
+                                    <span class="fa fa-volume-control-phone" aria-hidden="true"></span>
+                                </div>
+                                <input class="form-input"
+                                       type="tel"
+                                       name="phone_number"
+                                       value=""
+                                       required=""
+                                       id="id_phone_number"
+                                       placeholder="Телефон">
+                        </div>
+                    </div>
+                </div>
                 <div class="error">{{ form.phone_number.errors }}</div>
                 <div class="form-buttons-wrapper">
                     {% product_list as prices %}

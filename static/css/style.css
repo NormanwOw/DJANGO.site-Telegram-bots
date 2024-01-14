@@ -342,9 +342,54 @@ a:hover {
 
 .form-container>form>div {
   display: flex;
+  align-content: end;
+  align-items: end;
+}
+
+.input-wrapper {
+  display: flex;
   flex-direction: column;
   align-content: end;
   align-items: end;
+}
+
+.input-label-container {
+  display: flex;
+  align-items: center;
+}
+
+.input-label-container label {
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 270px;
+  background: rgb(0, 152, 204);
+  border-radius: 10px;
+}
+
+.input-container>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16%;
+}
+
+.input-container span {
+  color: white;
+  text-shadow: 0 1px 1px black;
+}
+
+.form-input {
+  border-radius: 0 10px 10px 0;
+  padding: 6px;
+  font-size: 1em;
+  width: 80%;
+  border: 2px rgb(0, 152, 204) solid;
 }
 
 .form-container form {
@@ -355,14 +400,6 @@ a:hover {
   margin-top: 2em;
   margin-right: 1em;
   margin-bottom: 2em;
-}
-
-.form-input {
-  border-color: rgb(0, 152, 204);
-  border-radius: 10px;
-  padding: 6px;
-  font-size: 1em;
-  margin-left: 5px;
 }
 
 .form-input:focus-visible {
@@ -633,10 +670,6 @@ a:hover {
 
   .content-container {
     display: block;
-  }
-
-  .form-input {
-    margin-right: 7px;
   }
 
   .form-input::placeholder {

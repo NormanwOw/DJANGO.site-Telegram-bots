@@ -11,40 +11,67 @@
 
 </div>
 <form class="form-profile" action="{% url 'users:profile' user.pk %}" method="post">
-  {% csrf_token %}
+{% csrf_token %}
   <div>
-      <input type="hidden" name="username" value="{{ user.username }}">
-      <label for="id_first_name">Имя: </label>
-      <input type="text"
-             class="form-input"
-             id="id_first_name"
-             name="first_name"
-             placeholder="Имя"
-             value="{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}"
-             maxlength="20">
-      <div class="error">{{ form.first_name.errors }}</div>
+      <div class="input-wrapper">
+          <div class="input-label-container">
+              <input type="hidden" name="username" value="{{ user.username }}">
+              <label for="id_first_name">Имя: </label>
+              <div class="input-container">
+                  <div>
+                      <span class="fa fa-user-circle" aria-hidden="true"></span>
+                  </div>
+                  <input type="text"
+                         class="form-input"
+                         id="id_first_name"
+                         name="first_name"
+                         placeholder="Имя"
+                         value="{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}"
+                         maxlength="20">
+              </div>
+          </div>
+          <div class="error">{{ form.first_name.errors }}</div>
+      </div>
   </div>
   <div>
-      <label for="id_last_name">Фамилия: </label>
-      <input type="text"
-             class="form-input"
-             id="id_last_name"
-             name="last_name"
-             placeholder="Фамилия"
-             value="{% if form.last_name.value %}{{ form.last_name.value }}{% endif %}"
-             maxlength="20">
-      <div class="error">{{ form.last_name.errors }}</div>
+      <div class="input-wrapper">
+          <div class="input-label-container">
+              <label for="id_last_name">Фамилия: </label>
+              <div class="input-container">
+                  <div>
+                      <span class="fa fa-user-circle-o" aria-hidden="true"></span>
+                  </div>
+                  <input type="text"
+                         class="form-input"
+                         id="id_last_name"
+                         name="last_name"
+                         placeholder="Фамилия"
+                         value="{% if form.last_name.value %}{{ form.last_name.value }}{% endif %}"
+                         maxlength="20">
+              </div>
+          </div>
+          <div class="error">{{ form.last_name.errors }}</div>
+      </div>
   </div>
   <div>
-      <label for="id_email">Email: </label>
-      <input type="email"
-             class="form-input"
-             id="id_email"
-             name="email"
-             placeholder="Email"
-             value="{{ form.email.value }}"
-             required>
-      <div class="error">{{ form.email.errors }}</div>
+      <div class="input-wrapper">
+          <div class="input-label-container">
+              <label for="id_email">Email: </label>
+              <div class="input-container">
+                  <div>
+                      <span>@</span>
+                  </div>
+                  <input type="email"
+                         class="form-input"
+                         id="id_email"
+                         name="email"
+                         placeholder="Email"
+                         value="{{ form.email.value }}"
+                         required>
+              </div>
+          </div>
+          <div class="error">{{ form.email.errors }}</div>
+      </div>
   </div>
   <button type="submit" class="profile-save-button form-button">Сохранить</button>
   {% if change_pw_msg %}
@@ -52,7 +79,7 @@
   {% endif %}
 </form>
 <div class="profile-form-buttons-wrapper">
-    <a href="#removeUser" class="form-button remove-user-button" data-toggle="modal">Удалить учётную запись</a>
+    <a href="#removeUser" class="form-button remove-user-button" data-toggle="modal"><span class="fa fa-ban" aria-hidden="true"></span> Удалить учётную запись</a>
     <a href="{% url 'users:password-change' %}" class="form-button change-pw-button">Сменить пароль</a>
 </div>
 <div class="modal fade" id="removeUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

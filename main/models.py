@@ -14,8 +14,8 @@ class Product(models.Model):
 
     class Meta:
         db_table = 'product'
-        verbose_name = 'Товар'
-        verbose_name_plural = 'Товары'
+        verbose_name = 'товар'
+        verbose_name_plural = 'товары'
         ordering = 'pk',
 
     def __str__(self):
@@ -48,8 +48,8 @@ class Order(models.Model):
 
     class Meta:
         db_table = 'order'
-        verbose_name = 'Заказ'
-        verbose_name_plural = 'Заказы'
+        verbose_name = 'заказ'
+        verbose_name_plural = 'заказы'
         ordering = ['-date']
 
     def __str__(self):
@@ -71,7 +71,7 @@ class Menu(models.Model):
 
     class Meta:
         db_table = 'menu'
-        verbose_name = 'Меню'
+        verbose_name = 'меню'
 
 
 class Contact(models.Model):
@@ -81,5 +81,6 @@ class Contact(models.Model):
 
     class Meta:
         db_table = 'contact'
-        verbose_name = 'Контакт'
-        verbose_name_plural = 'Контакты'
+        verbose_name = 'контакт'
+        verbose_name_plural = 'контакты'
+        ordering = ('pk',)

@@ -15,33 +15,47 @@
                 <form class="form-font" action="{% url 'users:login' %}" method="post">
                     {% csrf_token %}
                     <div>
-                        <div>
-                            <label for="id_username">{{ form.username.label }}:</label>
-                            <input class="form-input"
-                                   type="text"
-                                   name="username"
-                                   placeholder="{{ form.username.label }}"
-                                   maxlength="32"
-                                   required=""
-                                   id="id_username"
-                                   value="{% if form.username.value %}{{ form.username.value }}{% endif %}">
+                        <div class="input-wrapper">
+                            <div class="input-label-container">
+                                <label for="id_username">{{ form.username.label }}:</label>
+                                <div class="input-container">
+                                    <div>
+                                        <span class="fa fa-user-circle" aria-hidden="true"></span>
+                                    </div>
+                                    <input class="form-input"
+                                           type="text"
+                                           name="username"
+                                           placeholder="{{ form.username.label }}"
+                                           maxlength="32"
+                                           required=""
+                                           id="id_username"
+                                           value="{% if form.username.value %}{{ form.username.value }}{% endif %}">
+                                </div>
+                            </div>
                             <div class="error">{{ form.username.errors }}</div>
                         </div>
                     </div>
                     <div>
-                        <div>
-                            <label for="id_password">{{ form.password.label }}: </label>
-                            <input class="form-input"
-                                   type="password"
-                                   name="password"
-                                   placeholder="{{ form.password.label }}"
-                                   required=""
-                                   id="id_password"
-                                   value="{% if form.password.value %}{{ form.password.value }}{% endif %}">
+                        <div class="input-wrapper">
+                            <div class="input-label-container">
+                                <label for="id_password">{{ form.password.label }}: </label>
+                                <div class="input-container">
+                                    <div>
+                                        <span class="fa fa-lock" aria-hidden="true"></span>
+                                    </div>
+                                    <input class="form-input"
+                                           type="password"
+                                           name="password"
+                                           placeholder="{{ form.password.label }}"
+                                           required=""
+                                           id="id_password"
+                                           value="{% if form.password.value %}{{ form.password.value }}{% endif %}">
+                                </div>
+                            </div>
+                            <div class="error">{{ form.password.errors }}</div>
                         </div>
                     </div>
                     <div class="login-error">
-                        {% include 'includes/errors.html' %}
                     </div>
                     <div>
                         <div class="form-login-urls">

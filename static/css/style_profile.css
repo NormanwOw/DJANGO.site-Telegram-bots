@@ -143,8 +143,7 @@
   color: white;
   background: rgb(0, 152, 204);
   width: 100%;
-  padding-top: 0.7em;
-  padding-bottom: 0.3em;
+  padding-top: 1em;
 }
 
 @media (max-width: 1250px) {
@@ -165,11 +164,11 @@
   .form-profile {
     flex-direction: column;
     padding-right: 3.6em;
-    margin-bottom: 1.85em;
+    margin-bottom: 1em;
   }
 
   .form-profile-change {
-    margin-bottom: 3.3em;
+    margin-bottom: 67px;
   }
 
   .username-container {
@@ -190,7 +189,7 @@
   }
 
   .form-inner-wrapper {
-    height: 320px;
+    height: 300px;
   }
 
   .form-orders-title {
@@ -207,23 +206,23 @@
   .form-profile-change {
     align-items: center;
     padding-right: 0;
-    margin-bottom: 0.95em;
+    margin-top: 1.7em;
   }
 
   .change-password-buttons {
     display: flex;
     flex-direction: column;
     width: 76%;
-    margin-top: 15px;
+    margin-top: 10px;
   }
 
   .change-password-buttons>a {
     display: block;
-    height: 30px;
+    height: 20px;
     order: 2;
     margin-top: 5px;
     padding-top: 15px;
-    width: 250px;
+    width: 220px;
   }
 
   .change-password-buttons>button {

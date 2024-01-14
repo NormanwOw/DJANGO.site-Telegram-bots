@@ -14,6 +14,10 @@
   align-items: center;
 }
 
+.form-container form {
+  margin-bottom: 0;
+}
+
 .phone_number_field {
   margin-bottom: 0;
 }
@@ -48,11 +52,14 @@
 .buttons {
   display: flex;
   flex-direction: column;
+  margin-top: 4px;
 }
 
 .btn-next {
   left: 45px;
-  top: 10px;
+  top: -20px;
+  width: 50px;
+  height: 30px;
 }
 
 .accept-wrapper {
@@ -92,7 +99,6 @@
   width: 44px;
   box-sizing: border-box;
   position: relative;
-  border-radius: 2px;
   background: #848484;
   transition: background-color 0.3s cubic-bezier(0, 1, 0.5, 1);
   border-radius: 6px;
@@ -118,7 +124,6 @@
   display: inline-block;
   box-sizing: border-box;
   width: 22px;
-  border-radius: 1px;
   position: absolute;
   top: 1px;
   left: 1px;
@@ -196,13 +201,19 @@
 
   .form-func-title {
 	padding-inline: 0.5em;
+    margin-left: 5px;
 	font-size: 0.8em;
+  }
+
+  .input-container {
+    width: 100%;
   }
 
   .btn-next {
 	position: relative;
-	width: 100%;
-	left: 0px;
+	width: 80%;
+    height: 25px;
+	left: 0;
 	margin-top: 0.5em;
   }
 
@@ -213,5 +224,11 @@
 
   .accept-wrapper {
     padding-inline: 5px;
+  }
+
+  .errorlist {
+    position: relative;
+    width: 250px;
+    left: 30px;
   }
 }

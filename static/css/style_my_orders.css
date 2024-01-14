@@ -141,7 +141,7 @@
   font-size: 0.5em;
   padding-left: 0;
   flex-grow: 1;
-  height: fit-content;
+  height: 0;
 }
 
 .order>ul {
@@ -235,15 +235,12 @@ input[type="number"]:focus {
 @media (max-width: 1100px) {
   .search-button {
     display: block;
-    background: rgb(0, 152, 204);
     width: 50px;
     height: 50px;
     border: none;
     border-radius: 25px;
-    background-image: url(../images/search.png);
     background-size: 30px 30px;
-    background-repeat: no-repeat;
-    background-position: center;
+    background: rgb(0, 152, 204) url(../images/search.png) no-repeat center;
     cursor: pointer;
     box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.5);
   }
@@ -253,11 +250,8 @@ input[type="number"]:focus {
   }
 
   .search:hover .search-button {
-    background: rgb(18, 187, 243);
-    background-image: url(../images/search.png);
     background-size: 30px 30px;
-    background-repeat: no-repeat;
-    background-position: center;
+    background: rgb(18, 187, 243) url(../images/search.png) no-repeat center;
   }
 
   .search:hover .search-form {
@@ -295,5 +289,9 @@ input[type="number"]:focus {
     font-size: 1.5em;
     height: 3em;
     margin-right: 0.18em;
+  }
+
+  .order-date p {
+    font-size: 10px;
   }
 }
