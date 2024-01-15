@@ -33,6 +33,7 @@
   background: #0098cc;
   color: white;
   padding: 0.5em;
+  font-size: 1.3em;
   padding-inline: 1.5em;
 }
 
@@ -47,6 +48,14 @@
   cursor: pointer;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   animation: float 5s infinite;
+}
+
+.table1 tr:first-child td:last-child {
+  font-size: 0.8em;
+}
+
+.table2 tr:last-child {
+  border-top: #0098cc 4px dashed;
 }
 
 th {

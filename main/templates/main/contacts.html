@@ -1,12 +1,31 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load main_tags %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_contacts.css' %}">
 {% endblock %}
 
 {% block content %}
-<!-- Carousel -->
-
+<div class="logo-wrapper">
+    <div class="logo-container">
+        <p class="contacts-title">Контакты</p>
+        <div class="contacts-wrapper">
+        {% contact_list as contacts %}
+        {% for contact in contacts %}
+            <div class="contacts-container">
+                <div class="contacts-image">
+                    <span class="{{ contact.str_image }}" aria-hidden="true"></span>
+                </div>
+                <div class="contacts-data">
+                    <p class="contacts-data-title">{{ contact.title }}</p>
+                    <p>{{ contact.value }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock %}
 

@@ -3,7 +3,7 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style_order.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_accept.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -18,7 +18,7 @@
             </div>
             <form class="form-accept" action="{% url 'main:accept-done' %}" method="post">
                 {% csrf_token %}
-                <table class="table table-fill table-bordered">
+                <table class="table table1 table-fill table-bordered">
                       <tbody>
                         <tr>
                           <td>Email</td>
@@ -30,16 +30,16 @@
                         </tr>
                         </tbody>
                 </table>
-                <table class="table table-fill table-bordered">
+                <table class="table table2 table-fill table-bordered">
                       <tbody>
-                {% for title, value in new_order %}
+                    {% for title, value in new_order %}
                     {% if forloop.counter > 2 and not forloop.last %}
                         <tr>
                           <td>{{ title }}</td>
                           <td>{{ value|add:".00" }} &#x20bd;</td>
                         </tr>
                     {% endif %}
-                {% endfor %}
+                    {% endfor %}
                     </tbody>
                 </table>
                 <div class="form-accept-buttons">
