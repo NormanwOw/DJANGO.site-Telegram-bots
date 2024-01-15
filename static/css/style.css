@@ -451,6 +451,10 @@ a:hover {
   color: rgb(202, 179, 152);
 }
 
+.footer-wrapper-2 p {
+  padding-top: 13px;
+}
+
 .footer-container {
   margin-inline: 2em;
   margin-top: 3em;
@@ -553,9 +557,27 @@ a:hover {
     transition: 0.3s;
   }
 
+  .logo {
+    height: 66px;
+  }
+
+  .logo>a {
+    padding-top: 17px;
+  }
+
+  .nav-wrapper img {
+    padding-top: 8px;
+    padding-left: 3px;
+  }
+
+  .drop {
+    border-right: #007ea8 1px solid;
+  }
+
   .drop:hover .nav-buttons {
     display: block;
     position: absolute;
+    top: 66px;
     left: -20px;
     background: rgb(0, 152, 204);
     box-shadow: 0px 5px 5px black;
@@ -563,15 +585,16 @@ a:hover {
 
   .menu-button {
     display: block;
+    position: absolute;
+    top: -5px;
+    width: 70px;
+    height: 71px;
     color: white;
     cursor: pointer;
     background-color: rgb(0, 152, 204);
     border: none;
-    font-size: 2.5em;
-    padding: 0.4em;
-    padding-top: 0.3em;
-    padding-inline: 0.5em;
     border-right: #007ea8 1px solid;
+    font-size: 2.5em;
     transition: 0.3s;
   }
 
@@ -581,7 +604,22 @@ a:hover {
 
   .auth-button {
     display: block;
+    height: auto;
     border-inline: #007ea8 1px solid;
+  }
+
+  .auth-button img {
+    padding-top: 15px;
+    padding-inline: 15px;
+  }
+
+  .auth-button>a {
+    padding-top: 21px;
+    padding-bottom: 22px;
+  }
+
+  .auth-button:hover .auth-drop {
+    top: 66px;
   }
 
   .auth-button:hover .auth-drop>div {
@@ -597,6 +635,7 @@ a:hover {
   }
 
   .nav-wrapper {
+    height: fit-content;
     margin: 0;
     border-radius: 0;
   }
@@ -612,7 +651,7 @@ a:hover {
   }
 
   .carousel-control-next {
-    right: -10px;
+    right: 0;
   }
 
   .carousel-control-prev {
@@ -623,6 +662,11 @@ a:hover {
     display: inline-block;
     width: 1em;
     height: 4em;
+  }
+
+  .carousel-control-next-icon {
+    position: relative;
+    right: -9px;
   }
 
   .content {

@@ -206,7 +206,7 @@
   .form-profile-change {
     align-items: center;
     padding-right: 0;
-    margin-top: 1.7em;
+    margin-top: 1.8em;
   }
 
   .change-password-buttons {
@@ -242,6 +242,10 @@
   .form-profile {
     align-items: center;
     padding-right: 0;
+  }
+
+  .form-input {
+    font-size: 0.9em;
   }
 
   .form-orders-wrapper {

@@ -100,23 +100,21 @@
 
 .order-remove {
   align-self: start;
-  width: 30px;
-  height: 30px;
-  padding-top: 5px;
-  padding-right: 5px;
+  width: 20px;
+  height: 18px;
+  margin-top: 5px;
+  margin-right: 8px;
   cursor: pointer;
-  background-image: url(../images/remove.png);
-  background-size: 25px 25px;
-  background-repeat: no-repeat;
-  background-position: center;
+  border-radius: 10px;
   transition: 0.3s;
 }
 
+.order-remove span {
+  color: white;
+}
+
 .order-remove:hover {
-  background-image: url(../images/remove-h.png);
-  background-size: 25px 25px;
-  background-repeat: no-repeat;
-  background-position: center;
+  background-color: red;
 }
 
 .order-data {

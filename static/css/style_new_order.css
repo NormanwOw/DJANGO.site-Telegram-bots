@@ -29,6 +29,7 @@
 .title-container {
   display: flex;
   flex-direction: column;
+  width: 143px;
   align-items: end;
   padding-top: 5px;
 }
