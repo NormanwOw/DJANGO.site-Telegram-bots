@@ -63,6 +63,7 @@ class UserProfileView(UpdateView, LoginRequiredMixin):
 
         if request.GET.get('remove-user'):
             self.request.user.delete()
+            return redirect('main:home')
 
         return super().get(request, *args, **kwargs)
 

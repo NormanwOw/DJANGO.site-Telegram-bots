@@ -69,9 +69,9 @@ class AcceptOrderDoneView(TemplateView, LoginRequiredMixin):
             body=render_to_string('users/order-email.html', context=order_dict),
             to=(self.request.user.email,)
         )
+
         msg.content_subtype = 'html'
-        if not DEBUG:
-            msg.send()
+        msg.send()
 
         context.update(
             {
