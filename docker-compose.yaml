@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  db:
+    image: postgres:16
+    container_name: db_app
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=site-telegram-bots
+    expose:
+      - "5433"
+    ports:
+      - "5433:5432"
+  app:
+    build:
+      context: .
+    env_file:
+      - .env-non-dev
+    container_name: app
+    command: bash -c "python manage.py migrate && python manage.py loaddata fixtures/contacts.json && python manage.py loaddata fixtures/menus.json && python manage.py loaddata fixtures/products.json && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+

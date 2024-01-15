@@ -1,0 +1,1 @@
+[{"model": "main.menu", "pk": 1, "fields": {"name": "О технологии", "url": "main:about"}}, {"model": "main.menu", "pk": 2, "fields": {"name": "Цены", "url": "main:prices"}}, {"model": "main.menu", "pk": 3, "fields": {"name": "Новый заказ", "url": "main:new-order"}}, {"model": "main.menu", "pk": 4, "fields": {"name": "Контакты", "url": "main:contacts"}}]

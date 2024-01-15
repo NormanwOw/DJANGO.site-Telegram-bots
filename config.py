@@ -4,6 +4,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file='.env-non-dev')
 
+    DEBUG: int
+
     SECRET_KEY: str
     DB_HOST: str
     DB_PORT: str
