@@ -209,6 +209,12 @@
     margin-top: 1.8em;
   }
 
+  .form-profile-change input {
+    padding-top: 8px;
+    padding-bottom: 7px;
+    font-size: 0.8em;
+  }
+
   .change-password-buttons {
     display: flex;
     flex-direction: column;

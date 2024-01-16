@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = settings.SECRET_KEY
 
-DEBUG = True
+DEBUG = settings.DEBUG
 
 ALLOWED_HOSTS = ['*']
 
@@ -105,19 +105,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/login/'
 
-if not DEBUG:
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-else:
-    EMAIL_HOST = settings.SMTP_HOST
-    EMAIL_PORT = settings.SMTP_PORT
-    EMAIL_HOST_USER = settings.SMTP_USER
-    EMAIL_HOST_PASSWORD = settings.SMTP_PASSWORD
-    EMAIL_USE_SSL = True
+EMAIL_HOST = settings.SMTP_HOST
+EMAIL_PORT = settings.SMTP_PORT
+EMAIL_HOST_USER = settings.SMTP_USER
+EMAIL_HOST_PASSWORD = settings.SMTP_PASSWORD
+EMAIL_USE_SSL = True
 
-    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-    SERVER_EMAIL = EMAIL_HOST_USER
-    EMAIL_ADMIN = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER
 
 
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERY_BROKER_URL = f'redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}/0'
 CELERY_RESULT_BACKEND = 'django-db'

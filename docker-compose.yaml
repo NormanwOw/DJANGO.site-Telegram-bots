@@ -7,19 +7,37 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=site-telegram-bots
+    command: -p 5433
     expose:
-      - "5433"
-    ports:
-      - "5433:5432"
+      - 5433
+
+  redis:
+    image: redis:7
+    container_name: redis_app
+    command: --port 6380
+    expose:
+      - 6380
+
+  celery:
+    build:
+      context: .
+    env_file:
+      - .env-non-dev
+    container_name: celery_app
+    command: bash -c "celery -A app worker -l info"
+    depends_on:
+      - redis
+
   app:
     build:
       context: .
     env_file:
       - .env-non-dev
     container_name: app
-    command: bash -c "python manage.py migrate && python manage.py loaddata fixtures/contacts.json && python manage.py loaddata fixtures/menus.json && python manage.py loaddata fixtures/products.json && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py migrate django_celery_results && python manage.py loaddata fixtures/contacts.json && python manage.py loaddata fixtures/menus.json && python manage.py loaddata fixtures/products.json && python manage.py runserver 0.0.0.0:8000"
     ports:
       - 8000:8000
     depends_on:
       - db
-
+      - redis
+    restart: on-failure:10
