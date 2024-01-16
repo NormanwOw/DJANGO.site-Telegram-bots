@@ -39,11 +39,15 @@
 .orders-container .pagination li {
   list-style-type: none;
   display: inline-block;
+  height: fit-content;
 }
 
 .orders-container .pagination li a {
-  position: relative;
-  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 45px;
+  padding-inline: 15px;
   text-decoration: none;
   color: #fff;
   font-weight: 500;
