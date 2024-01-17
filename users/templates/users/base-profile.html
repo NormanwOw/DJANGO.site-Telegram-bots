@@ -28,6 +28,15 @@
               </div>
               <div class="form-orders-title form-font">
                   <p>История заказов</p>
+                  <div class="search-button form-button">
+                      <div class="search">
+                          <form class="search-form" action="{% url 'users:profile' user.id %}" method="get">
+                            <input class="search-form-input" type="number" name="search" placeholder="Номер заказа" id="id_search">
+                            <button class="search-submit-button" type="submit">Поиск</button>
+                          </form>
+                      </div>
+                      <span class="fa fa-search" aria-hidden="true"></span>
+                  </div>
               </div>
               <div class="form-orders-wrapper">
               {% get_order_page as pages %}

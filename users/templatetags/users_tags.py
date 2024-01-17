@@ -28,7 +28,7 @@ def get_order_page(context):
     query = Q(user=request.user.id)
 
     if order_number:
-        query &= Q(order_id=order_number)
+        query &= Q(order_id__contains=order_number)
 
     orders = Order.objects.filter(query)
     paginator = Paginator(orders, 3)
