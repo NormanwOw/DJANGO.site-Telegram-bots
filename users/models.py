@@ -4,8 +4,12 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
 
-    first_name = models.CharField(max_length=20, verbose_name='Имя', blank=True, null=True)
-    last_name = models.CharField(max_length=20, verbose_name='Фамилия', blank=True, null=True)
+    first_name = models.CharField(
+        max_length=20, verbose_name='Имя', blank=True, null=True
+    )
+    last_name = models.CharField(
+        max_length=20, verbose_name='Фамилия', blank=True, null=True
+    )
 
     class Meta:
         db_table = 'user'

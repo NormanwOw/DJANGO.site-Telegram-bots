@@ -12,7 +12,7 @@
         <div class="form-wrapper">
             <div class="form-header form-font">Регистрация</div>
             <div class="form-container">
-                <form class="form-font" action="{% url 'users:registration' %}" method="post">
+                <form class="form-registration form-font" action="{% url 'users:registration' %}" method="post">
                     {% csrf_token %}
                     <div>
                         <div class="input-wrapper">
