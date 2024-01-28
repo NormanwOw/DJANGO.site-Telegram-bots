@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_celery_results',
+    'django_nose',
 
     'phonenumber_field',
     'main',
@@ -103,7 +104,7 @@ INTERNAL_IPS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
-LOGIN_URL = '/login/'
+LOGIN_URL = '/users/login/'
 
 EMAIL_HOST = settings.SMTP_HOST
 EMAIL_PORT = settings.SMTP_PORT
@@ -118,3 +119,9 @@ EMAIL_ADMIN = EMAIL_HOST_USER
 
 CELERY_BROKER_URL = f'redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}/0'
 CELERY_RESULT_BACKEND = 'django-db'
+
+# TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+# NOSE_ARGS = [
+#     '--with-coverage',
+#     '--cover-package=main,users'
+# ]

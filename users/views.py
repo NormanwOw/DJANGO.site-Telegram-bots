@@ -46,7 +46,7 @@ class AuthRegistrationView(CreateView):
         return valid
 
 
-class UserProfileView(UpdateView, LoginRequiredMixin):
+class UserProfileView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = ProfileForm
     template_name = 'users/profile.html'
