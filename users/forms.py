@@ -43,7 +43,7 @@ class RegistrationForm(UserCreationForm):
             return email
 
     @staticmethod
-    def length_msg(min_len, max_len: str) -> dict:
+    def length_msg(min_len: int, max_len: int) -> dict:
         return {
             'min_length': f'Минимальноe количество символов - {min_len}',
             'max_length': f'Максимальное количество символов - {max_len}'
