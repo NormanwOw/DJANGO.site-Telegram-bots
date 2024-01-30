@@ -4,7 +4,7 @@ from django.views.generic import FormView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from main.forms import NewOrderForm
-from main.utils import UtilsOrder
+from main.services import UtilsOrder
 from main.models import Order
 from app.celery import send_email
 

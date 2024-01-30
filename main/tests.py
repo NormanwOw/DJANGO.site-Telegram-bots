@@ -29,6 +29,12 @@ class TestMain(TestCase):
         products = tags['product_list']
         self.assertTrue(products)
 
+    def test_contacts(self):
+        response = self.client.get(reverse('main:contacts'))
+        self.assertEquals(response.status_code, 200)
+        context = response.context[1].dicts[3]
+        self.assertIn('contacts', context.keys())
+
 
 class TestNewOrderView(TestCase):
 
@@ -91,4 +97,34 @@ class TestAcceptOrderView(TestCase):
         session.save()
         response = self.client.get(reverse('main:accept'))
         self.assertEquals(response.status_code, 200)
+
+
+class TestAcceptOrderDoneView(TestCase):
+
+    def test_anonym(self):
+        response = self.client.get(reverse('main:accept-done'))
+        self.assertEquals(response.status_code, 302)
+        self.assertIn('login', response.url)
+
+    def test_post(self):
+        user = UserFactory()
+        self.client.force_login(user)
+        order_id = '4444444'
+        order = {
+            'admin_panel': True,
+            'bot_shop': True,
+            'database': True,
+            'order_id': order_id,
+            'phone_number': '+79999999999',
+            'total_price': 0
+        }
+        session = self.client.session
+        session['new_order'] = order
+        session.save()
+        response = self.client.post(reverse('main:accept-done'))
+        self.assertEquals(response.status_code, 200)
+        context = response.context[1].dicts[3]
+        self.assertEquals(context['order_number'], order_id)
+        self.assertEquals(context['email'], user.email)
+
 
