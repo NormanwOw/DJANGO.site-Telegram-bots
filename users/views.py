@@ -6,8 +6,8 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.generic import FormView, CreateView, UpdateView
+from django.http import HttpResponse
 
-from main.views import page_not_found
 from users.forms import LoginForm, RegistrationForm, ProfileForm
 from users.models import User
 
@@ -59,7 +59,7 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
 
     def get(self, request, *args, **kwargs):
         if kwargs['pk'] != str(self.request.user.pk):
-            return page_not_found(request, 'page404.html')
+            return HttpResponse(status=404)
 
         if request.GET.get('remove-user'):
             self.request.user.delete()
@@ -77,7 +77,7 @@ def logout(request):
     return redirect(reverse('main:home'))
 
 
-class UserPasswordChangeView(PasswordChangeView):
+class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     form_class = PasswordChangeForm
     success_url = reverse_lazy('users:password-change-done')
     template_name = 'users/password-change-form.html'

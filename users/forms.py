@@ -58,10 +58,11 @@ class ProfileForm(UserChangeForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        user = self.data.get('username')
+        username = self.data.get('username')
         msg = {'email': 'Пользователь с таким Email уже существует.'}
+        user = User.objects.filter(email=email).exclude(username=username)
 
-        if email and self._meta.model.objects.filter(email=email).exclude(username=user).exists():
+        if user:
             self._update_errors(forms.ValidationError(msg))
         else:
             return email

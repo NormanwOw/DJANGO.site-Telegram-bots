@@ -80,4 +80,4 @@ def contacts(request):
 
 
 def page_not_found(request, exception):
-    return render(request, 'page404.html')
+    return render(request, 'page404.html', status=404)

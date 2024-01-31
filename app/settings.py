@@ -19,7 +19,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_celery_results',
-    'django_nose',
 
     'phonenumber_field',
     'main',
@@ -119,9 +118,3 @@ EMAIL_ADMIN = EMAIL_HOST_USER
 
 CELERY_BROKER_URL = f'redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}/0'
 CELERY_RESULT_BACKEND = 'django-db'
-
-# TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-# NOSE_ARGS = [
-#     '--with-coverage',
-#     '--cover-package=main,users'
-# ]
