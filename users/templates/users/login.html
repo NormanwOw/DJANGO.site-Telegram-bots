@@ -12,7 +12,7 @@
         <div class="form-wrapper">
             <div class="form-header form-font">Вход</div>
             <div class="form-container">
-                <form class="form-font" action="{% url 'users:login' %}" method="post">
+                <form class="form-font" method="POST">
                     {% csrf_token %}
                     <div>
                         <div class="input-wrapper">
@@ -32,7 +32,7 @@
                                            value="{% if form.username.value %}{{ form.username.value }}{% endif %}">
                                 </div>
                             </div>
-                            <div class="error">{{ form.username.errors }}</div>
+                            <div class="error error-username"></div>
                         </div>
                     </div>
                     <div>
@@ -52,8 +52,11 @@
                                            value="{% if form.password.value %}{{ form.password.value }}{% endif %}">
                                 </div>
                             </div>
-                            <div class="error">{{ form.password.errors }}</div>
-                            <div class="error">{{ form.non_field_errors }}</div>
+                            <div class="error error-nonfield">
+                                <ul class="errorlist">
+                                    <li></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div class="login-error">
@@ -69,4 +72,26 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>    
+    $(document).ready(function () {
+          $('form').submit(function (e) {
+              e.preventDefault();
+              $.ajax({
+                  data: $(this).serialize(),
+                  type: $(this).attr('method'),
+                  url: "{% url 'users:login' %}",
+                  success: function () {
+                      window.location.replace('{% url "main:home" %}');
+                  },
+                  error: function (response) {
+                      let errorMessage = response.responseJSON.errors.__all__[0].message
+                      $('.error-nonfield li').text(errorMessage);
+                  }
+              });
+              return false;
+          });
+    })
+</script>
 {% endblock %}

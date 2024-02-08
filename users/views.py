@@ -6,7 +6,7 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.generic import FormView, CreateView, UpdateView
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from users.forms import LoginForm, RegistrationForm, ProfileForm
 from users.models import User
@@ -15,18 +15,20 @@ from users.models import User
 class AuthLoginView(FormView):
     form_class = LoginForm
     template_name = 'users/login.html'
-    success_url = reverse_lazy('main:home')
     extra_context = {'title': 'Авторизация'}
 
     def form_valid(self, form):
-        valid = super().form_valid(form)
         username = self.request.POST['username']
         password = self.request.POST['password']
         user = auth.authenticate(username=username, password=password)
         if user:
             auth.login(self.request, user)
 
-        return valid
+        return JsonResponse({'status': 'ok'}, status=200)
+
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
 
 
 class AuthRegistrationView(CreateView):
