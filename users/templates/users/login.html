@@ -52,9 +52,9 @@
                                            value="{% if form.password.value %}{{ form.password.value }}{% endif %}">
                                 </div>
                             </div>
-                            <div class="error error-nonfield">
+                            <div class="error" style="height: 24px">
                                 <ul class="errorlist">
-                                    <li></li>
+                                    <li class="error-nonfield"></li>
                                 </ul>
                             </div>
                         </div>
@@ -86,8 +86,11 @@
                       window.location.replace('{% url "main:home" %}');
                   },
                   error: function (response) {
-                      let errorMessage = response.responseJSON.errors.__all__[0].message
-                      $('.error-nonfield li').text(errorMessage);
+                      $.each(response.responseJSON.errors, function (key, value) {
+                          $.each(value, function () {
+                              $('.error-nonfield').text($(this)[0].message).delay(5000).fadeOut(1000)
+                          });
+                      })
                   }
               });
               return false;

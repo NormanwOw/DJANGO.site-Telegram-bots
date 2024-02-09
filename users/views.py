@@ -34,18 +34,20 @@ class AuthLoginView(FormView):
 class AuthRegistrationView(CreateView):
     form_class = RegistrationForm
     template_name = 'users/registration.html'
-    success_url = reverse_lazy('main:home')
     extra_context = {'title': 'Регистрация'}
 
     def form_valid(self, form):
-        valid = super().form_valid(form)
         new_user = auth.authenticate(
             username=form.cleaned_data['username'],
             password=form.cleaned_data['password1'],
         )
         auth.login(self.request, new_user)
 
-        return valid
+        return JsonResponse({'status': 'ok'}, status=200)
+
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
 
 
 class UserProfileView(LoginRequiredMixin, UpdateView):

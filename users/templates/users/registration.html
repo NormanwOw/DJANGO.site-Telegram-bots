@@ -31,7 +31,11 @@
                                            required>
                                 </div>
                             </div>
-                            <div class="error">{{ form.username.errors }}</div>
+                            <div class="error">
+                                <ul class="errorlist">
+                                    <li class="error-username"></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -51,7 +55,11 @@
                                            required>
                                 </div>
                             </div>
-                            <div class="error">{{ form.email.errors }}</div>
+                            <div class="error">
+                                <ul class="errorlist">
+                                    <li class="error-email"></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -71,7 +79,11 @@
                                            required>
                                 </div>
                             </div>
-                            <div class="error">{{ form.password1.errors }}</div>
+                            <div class="error">
+                                <ul class="errorlist">
+                                    <li class="error-password1"></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -91,7 +103,11 @@
                                            required>
                                 </div>
                             </div>
-                            <div class="error">{{ form.password2.errors }}</div>
+                            <div class="error">
+                                <ul class="errorlist">
+                                    <li class="error-password2"></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <button class="form-button" type="submit">Зарегистрироваться</button>
@@ -100,4 +116,27 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function () {
+          $('form').submit(function (e) {
+              e.preventDefault();
+              $.ajax({
+                  data: $(this).serialize(),
+                  type: $(this).attr('method'),
+                  url: "{% url 'users:registration' %}",
+                  success: function () {
+                      window.location.replace('{% url "main:home" %}');
+                  },
+                  error: function (response) {
+                      $.each(response.responseJSON.errors, function (key, value) {
+                          $('.error-'+key).text(value[0].message).delay(5000).fadeOut(1000);
+                      })
+                  }
+              });
+              return false;
+          });
+    })
+</script>
 {% endblock %}
