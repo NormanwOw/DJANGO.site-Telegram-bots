@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 
 from users.models import User
+from users.services import ValidateNameMixin
 
 
 class LoginForm(AuthenticationForm):
@@ -50,7 +51,7 @@ class RegistrationForm(UserCreationForm):
         }
 
 
-class ProfileForm(UserChangeForm):
+class ProfileForm(ValidateNameMixin, UserChangeForm):
 
     class Meta:
         model = User
@@ -66,3 +67,10 @@ class ProfileForm(UserChangeForm):
             self._update_errors(forms.ValidationError(msg))
         else:
             return email
+
+    def clean_first_name(self):
+        return self.check_name(self, 'first_name') or None
+
+    def clean_last_name(self):
+        return self.check_name(self, 'last_name') or None
+

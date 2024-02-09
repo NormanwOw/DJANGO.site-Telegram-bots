@@ -57,9 +57,12 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
     extra_context = {'title': 'Профиль'}
 
     def form_valid(self, form, **kwargs):
-        messages.success(self.request, 'Данные успешно изменены')
+        form.save()
+        return JsonResponse({'message': 'Данные успешно изменены'}, status=200)
 
-        return super().form_valid(form)
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
 
     def get(self, request, *args, **kwargs):
         if kwargs['pk'] != str(self.request.user.pk):
