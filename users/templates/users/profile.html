@@ -111,23 +111,35 @@
 {% block script %}
 <script>
     $(document).ready(function () {
-          $('form').submit(function (e) {
-              e.preventDefault();
-              $.ajax({
-                  data: $(this).serialize(),
-                  type: $(this).attr('method'),
-                  url: "{% url 'users:profile' user.pk %}",
-                  success: function (response) {
-                      $('.profile-message p').css('display', 'block').text(response.message).delay(5000).fadeOut(1000);
-                  },
-                  error: function (response) {
-                      $.each(response.responseJSON.errors, function (key, value) {
-                          $('.error-'+key).text(value[0].message).delay(5000).fadeOut(1000);
-                      })
-                  }
-              });
-              return false;
-          });
+        let inputs = [];
+        $.each($('.form-input'), function (){
+            inputs.push($(this).val());
+        });
+        $('.form-profile').submit(function (e) {
+            e.preventDefault();
+            let newInputs = [];
+            $.each($('.form-input'), function (){
+                newInputs.push($(this).val());
+            });
+            if (inputs.toString() === newInputs.toString()) {
+                return false;
+            }
+            inputs = newInputs
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: "{% url 'users:profile' user.pk %}",
+                success: function (response) {
+                    $('.profile-message p').css('display', 'block').text(response.message).delay(5000).fadeOut(1000);
+                },
+                error: function (response) {
+                    $.each(response.responseJSON.errors, function (key, value) {
+                        $('.error-'+key).text(value[0].message).css('display', 'block').delay(5000).fadeOut(1000);
+                    })
+                }
+            });
+            return false;
+        });
     })
 </script>
 {% endblock %}

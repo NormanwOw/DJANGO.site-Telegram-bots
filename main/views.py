@@ -1,5 +1,5 @@
+from django.http import JsonResponse
 from django.shortcuts import render
-from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -24,14 +24,16 @@ def prices(request):
 class NewOrderView(LoginRequiredMixin, FormView, UtilsOrder):
     form_class = NewOrderForm
     template_name = 'main/new-order.html'
-    success_url = reverse_lazy('main:accept')
     extra_context = {'title': 'Новый заказ'}
 
     def form_valid(self, form):
         order_list = self.get_order(form.cleaned_data)
         self.request.session['new_order'] = order_list
+        return JsonResponse({'status': 'ok'}, status=200)
 
-        return super().form_valid(form)
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
 
 
 class AcceptOrderView(LoginRequiredMixin, TemplateView):

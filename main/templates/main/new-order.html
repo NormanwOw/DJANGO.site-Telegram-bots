@@ -14,7 +14,7 @@
             Новый заказ
         </div>
         <div class="form-container form-font">
-            <form action="/new-order/" method="post">
+            <form method="post">
                 {% csrf_token %}
                 <div class="input-wrapper">
                     <div class="input-label-container">
@@ -35,7 +35,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="error">{{ form.phone_number.errors }}</div>
+                <div class="error">
+                    <ul class="errorlist">
+                        <li class="error-phone_number"></li>
+                    </ul>
+                </div>
                 <div class="form-buttons-wrapper">
                     {% product_list as prices %}
                     {% for item in prices %}
@@ -70,6 +74,29 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function () {
+        $('form').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: "{% url 'main:new-order' %}",
+                success: function () {
+                    window.location.replace('{% url "main:accept" %}');
+                },
+                error: function (response) {
+                    $.each(response.responseJSON.errors, function (key, value) {
+                        $('.error-'+key).text(value[0].message).css('display', 'block').delay(5000).fadeOut(1000);
+                    })
+                }
+            });
+            return false;
+        });
+    })
+</script>
 {% endblock %}
 
 

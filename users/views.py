@@ -1,8 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.views import PasswordChangeView, PasswordResetView
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import redirect, reverse
-from django.contrib import auth, messages
+from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.generic import FormView, CreateView, UpdateView
@@ -86,5 +86,34 @@ def logout(request):
 
 class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     form_class = PasswordChangeForm
-    success_url = reverse_lazy('users:password-change-done')
     template_name = 'users/password-change-form.html'
+
+    def form_valid(self, form, **kwargs):
+        form.save()
+        return JsonResponse({'status': 'ok'}, status=200)
+
+    def form_invalid(self, form):
+        errors = form.errors.get_json_data()
+        return JsonResponse({'errors': errors}, status=400)
+
+
+class UserPasswordResetView(PasswordResetView):
+    template_name = 'users/password-reset-form.html'
+    email_template_name = 'users/password-reset-email.html'
+    html_email_template_name = 'users/password-reset-email.html'
+    success_url = reverse_lazy('users:password-reset-done')
+
+    def form_valid(self, form):
+        opts = {
+            'use_https': self.request.is_secure(),
+            'token_generator': self.token_generator,
+            'from_email': self.from_email,
+            'email_template_name': self.email_template_name,
+            'subject_template_name': self.subject_template_name,
+            'request': self.request,
+            'html_email_template_name': self.html_email_template_name,
+            'extra_email_context': self.extra_email_context,
+        }
+        form.save(**opts)
+
+        return JsonResponse({'status': 'ok'}, status=200)

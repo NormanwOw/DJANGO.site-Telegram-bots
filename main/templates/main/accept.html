@@ -43,13 +43,23 @@
                     </tbody>
                 </table>
                 <div class="form-accept-buttons">
-                    <button formaction="{% url 'main:new-order' %}" class="form-button form-font">Назад</button>
+                    <button class="form-button form-font button-back">Назад</button>
                     <button type="submit" class="form-button form-font">Оплатить</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+$(document).ready(function () {
+    $('.button-back').click(function (e) {
+        e.preventDefault();
+        window.location.replace('{% url "main:new-order" %}');
+    })
+})
+</script>
 {% endblock %}
 
 
