@@ -141,5 +141,39 @@
             return false;
         });
     })
+    function ajaxPagination() {
+        $('.pagination a').each(function (index, el) {
+            $(el).click(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'GET',
+                    url: $(el).attr('href'),
+                    success: function (response) {
+                        $('.form-orders-wrapper').empty().append($(response).find('.form-orders-wrapper').html());
+                    }
+                });
+            });
+        });
+    }
+    function ajaxSearch() {
+        $('.search-form').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'users:profile' user.id %}",
+                data: {'search': $('#id_search').val()},
+                success: function (response) {
+                    $('.form-orders-wrapper').empty().append($(response).find('.form-orders-wrapper').html());
+                }
+            });
+        })
+    }
+    $(document).ready(function () {
+        ajaxPagination();
+        ajaxSearch();
+    })
+    $(document).ajaxStop(function () {
+        ajaxPagination();
+    })
 </script>
 {% endblock %}
