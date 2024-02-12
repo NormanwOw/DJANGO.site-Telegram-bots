@@ -35,8 +35,10 @@ class AuthRegistrationView(CreateView):
     form_class = RegistrationForm
     template_name = 'users/registration.html'
     extra_context = {'title': 'Регистрация'}
+    success_url = reverse_lazy('main:home')
 
     def form_valid(self, form):
+        super().form_valid(form)
         new_user = auth.authenticate(
             username=form.cleaned_data['username'],
             password=form.cleaned_data['password1'],

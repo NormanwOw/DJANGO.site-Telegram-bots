@@ -88,7 +88,7 @@
                   error: function (response) {
                       $.each(response.responseJSON.errors, function (key, value) {
                           $.each(value, function () {
-                              $('.error-nonfield').text($(this)[0].message).delay(5000).fadeOut(1000)
+                              $('.error-nonfield').text($(this)[0].message).css('display', 'block').delay(5000).fadeOut(1000)
                           });
                       })
                   }

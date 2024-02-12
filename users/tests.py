@@ -27,8 +27,9 @@ class TestAuth(TestCase):
             'password1': '123123ewqEWQ',
             'password2': '123123ewqEWQ'
         })
-        self.assertEquals(response.status_code, 302)
-        user = User.objects.filter(username='example').first()
+        self.assertEquals(response.status_code, 200)
+        self.assertIn(b'ok', response.content)
+        user = User.objects.filter(username='example2').first()
         self.assertIsInstance(user, User)
         self.assertIn('sessionid', response.cookies.keys())
 
@@ -39,9 +40,8 @@ class TestAuth(TestCase):
             'password1': '123123ewqEWQ',
             'password2': '123123ewqEW'
         })
-        self.assertEquals(response.status_code, 200)
-        error = response.context_data['form'].error_messages['password_mismatch']
-        self.assertEquals(error, 'Введенные пароли не совпадают.')
+        self.assertEquals(response.status_code, 400)
+        self.assertIn(b'password_mismatch', response.content)
         user = User.objects.filter(username='example2').first()
         self.assertFalse(user)
         self.assertNotIn('sessionid', response.cookies.keys())
@@ -58,7 +58,7 @@ class TestAuth(TestCase):
             'username': self.user.username,
             'password': self.password
         })
-        self.assertEquals(response.status_code, 302)
+        self.assertEquals(response.status_code, 200)
         self.assertIn('sessionid', response.cookies.keys())
 
     def test_logout(self):
@@ -86,8 +86,8 @@ class TestAuth(TestCase):
             'new_password1': 'secret123EWQ',
             'new_password2': 'secret123EWQ'
         })
-        self.assertEquals(response.status_code, 302)
-        self.assertIn('password-change/done', response.url)
+        self.assertEquals(response.status_code, 200)
+        self.assertIn(b'ok', response.content)
 
         self.client.login(username=self.user.username, password='secret123EWQ')
         self.assertTrue(self.client.cookies['sessionid'].value)
@@ -100,9 +100,8 @@ class TestAuth(TestCase):
             'new_password1': 'secret123EWQ',
             'new_password2': 'secret123EWQ'
         })
-        self.assertEquals(response.status_code, 200)
-        error = response.context['form'].error_messages['password_incorrect']
-        self.assertIn('Ваш старый пароль введен неправильно.', error)
+        self.assertEquals(response.status_code, 400)
+        self.assertIn(b'password_incorrect', response.content)
 
 
 class TestUserProfileView(TestCase):
@@ -158,7 +157,7 @@ class TestUserProfileView(TestCase):
                 'email': 'example2@gmail.com'
             }
         )
-        self.assertEquals(response.status_code, 302)
+        self.assertEquals(response.status_code, 200)
         user = User.objects.filter(first_name='name')
         self.assertTrue(user)
 
@@ -169,9 +168,8 @@ class TestUserProfileView(TestCase):
             reverse('users:profile', kwargs={'pk': self.user.pk}), data={
                 'email': self.other_user.email
             })
-        self.assertEquals(response.status_code, 200)
-        error = response.context_data['form'].errors['email'].data[0].message
-        self.assertEquals('Пользователь с таким Email уже существует.', error)
+        self.assertEquals(response.status_code, 400)
+        self.assertIn(b'email', response.content)
 
     def test_remove_order(self):
         self.client.login(username=self.user.username, password=self.password)

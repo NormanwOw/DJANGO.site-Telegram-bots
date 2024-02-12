@@ -58,8 +58,8 @@ class TestNewOrderView(TestCase):
         }
 
         response = self.client.post(reverse('main:new-order'), data=payload)
-        self.assertEquals(response.status_code, 302)
-        self.assertIn('accept', response.url)
+        self.assertEquals(response.status_code, 200)
+        self.assertIn(b'ok', response.content)
 
         payload = {
             'phone_number': '+7999999',
@@ -69,9 +69,8 @@ class TestNewOrderView(TestCase):
         }
 
         response = self.client.post(reverse('main:new-order'), data=payload)
-        self.assertEquals(response.status_code, 200)
-        errors = response.context[3].dicts[1]['errors']
-        self.assertIn('Введите корректный номер телефона', errors)
+        self.assertEquals(response.status_code, 400)
+        self.assertIn(b'phone_number', response.content)
 
 
 class TestAcceptOrderView(TestCase):
