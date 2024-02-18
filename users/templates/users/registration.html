@@ -79,7 +79,8 @@
                                            required>
                                 </div>
                             </div>
-                            <div class="error">
+                            <span class="fa fa-check input-check" aria-hidden="true"></span>
+                            <div class="error fixed-error">
                                 <ul class="errorlist">
                                     <li class="error-password1"></li>
                                 </ul>
@@ -103,12 +104,14 @@
                                            required>
                                 </div>
                             </div>
-                            <div class="error">
+                            <span class="fa fa-check input-check" aria-hidden="true"></span>
+                            <div class="error fixed-error">
                                 <ul class="errorlist">
                                     <li class="error-password2"></li>
                                 </ul>
                             </div>
                         </div>
+
                     </div>
                     <button class="form-button" type="submit">Зарегистрироваться</button>
                 </form>
@@ -133,10 +136,45 @@
                       $.each(response.responseJSON.errors, function (key, value) {
                           $('.error-'+key).text(value[0].message).css('display', 'block').delay(5000).fadeOut(1000);
                       })
+                      $('.input-check').hide()
+                      $('.error-with-check').each(function () {
+                          $(this).removeClass('error-with-check')
+                      })
+                      $('#id_password1').css('background-color', 'white')
+                      $('#id_password2').css('background-color', 'white')
                   }
               });
               return false;
           });
+          $('#id_password2').keyup(function () {
+              let pw1 = $('#id_password1')
+              let pw2 = $('#id_password2')
+              let pwVal1 = pw1.val()
+              let pwVal2 = pw2.val()
+              if (pwVal2.length >= pwVal1.length && pwVal1.length >= 8) {
+                  if (pwVal1 === pwVal2) {
+                      $('.input-check').removeClass('fa-times').addClass('fa-check').css('color', 'rgb(36, 196, 108)').show()
+                      pw1.css('background-color', 'rgb(231, 255, 242)')
+                      pw2.css('background-color', 'rgb(231, 255, 242)')
+                  } else {
+                      $('.input-check').removeClass('fa-check').addClass('fa-times').css('color', 'rgb(166, 49, 55)').show()
+                      pw1.css('background-color', 'rgb(247, 227, 224)')
+                      pw2.css('background-color', 'rgb(247, 227, 224)')
+                  }
+                  $('.fixed-error').each(function () {
+                      $(this).addClass('error-with-check')
+                  })
+              } else {
+                  $('.input-check').hide()
+                  $('.error-with-check').each(function () {
+                      $(this).removeClass('error-with-check')
+                  })
+                  pw1.css('background-color', 'white')
+                  pw2.css('background-color', 'white')
+              }
+
+
+          })
     })
 </script>
 {% endblock %}

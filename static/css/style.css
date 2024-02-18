@@ -477,6 +477,11 @@ a:hover {
   align-self: end;
 }
 
+.error-with-check {
+  position: relative;
+  bottom: 19px;
+}
+
 .errorlist>li {
   font-size: 0.6em;
   color: rgb(78, 1, 1);

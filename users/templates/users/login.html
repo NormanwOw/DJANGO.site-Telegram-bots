@@ -88,7 +88,12 @@
                   error: function (response) {
                       $.each(response.responseJSON.errors, function (key, value) {
                           $.each(value, function () {
-                              $('.error-nonfield').text($(this)[0].message).css('display', 'block').delay(5000).fadeOut(1000)
+                              let errorText = $(this)[0].message
+                              console.log(errorText)
+                              if (errorText.includes('Пожалуйста')) {
+                                  errorText = 'Пожалуйста, введите правильные имя пользователя и пароль.'
+                              }
+                              $('.error-nonfield').text(errorText).css('display', 'block').delay(5000).fadeOut(1000)
                           });
                       })
                   }

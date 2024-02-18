@@ -6,6 +6,17 @@
   width: 616px;
 }
 
+.input-wrapper {
+  height: 50px;
+}
+
+.input-check {
+  display: none;
+  position: relative;
+  top: -28px;
+  right: 10px;
+}
+
 .form-container {
   width: fit-content;
 }
