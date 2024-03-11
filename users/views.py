@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView, PasswordResetView
 from django.contrib.auth.forms import PasswordChangeForm
-from django.shortcuts import redirect, reverse
+from django.shortcuts import redirect, reverse, render
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
@@ -74,7 +74,7 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
             self.request.user.delete()
             return redirect('main:home')
 
-        return super().get(request, *args, **kwargs)
+        return render(request, 'users/profile.html')
 
     def get_success_url(self):
         return reverse('users:profile', kwargs={'pk': self.request.user.pk})

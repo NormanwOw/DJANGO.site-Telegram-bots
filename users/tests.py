@@ -145,7 +145,6 @@ class TestUserProfileView(TestCase):
 
         response = self.client.get(reverse('users:profile', kwargs={'pk': self.user.pk}))
         self.assertEquals(response.status_code, 200)
-        self.assertIsInstance(response.context['form'], ProfileForm)
 
     def test_profile_update_user(self):
         self.client.login(username=self.user.username, password=self.password)

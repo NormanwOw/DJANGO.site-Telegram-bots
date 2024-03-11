@@ -20,7 +20,7 @@
                          id="id_first_name"
                          name="first_name"
                          placeholder="Имя"
-                         value="{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}"
+                         value="{% if user.first_name %}{{ user.first_name }}{% endif %}"
                          maxlength="20">
               </div>
           </div>
@@ -44,7 +44,7 @@
                          id="id_last_name"
                          name="last_name"
                          placeholder="Фамилия"
-                         value="{% if form.last_name.value %}{{ form.last_name.value }}{% endif %}"
+                         value="{% if user.last_name %}{{ user.last_name }}{% endif %}"
                          maxlength="20">
               </div>
           </div>
@@ -68,7 +68,7 @@
                          id="id_email"
                          name="email"
                          placeholder="Email"
-                         value="{{ form.email.value }}"
+                         value="{{ user.email }}"
                          required>
               </div>
           </div>
