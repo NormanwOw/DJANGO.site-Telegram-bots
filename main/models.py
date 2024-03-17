@@ -62,7 +62,9 @@ class Order(models.Model):
                 yield title, field.value_to_string(self)
 
     def get_products(self) -> list:
-        return [(product.title, getattr(self, product.name)) for product in self.product_list]
+        return [
+            (product.title, getattr(self, product.name)) for product in self.product_list
+        ]
 
 
 class Menu(models.Model):
