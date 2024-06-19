@@ -2,8 +2,7 @@
 ![](https://img.shields.io/badge/Python-v3.10-green) ![](https://img.shields.io/badge/Django-v5.0-1a780c) ![](https://img.shields.io/badge/PostgreSQL-v16-blue) 
 ![](https://img.shields.io/badge/Redis-v5.0-red) ![](https://img.shields.io/badge/Celery-v5.3-green) ![](https://img.shields.io/badge/Docker-blue)  
 
-Actual version running [here](http://95.216.65.93:23345/)
-
+Actual version running [here](http://195.54.178.243:21722/)
 ## About
 Website for ordering products with auth system, personal account, database, section of administration and tasks manager
 * Language **'RU'**
