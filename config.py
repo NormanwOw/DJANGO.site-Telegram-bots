@@ -1,8 +1,11 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
+import platform
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file='.env-non-dev')
+    model_config = SettingsConfigDict(
+        env_file='.env-non-dev' if platform.system() == 'Windows' else 'deploy/.env',
+    )
 
     DEBUG: int
 

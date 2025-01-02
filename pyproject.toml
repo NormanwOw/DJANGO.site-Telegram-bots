@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "django-site-telegram-bots"
+version = "0.1.0"
+description = ""
+authors = ["NormanwOw <normjkeee@vk.com>"]
+readme = "README.md"
+packages = [{include = "django"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pydantic-settings = "^2.7.1"
+celery = "5.3.6"
+phonenumbers = "8.13.27"
+psycopg2-binary = "2.9.9"
+redis = "5.0.1"
+django-celery-results = "2.5.1"
+flake8 = "^7.1.1"
+flake8-print = "^5.0.0"
+pre-commit = "^4.0.1"
+django = "4.2.9"
+django-debug-toolbar = "^4.4.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
