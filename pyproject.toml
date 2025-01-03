@@ -19,6 +19,7 @@ flake8-print = "^5.0.0"
 pre-commit = "^4.0.1"
 django = "4.2.9"
 django-debug-toolbar = "^4.4.6"
+django-extensions = "^3.2.3"
 
 
 [build-system]
