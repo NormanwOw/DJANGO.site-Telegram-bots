@@ -6,7 +6,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 from users.models import User
 
 
-class Product(models.Model):
+class ProductModel(models.Model):
+    code = models.CharField(verbose_name='Код')
     name = models.CharField(verbose_name='Товар')
     price = models.IntegerField(verbose_name='Цена')
     title = models.CharField(verbose_name='Название')
@@ -22,7 +23,7 @@ class Product(models.Model):
         return self.title
 
 
-class Order(models.Model):
+class OrderModel(models.Model):
     STATUS = {
         ('Оформлен', 'Оформлен'),
         ('В работе', 'В работе'),
@@ -37,14 +38,10 @@ class Order(models.Model):
         related_name='orders'
     )
     phone_number = PhoneNumberField(region='RU', verbose_name='Телефон')
-    bot_shop = models.IntegerField(verbose_name='Бот-магазин')
-    admin_panel = models.IntegerField(verbose_name='Админ-панель')
-    database = models.IntegerField(verbose_name='База данных')
     total_price = models.IntegerField('Общая цена')
     date = models.DateTimeField(verbose_name='Дата', default=datetime.utcnow)
     status = models.CharField(verbose_name='Статус', choices=STATUS, default='Оформлен')
-
-    product_list = Product.objects.all()
+    products = models.ManyToManyField(ProductModel)
 
     class Meta:
         db_table = 'order'
@@ -61,13 +58,8 @@ class Order(models.Model):
             if title not in ['ID', 'Дата', 'Номер заказа']:
                 yield title, field.value_to_string(self)
 
-    def get_products(self) -> list:
-        return [
-            (product.title, getattr(self, product.name)) for product in self.product_list
-        ]
 
-
-class Menu(models.Model):
+class MenuModel(models.Model):
     name = models.CharField(verbose_name='Название')
     url = models.CharField(verbose_name='Ссылка')
 
@@ -76,7 +68,7 @@ class Menu(models.Model):
         verbose_name = 'меню'
 
 
-class Contact(models.Model):
+class ContactModel(models.Model):
     title = models.CharField()
     str_image = models.CharField()
     value = models.CharField()
