@@ -1,13 +1,13 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 
-from users.models import User
+from users.models import UserModel
 from users.services import ValidateNameMixin
 
 
 class LoginForm(AuthenticationForm):
     class Meta:
-        model = User
+        model = UserModel
 
 
 class RegistrationForm(UserCreationForm):
@@ -26,7 +26,7 @@ class RegistrationForm(UserCreationForm):
         self.fields['username'].error_messages.update(self.length_msg(3, 16))
 
     class Meta:
-        model = User
+        model = UserModel
         fields = (
             'username',
             'email',
@@ -54,14 +54,14 @@ class RegistrationForm(UserCreationForm):
 class ProfileForm(ValidateNameMixin, UserChangeForm):
 
     class Meta:
-        model = User
+        model = UserModel
         fields = 'first_name', 'last_name', 'email'
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
         username = self.data.get('username')
         msg = {'email': 'Пользователь с таким Email уже существует.'}
-        user = User.objects.filter(email=email).exclude(username=username)
+        user = UserModel.objects.filter(email=email).exclude(username=username)
 
         if user:
             self._update_errors(forms.ValidationError(msg))
@@ -73,4 +73,3 @@ class ProfileForm(ValidateNameMixin, UserChangeForm):
 
     def clean_last_name(self):
         return self.check_name(self, 'last_name') or None
-

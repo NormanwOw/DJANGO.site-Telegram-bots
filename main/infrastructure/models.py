@@ -3,7 +3,9 @@ from datetime import datetime
 
 from phonenumber_field.modelfields import PhoneNumberField
 
-from users.models import User
+from main.domain.aggregates import Order
+from main.domain.entities import Product
+from users.models import UserModel
 
 
 class ProductModel(models.Model):
@@ -22,6 +24,27 @@ class ProductModel(models.Model):
     def __str__(self):
         return self.title
 
+    def to_domain(self) -> Product:
+        return Product(
+            id=self.pk,
+            code=self.code,
+            name=self.name,
+            price=self.price,
+            title=self.title,
+            description=self.description
+        )
+
+    @staticmethod
+    def from_domain(product: Product) -> 'ProductModel':
+        return ProductModel(
+            id=product.id,
+            code=product.code,
+            name=product.name,
+            price=product.price,
+            title=product.title,
+            description=product.description
+        )
+
 
 class OrderModel(models.Model):
     STATUS = {
@@ -32,7 +55,7 @@ class OrderModel(models.Model):
 
     order_id = models.IntegerField(verbose_name='Номер заказа')
     user = models.ForeignKey(
-        User,
+        UserModel,
         on_delete=models.CASCADE,
         verbose_name='Пользователь',
         related_name='orders'
@@ -57,6 +80,25 @@ class OrderModel(models.Model):
             title = field.verbose_name
             if title not in ['ID', 'Дата', 'Номер заказа']:
                 yield title, field.value_to_string(self)
+
+    def to_domain(self) -> Order:
+        return Order(
+            number=self.order_id,
+            phone_number=self.phone_number,
+            user_id=self.user.pk,
+            total_price=self.total_price,
+            products=[product.to_domain() for product in self.products.all()]
+        )
+
+    @staticmethod
+    def from_domain(order: Order) -> 'OrderModel':
+        order_model = OrderModel(
+            order_id=order.number,
+            phone_number=order.phone_number,
+            user=UserModel.objects.get(pk=order.user_id),
+            total_price=order.total_price
+        )
+        return order_model
 
 
 class MenuModel(models.Model):

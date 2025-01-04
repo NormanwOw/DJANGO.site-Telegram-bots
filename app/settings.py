@@ -94,7 +94,7 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
-    ]
+]
 
 MEDIA_URL = 'media/'
 
@@ -105,7 +105,7 @@ INTERNAL_IPS = [
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'users.UserModel'
 LOGIN_URL = '/users/login/'
 
 EMAIL_HOST = settings.SMTP_HOST
