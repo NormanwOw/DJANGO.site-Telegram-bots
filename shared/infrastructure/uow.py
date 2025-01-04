@@ -1,7 +1,7 @@
 from django.db import transaction
 
-from main.infrastructure.interfaces import IUnitOfWork
 from main.infrastructure.repositories import UserRepository, OrderRepository, ProductRepository
+from shared.infrastructure.interfaces import IUnitOfWork
 
 
 class UnitOfWork(IUnitOfWork):
