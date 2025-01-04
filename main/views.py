@@ -1,12 +1,16 @@
+import json
+
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.generic import FormView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from main.application.services.commands.create_order import CreateOrder
+from main.application.services.commands.get_order_numbers import GetOrderNumbers
+from main.domain.entities import Product
 from main.forms import NewOrderForm
-from main.services import UtilsOrder
-from main.models import Order
-from app.celery import send_email
+from main.domain.aggregates import Order
+from shared.infrastructure.uow import UnitOfWork
 
 
 def index(request):
@@ -21,15 +25,10 @@ def prices(request):
     return render(request, 'main/prices.html', {'title': 'Цены'})
 
 
-class NewOrderView(LoginRequiredMixin, FormView, UtilsOrder):
+class NewOrderView(LoginRequiredMixin, FormView):
     form_class = NewOrderForm
     template_name = 'main/new-order.html'
     extra_context = {'title': 'Новый заказ'}
-
-    def form_valid(self, form):
-        order_list = self.get_order(form.cleaned_data)
-        self.request.session['new_order'] = order_list
-        return JsonResponse({'status': 'ok'}, status=200)
 
     def form_invalid(self, form):
         errors = form.errors.get_json_data()
@@ -38,43 +37,48 @@ class NewOrderView(LoginRequiredMixin, FormView, UtilsOrder):
 
 class AcceptOrderView(LoginRequiredMixin, TemplateView):
     template_name = 'main/accept.html'
+    uow = UnitOfWork()
+    get_order_numbers_command = GetOrderNumbers()
+    order_numbers = get_order_numbers_command(uow)
+    order_number = str(Order.generate_order_number(order_numbers))
+    extra_context = {
+        'title': 'Оформление заказа',
+        'order_number': order_number
+    }
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        order_dict = self.request.session['new_order']
-        order = Order(**order_dict)
-
-        context.update(
-            {
-                'title': 'Оформление заказа',
-                'new_order': order,
-                'email': self.request.user.email
-            }
-        )
-        return context
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        request.session['order_number'] = self.order_number
+        return self.render_to_response(context)
 
 
-class AcceptOrderDoneView(LoginRequiredMixin, TemplateView):
+class AcceptOrderDoneView(TemplateView, LoginRequiredMixin):
     template_name = 'main/accept-done.html'
+    extra_context = {'title': 'Оформление заказа'}
+    create_order_command = CreateOrder()
+    uow = UnitOfWork()
 
     def post(self, request, **kwargs):
-        context = dict(**request.POST)
-        order_dict = self.request.session['new_order']
-        order_dict['user'] = self.request.user
-        order = Order(**order_dict)
-        order.save()
-
-        del order_dict['user']
-        send_email.delay(self.request.user.email, order_dict)
-
-        context.update(
-            {
-                'title': 'Оформление заказа',
-                'order_number': order.order_id,
-                'email': self.request.user.email
-            }
+        order_number = request.session['order_number']
+        order = json.loads(request.POST['order'])
+        order = Order.factory(
+            number=order_number,
+            phone_number=order['phone_number'],
+            user_id=self.request.user.pk,
+            products=[
+                Product.factory(
+                    _id=item['id'],
+                    code=item['code'],
+                    price=item['price']
+                ) for item in order['products']
+            ],
         )
-        return super().render_to_response(context)
+        self.create_order_command(self.uow, order)
+        self.extra_context.update({
+            'order_number': order_number,
+            'email': self.request.user.email,
+        })
+        return super().render_to_response({})
 
 
 def contacts(request):
