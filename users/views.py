@@ -8,7 +8,9 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView, CreateView, UpdateView
 from django.http import HttpResponse, JsonResponse
 
+from shared.infrastructure.uow import UnitOfWork
 from users.application.command.auth_user import AuthUser
+from users.application.command.delete_user import DeleteUser
 from users.forms import LoginForm, RegistrationForm, ProfileForm
 from users.models import UserModel
 
@@ -56,6 +58,8 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
     form_class = ProfileForm
     template_name = 'users/profile.html'
     extra_context = {'title': 'Профиль'}
+    delete_user_command = DeleteUser()
+    uow = UnitOfWork()
 
     def form_valid(self, form, **kwargs):
         form.save()
@@ -70,7 +74,7 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
             return HttpResponse(status=404)
 
         if request.GET.get('remove-user'):
-            self.request.user.delete()
+            self.delete_user_command(self.uow, self.request.user)
             return redirect('main:home')
 
         return render(request, 'users/profile.html')
