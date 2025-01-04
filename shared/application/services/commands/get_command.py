@@ -1,8 +1,7 @@
-from abc import ABC, abstractmethod
+from abc import ABC
+
+from shared.application.services.commands.command import Command
 
 
-class GetCommand(ABC):
-
-    @abstractmethod
-    def __call__(self, *args, **kwargs):
-        raise NotImplementedError
+class GetCommand(Command, ABC):
+    pass

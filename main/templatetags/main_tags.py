@@ -1,5 +1,5 @@
 from django import template
-from main.models import Menu, Product, Contact
+from main.infrastructure.models import MenuModel, ProductModel, ContactModel
 
 
 register = template.Library()
@@ -7,14 +7,14 @@ register = template.Library()
 
 @register.simple_tag()
 def menu():
-    return Menu.objects.all()
+    return MenuModel.objects.all()
 
 
 @register.simple_tag()
 def product_list():
-    return Product.objects.all()
+    return ProductModel.objects.all()
 
 
 @register.simple_tag()
 def contact_list():
-    return Contact.objects.all()
+    return ContactModel.objects.all()

@@ -8,22 +8,22 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView, CreateView, UpdateView
 from django.http import HttpResponse, JsonResponse
 
+from users.application.command.auth_user import AuthUser
 from users.forms import LoginForm, RegistrationForm, ProfileForm
-from users.models import User
+from users.models import UserModel
 
 
 class AuthLoginView(FormView):
     form_class = LoginForm
     template_name = 'users/login.html'
     extra_context = {'title': 'Авторизация'}
+    auth = auth
+    auth_user_command = AuthUser()
 
     def form_valid(self, form):
         username = self.request.POST['username']
         password = self.request.POST['password']
-        user = auth.authenticate(username=username, password=password)
-        if user:
-            auth.login(self.request, user)
-
+        self.auth_user_command(auth, self.request, username, password)
         return JsonResponse({'status': 'ok'}, status=200)
 
     def form_invalid(self, form):
@@ -36,15 +36,14 @@ class AuthRegistrationView(CreateView):
     template_name = 'users/registration.html'
     extra_context = {'title': 'Регистрация'}
     success_url = reverse_lazy('main:home')
+    auth = auth
+    auth_user_command = AuthUser()
 
     def form_valid(self, form):
         super().form_valid(form)
-        new_user = auth.authenticate(
-            username=form.cleaned_data['username'],
-            password=form.cleaned_data['password1'],
-        )
-        auth.login(self.request, new_user)
-
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password1']
+        self.auth_user_command(auth, self.request, username, password)
         return JsonResponse({'status': 'ok'}, status=200)
 
     def form_invalid(self, form):
@@ -53,7 +52,7 @@ class AuthRegistrationView(CreateView):
 
 
 class UserProfileView(LoginRequiredMixin, UpdateView):
-    model = User
+    model = UserModel
     form_class = ProfileForm
     template_name = 'users/profile.html'
     extra_context = {'title': 'Профиль'}
