@@ -8,6 +8,8 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView, CreateView, UpdateView
 from django.http import HttpResponse, JsonResponse
 
+from main.application.services.commands.delete_order import DeleteOrder
+from main.application.services.commands.get_orders import GetOrders
 from shared.infrastructure.uow import UnitOfWork
 from users.application.command.auth_user import AuthUser
 from users.application.command.delete_user import DeleteUser
@@ -57,8 +59,9 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
     model = UserModel
     form_class = ProfileForm
     template_name = 'users/profile.html'
-    extra_context = {'title': 'Профиль'}
+    get_orders_command = GetOrders()
     delete_user_command = DeleteUser()
+    delete_order_command = DeleteOrder()
     uow = UnitOfWork()
 
     def form_valid(self, form, **kwargs):
@@ -73,11 +76,19 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
         if kwargs['pk'] != str(self.request.user.pk):
             return HttpResponse(status=404)
 
+        remove_order_id = request.GET.get('remove-order')
+        if remove_order_id:
+            self.delete_order_command(self.uow, int(remove_order_id))
+
         if request.GET.get('remove-user'):
             self.delete_user_command(self.uow, self.request.user)
             return redirect('main:home')
 
-        return render(request, 'users/profile.html')
+        context = {
+            'title': 'Профиль',
+            'orders': self.get_orders_command(self.uow, self.request.user.pk),
+        }
+        return render(request, 'users/profile.html', context=context)
 
     def get_success_url(self):
         return reverse('users:profile', kwargs={'pk': self.request.user.pk})
