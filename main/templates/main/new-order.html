@@ -54,18 +54,16 @@
                     {% endfor %}
                         </div>
                         <div class="buttons">
+                            {% for item in prices %}
+                            {% if item.name != "bot_shop" %}  
                             <p>
                                 <label class="checkbox-green">
-                                <input type="checkbox" name="admin_panel" id="id_admin_panel" {% if request.POST.admin_panel %}checked{% endif %}>
+                                <input type="checkbox" name="{{ item.name }}" id="id_{{ item.name }}" class="product-checkbox">
                                 <span class="checkbox-green-switch" data-label-on="On" data-label-off="Off"></span>
                                 </label>
                             </p>
-                            <p>
-                                <label class="checkbox-green">
-                                <input type="checkbox" name="database" id="id_database" {% if request.POST.database %}checked{% endif %}>
-                                <span class="checkbox-green-switch" data-label-on="On" data-label-off="Off"></span>
-                                </label>
-                            </p>
+                            {% endif %}  
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -78,23 +76,33 @@
 {% block script %}
 <script>
     $(document).ready(function () {
-        $('form').submit(function (e) {
-            e.preventDefault();
-            $.ajax({
-                data: $(this).serialize(),
-                type: $(this).attr('method'),
-                url: "{% url 'main:new-order' %}",
-                success: function () {
-                    window.location.replace('{% url "main:accept" %}');
-                },
-                error: function (response) {
-                    $.each(response.responseJSON.errors, function (key, value) {
-                        $('.error-'+key).text(value[0].message).css('display', 'block').delay(5000).fadeOut(1000);
-                    })
-                }
-            });
-            return false;
-        });
+      const products = []
+      {% product_list as products %}
+      {% for product in products %}
+        products.push({
+          id: "{{ product.id }}",
+          code: "{{ product.code }}",
+          price: "{{ product.price }}",
+          name: "{{ product.name }}"
+        })
+      {% endfor %}
+      $('form').submit(function (e) {
+        e.preventDefault()
+        const orderProducts = []
+        $('.product-checkbox').each(function () {
+            if ($(this).prop("checked")) {
+              const product = products.find((item) => item.name === $(this).attr("name"))
+              orderProducts.push(product)
+            }
+        })
+        const newOrder = {
+          phone_number: $('#id_phone_number').val(),
+          products: orderProducts
+        }
+        localStorage.setItem('order', JSON.stringify(newOrder))
+        window.location.assign({% url 'main:accept' %})
+      });
+        
     })
 </script>
 {% endblock %}

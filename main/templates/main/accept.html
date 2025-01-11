@@ -14,33 +14,25 @@
         </div>
         <div class="form-order-container form-font">
             <div class="order-number-title">
-                <p>Заказ №{{ new_order.order_id }}</p>
+                <p>Заказ №{{ order_number }}</p>
             </div>
-            <form class="form-accept" action="{% url 'main:accept-done' %}" method="post">
+            <form class="form-accept" method="POST">
                 {% csrf_token %}
                 <table class="table table1 table-fill table-bordered">
-                      <tbody>
-                        <tr>
-                          <td>Email</td>
-                          <td>{{ email }}</td>
-                        </tr>
-                        <tr>
-                          <td>Телефон</td>
-                          <td>{{ new_order.phone_number }}</td>
-                        </tr>
-                        </tbody>
+                  <tbody>
+                    <tr>
+                      <td>Email</td>
+                      <td id="email-field">{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                      <td>Телефон</td>
+                      <td id="phone-field"></td>
+                    </tr>
+                  </tbody>
                 </table>
                 <table class="table table2 table-fill table-bordered">
-                      <tbody>
-                    {% for title, value in new_order %}
-                    {% if forloop.counter > 2 and not forloop.last %}
-                        <tr>
-                          <td>{{ title }}</td>
-                          <td>{{ value|add:".00" }} &#x20bd;</td>
-                        </tr>
-                    {% endif %}
-                    {% endfor %}
-                    </tbody>
+                  <tbody id="prices-table">
+                  </tbody>
                 </table>
                 <div class="form-accept-buttons">
                     <button class="form-button form-font button-back">Назад</button>
@@ -54,10 +46,40 @@
 {% block script %}
 <script>
 $(document).ready(function () {
-    $('.button-back').click(function (e) {
-        e.preventDefault();
-        window.location.replace('{% url "main:new-order" %}');
+  const order = JSON.parse(localStorage.getItem('order'))
+  $('#phone-field').text(order.phone_number)
+  $('form').submit(function (e) {
+    e.preventDefault()
+    const csrfToken = getCookie('csrftoken')
+    $.ajax({
+        data: {'order': JSON.stringify(order)} ,
+        headers: {
+          'X-CSRFToken': csrfToken
+        },
+        type: $(this).attr('method'),
+        url: "{% url 'main:accept-done' %}",
+        success: function () {
+            window.location.replace('{% url 'main:accept-done' %}')
+        }
     })
+  })
+  $('.button-back').click(function () {
+      window.location.replace('{% url "main:new-order" %}');
+  })
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = jQuery.trim(cookies[i]);
+        if (cookie.startsWith(name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break
+        }
+      }
+    }
+    return cookieValue
+  }
 })
 </script>
 {% endblock %}
