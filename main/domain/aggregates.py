@@ -1,7 +1,8 @@
 import random
-from typing import List
+from datetime import datetime
+from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from main.domain.entities import Product
 
@@ -11,7 +12,9 @@ class Order(BaseModel):
     phone_number: str
     user_id: int
     products: List[Product]
+    status: str = 'Оформлен'
     total_price: int = 0
+    date: Optional[datetime] = Field(default_factory=datetime.utcnow)
 
     @staticmethod
     def factory(

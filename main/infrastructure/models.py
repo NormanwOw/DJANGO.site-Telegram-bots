@@ -84,10 +84,12 @@ class OrderModel(models.Model):
     def to_domain(self) -> Order:
         return Order(
             number=self.order_id,
-            phone_number=self.phone_number,
+            phone_number=str(self.phone_number),
             user_id=self.user.pk,
             total_price=self.total_price,
-            products=[product.to_domain() for product in self.products.all()]
+            status=self.status,
+            products=[product.to_domain() for product in self.products.all()],
+            date=self.date
         )
 
     @staticmethod
@@ -96,7 +98,9 @@ class OrderModel(models.Model):
             order_id=order.number,
             phone_number=order.phone_number,
             user=UserModel.objects.get(pk=order.user_id),
-            total_price=order.total_price
+            status=order.status,
+            total_price=order.total_price,
+            date=order.date
         )
         return order_model
 
