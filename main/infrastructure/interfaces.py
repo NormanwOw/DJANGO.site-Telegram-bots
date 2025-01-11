@@ -42,6 +42,11 @@ class IOrderRepository(ABC):
 
     @classmethod
     @abstractmethod
+    def get_by_user_id(cls, user_id: int) -> List[OrderModel]:
+        raise NotImplementedError
+
+    @classmethod
+    @abstractmethod
     def create(cls, order: Order) -> OrderModel:
         raise NotImplementedError
 
@@ -53,6 +58,11 @@ class IOrderRepository(ABC):
     @classmethod
     @abstractmethod
     def delete(cls, order_model: OrderModel):
+        raise NotImplementedError
+
+    @classmethod
+    @abstractmethod
+    def delete_by_id(cls, order_id: int):
         raise NotImplementedError
 
     @classmethod
@@ -72,6 +82,11 @@ class IProductRepository(ABC):
     @classmethod
     @abstractmethod
     def get_by_code(cls, code_list: list[str]) -> List[ProductModel]:
+        raise NotImplementedError
+
+    @classmethod
+    @abstractmethod
+    def get_by_name(cls, product_name: str) -> ProductModel:
         raise NotImplementedError
 
     @classmethod

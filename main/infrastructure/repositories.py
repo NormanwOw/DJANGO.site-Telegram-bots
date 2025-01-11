@@ -48,6 +48,10 @@ class OrderRepository(IOrderRepository):
         return cls.model.objects.get(order_id=order.number)
 
     @classmethod
+    def get_by_user_id(cls, user_id: int) -> List[OrderModel]:
+        return cls.model.objects.filter(user_id=user_id)
+
+    @classmethod
     def create(cls, order: Order) -> OrderModel:
         order_model = cls.model.from_domain(order)
         order_model.save()
@@ -66,6 +70,10 @@ class OrderRepository(IOrderRepository):
         cls.model.delete(order_model)
 
     @classmethod
+    def delete_by_id(cls, order_id: int):
+        cls.model.objects.filter(order_id=order_id).delete()
+
+    @classmethod
     def all(cls) -> List[OrderModel]:
         return cls.model.objects.all()
 
@@ -80,6 +88,10 @@ class ProductRepository(IProductRepository):
     @classmethod
     def get_by_code(cls, code_list: list[str]) -> List[ProductModel]:
         return cls.model.objects.filter(code__in=code_list)
+
+    @classmethod
+    def get_by_name(cls, product_name: str) -> ProductModel:
+        return cls.model.objects.filter(name=product_name).first()
 
     @classmethod
     def create(cls, product: Product) -> ProductModel:
