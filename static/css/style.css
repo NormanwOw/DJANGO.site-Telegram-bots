@@ -503,6 +503,10 @@ a:hover {
   align-items: start;
 }
 
+.modal-title {
+  width: 100%;
+}
+
 .modal-form {
   display: flex;
   justify-content: space-evenly;

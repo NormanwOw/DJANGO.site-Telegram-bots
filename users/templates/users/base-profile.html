@@ -62,7 +62,7 @@
                             <p class="order-status">{{ order.status }}</p>
                         </div>
                       </div>
-                      <a href="#orderModal" class="order-remove" data-toggle="modal" title="Удалить">
+                      <a href="#orderModal" class="order-remove" data-bs-toggle="modal" title="Удалить">
                           <span class="fa fa-times" aria-hidden="true"></span>
                       </a>
                       <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -70,7 +70,7 @@
                             <div class="modal-content">
                               <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Вы уверены что хотите удалить заказ?</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
                               </div>
@@ -78,7 +78,7 @@
                                   <form class="modal-form" action="{% url 'users:profile' user.pk %}" method="get">
                                     <input type="hidden" name="remove-order" value="{{ order.order_id }}">
                                     <button type="submit" class="form-button">Да</button>
-                                    <button type="button" class="form-button" data-dismiss="modal">Нет</button>
+                                    <button type="button" class="form-button" data-bs-dismiss="modal">Нет</button>
                                   </form>
                               </div>
                             </div>
