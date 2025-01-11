@@ -144,39 +144,94 @@
             return false;
         });
     })
-    function ajaxPagination() {
-        $('.pagination a').each(function (index, el) {
-            $(el).click(function (e) {
-                e.preventDefault();
-                $.ajax({
-                    type: 'GET',
-                    url: $(el).attr('href'),
-                    success: function (response) {
-                        $('.form-orders-wrapper').empty().append($(response).find('.form-orders-wrapper').html());
-                    }
-                });
-            });
-        });
-    }
-    function ajaxSearch() {
-        $('.search-form').submit(function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'GET',
-                url: "{% url 'users:profile' user.id %}",
-                data: {'search': $('#id_search').val()},
-                success: function (response) {
-                    $('.form-orders-wrapper').empty().append($(response).find('.form-orders-wrapper').html());
-                }
-            });
-        })
-    }
-    $(document).ready(function () {
-        ajaxPagination();
-        ajaxSearch();
+    const ordersList = []
+    let orderObj
+
+    {% if orders|length < 3 %}
+    $('.form-orders-wrapper').css('overflow', 'hidden')
+    {% endif %}
+
+    {% for order in orders %}
+      orderObj = {
+        number: "{{ order.number }}",
+        phoneNumber: "{{ order.phone_number }}",
+        status: "{{ order.status }}",
+        totalPrice: "{{ order.total_price }}",
+        products: [],
+        date: "{{ order.date }}"
+      }
+      {% for product in order.products %}
+        orderObj.products.push(
+          {
+            code: "{{ product.code }}",
+            name: "{{ product.name }}",
+            title: "{{ product.title }}"
+          }
+        )
+      {% endfor %}
+      ordersList.push(orderObj)
+    {% endfor %}
+    $('.search-form').submit(function (e) {
+      e.preventDefault()
+      const searchValue = $('#id_search').val()
+      const orders = ordersList.filter((order) => order.number.includes(searchValue))
+      const cards = $('.card-wrapper')
+      cards.empty()
+      if (!orders.length) {
+        cards.append(`
+          <div class="empty-order-list">
+            <p class="form-font">Список заказов пуст</p>
+            <a class="form-button" href="{% url 'main:new-order' %}"><span class="fa fa-plus-circle" aria-hidden="true"></span> Новый заказ</a>
+          </div>
+        `)
+        return false
+      }
+      orders.forEach(function (order) {
+        cards.append(`
+          <div class="card-container">
+            <div class="order-data">
+              <div class="order-number">
+                Заказ № ${order.number}
+              </div>
+                <div id="order-${order.number}" class="order"></div>
+              <div class="order-date">
+                  <p>${order.date}</p>
+                  <p class="order-status">${order.status}</p>
+              </div>
+            </div>
+            <a href="#orderModal" class="order-remove" data-bs-toggle="modal" title="Удалить">
+                <span class="fa fa-times" aria-hidden="true"></span>
+            </a>
+            <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Вы уверены что хотите удалить заказ?</h5>
+                      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-footer">
+                        <form class="modal-form" action="{% url 'users:profile' user.pk %}" method="get">
+                          <input type="hidden" name="remove-order" value="${order.number}">
+                          <button type="submit" class="form-button">Да</button>
+                          <button type="button" class="form-button" data-bs-dismiss="modal">Нет</button>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="order-price">
+              <p> ${order.totalPrice}&#x20bd;</p>
+            </div>
+          </div>`)
+          order.products.forEach(function (product) {
+            $('#order-'+order.number).append(`
+              <a>${product.title}</a>
+            `)
+          })
+      })
     })
-    $(document).ajaxStop(function () {
-        ajaxPagination();
-    })
+
 </script>
 {% endblock %}

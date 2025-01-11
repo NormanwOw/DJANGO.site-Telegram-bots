@@ -30,7 +30,7 @@
                   <p>История заказов</p>
                   <div class="search-button form-button">
                       <div class="search">
-                          <form class="search-form" action="{% url 'users:profile' user.id %}" method="get">
+                          <form class="search-form">
                             <input class="search-form-input" type="number" name="search" placeholder="Номер заказа" id="id_search">
                             <button class="search-submit-button" type="submit">Поиск</button>
                           </form>
@@ -39,91 +39,61 @@
                   </div>
               </div>
               <div class="form-orders-wrapper">
-              {% get_order_page as pages %}
-              {% if pages %}
+                {% if orders %}
                 <div class="card-wrapper">
-                  {% for order in pages %}
-                    <div class="card-container">
-                      <div class="order-data">
-                        <div class="order-number">
-                          Заказ №{{ order.order_id }}
-                        </div>
-                          <div class="order">
-                            <ul>
-                              {% for title, price in order.get_products %}
-                                {% if price %}
-                                  <li>{{ title }} - {{ price }} руб.</li>
-                                {% endif %}
-                              {% endfor %}
-                            </ul>
-                          </div>
-                        <div class="order-date">
-                            <p>{{ order.date }}</p>
-                            <p class="order-status">{{ order.status }}</p>
-                        </div>
+                  {% for order in orders %}
+                  <div class="card-container">
+                    <div class="order-data">
+                      <div class="order-number">
+                        Заказ № {{ order.number }}
                       </div>
-                      <a href="#orderModal" class="order-remove" data-bs-toggle="modal" title="Удалить">
-                          <span class="fa fa-times" aria-hidden="true"></span>
-                      </a>
-                      <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Вы уверены что хотите удалить заказ?</h5>
-                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-footer">
-                                  <form class="modal-form" action="{% url 'users:profile' user.pk %}" method="get">
-                                    <input type="hidden" name="remove-order" value="{{ order.order_id }}">
-                                    <button type="submit" class="form-button">Да</button>
-                                    <button type="button" class="form-button" data-bs-dismiss="modal">Нет</button>
-                                  </form>
-                              </div>
+                        <div id="order-{{ order.number }}" class="order">
+                          {% for product in order.products %}
+                          <a>{{ product.title }}</a>
+                          {% endfor %}
+                        </div>
+                      <div class="order-date">
+                          <p>{{ order.date }}</p>
+                          <p class="order-status">{{ order.status }}</p>
+                      </div>
+                    </div>
+                    <a href="#orderModal" class="order-remove" data-bs-toggle="modal" title="Удалить">
+                        <span class="fa fa-times" aria-hidden="true"></span>
+                    </a>
+                    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Вы уверены что хотите удалить заказ?</h5>
+                              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-footer">
+                                <form class="modal-form" action="{% url 'users:profile' user.pk %}" method="get">
+                                  <input type="hidden" name="remove-order" value="{{ order.number }}">
+                                  <button type="submit" class="form-button">Да</button>
+                                  <button type="button" class="form-button" data-bs-dismiss="modal">Нет</button>
+                                </form>
                             </div>
                           </div>
-                      </div>
-                      <div class="order-price">
-                        <p>{{ order.total_price }} &#x20bd;</p>
-                      </div>
+                        </div>
                     </div>
-                  {% endfor %}
+                    <div class="order-price">
+                      <p> {{ order.total_price }}&#x20bd;</p>
+                    </div>
                   </div>
-                  {% if pages.paginator.count > 3 %}
-                  <div class="orders-container">
-                      <ul class="pagination">
-                        <li>
-                          <a href="{% if pages.has_previous %}{% change_params page=pages.previous_page_number %}{% else %}#{% endif %}"
-                             class="{% if not pages.has_previous %}disabled{% endif %}">Пред.</a>
-                        </li>
-                        {% for page in pages.paginator.page_range %}
-                        {% if page >= pages.number|add:-2 and page <= pages.number|add:2 %}
-                          {% if request.GET.page == None and forloop.first %}
-                          <li class="active">
-                          {% else %}
-                          <li class="{% if pages.number == page %} active disabled{% endif %}">
-                          {% endif %}
-                            <a href="{% change_params page=page %}">{{ page }}</a>
-                          </li>
-                        {% endif %}
-                        {% endfor %}
-                        <li>
-                          <a href="{% if pages.has_next %}{% change_params page=pages.next_page_number %}{% else %}#{% endif %}"
-                             class="{% if not pages.has_next %}disabled{% endif %}">След.</a>
-                        </li>
-                      </ul>
-                    </div>
-                  {% endif %}
-                  {% else %}
-                    <div class="empty-order-list">
-                        <p class="form-font">Список заказов пуст</p>
-                        <a class="form-button" href="{% url 'main:new-order' %}"><span class="fa fa-plus-circle" aria-hidden="true"></span> Новый заказ</a>
-                    </div>
-                  {% endif %}
+                  {% endfor %}
                 </div>
+                {% else %}
+                <div class="empty-order-list">
+                    <p class="form-font">Список заказов пуст</p>
+                    <a class="form-button" href="{% url 'main:new-order' %}"><span class="fa fa-plus-circle" aria-hidden="true"></span> Новый заказ</a>
+                </div>
+                {% endif %}
               </div>
           </div>
       </div>
   </div>
+</div>
 {% endblock %}
