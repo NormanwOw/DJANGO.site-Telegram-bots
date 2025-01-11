@@ -40,15 +40,14 @@ class AcceptOrderView(LoginRequiredMixin, TemplateView):
     uow = UnitOfWork()
     get_order_numbers_command = GetOrderNumbers()
     order_numbers = get_order_numbers_command(uow)
-    order_number = str(Order.generate_order_number(order_numbers))
-    extra_context = {
-        'title': 'Оформление заказа',
-        'order_number': order_number
-    }
 
     def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        request.session['order_number'] = self.order_number
+        order_number = str(Order.generate_order_number(self.order_numbers))
+        request.session['order_number'] = order_number
+        context = {
+            'title': 'Оформление заказа',
+            'order_number': order_number
+        }
         return self.render_to_response(context)
 
 
