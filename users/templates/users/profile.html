@@ -84,16 +84,19 @@
   <p>{{ change_pw_msg }}</p>
   {% endif %}
 </form>
+
 <div class="profile-form-buttons-wrapper">
-    <a href="#removeUser" class="form-button remove-user-button" data-toggle="modal"><span class="fa fa-ban" aria-hidden="true"></span> Удалить учётную запись</a>
+    <button type="button" class="form-button remove-user-button" data-bs-toggle="modal" data-bs-target="#removeUser">
+      <span class="fa fa-ban" aria-hidden="true"></span> Удалить учётную запись
+    </button>
     <a href="{% url 'users:password-change' %}" class="form-button change-pw-button">Сменить пароль</a>
 </div>
-<div class="modal fade" id="removeUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="removeUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Вы уверены что хотите удалить свой профиль?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -101,7 +104,7 @@
           <form class="modal-form" action="{% url 'users:profile' user.pk %}" method="get">
             <input type="hidden" name="remove-user" value="true">
             <button type="submit" class="form-button">Да</button>
-            <button type="button" class="form-button" data-dismiss="modal">Нет</button>
+            <button type="button" class="form-button" data-bs-dismiss="modal">Нет</button>
           </form>
       </div>
     </div>
