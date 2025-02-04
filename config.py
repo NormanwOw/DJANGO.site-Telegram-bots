@@ -12,9 +12,9 @@ class Settings(BaseSettings):
     SECRET_KEY: str
     DB_HOST: str
     DB_PORT: str
-    DB_USER: str
-    DB_PASS: str
-    DB_NAME: str
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
+    POSTGRES_DB: str
 
     REDIS_HOST: str
     REDIS_PORT: str
