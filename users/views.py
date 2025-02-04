@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView, CreateView, UpdateView
 from django.http import HttpResponse, JsonResponse
 
+from logger import Logger
 from main.application.services.commands.delete_order import DeleteOrder
 from main.application.services.commands.get_orders import GetOrders
 from shared.infrastructure.uow import UnitOfWork
@@ -59,9 +60,10 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
     model = UserModel
     form_class = ProfileForm
     template_name = 'users/profile.html'
-    get_orders_command = GetOrders()
-    delete_user_command = DeleteUser()
-    delete_order_command = DeleteOrder()
+    logger = Logger()
+    get_orders_command = GetOrders(logger)
+    delete_user_command = DeleteUser(logger)
+    delete_order_command = DeleteOrder(logger)
     uow = UnitOfWork()
 
     def form_valid(self, form, **kwargs):
@@ -86,7 +88,7 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
 
         context = {
             'title': 'Профиль',
-            'orders': self.get_orders_command(self.uow, self.request.user.pk),
+            'orders': self.get_orders_command(self.uow, self.request.user),
         }
         return render(request, 'users/profile.html', context=context)
 

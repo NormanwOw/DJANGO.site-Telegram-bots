@@ -5,8 +5,11 @@ from django.shortcuts import render
 from django.views.generic import FormView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from logger import Logger
 from main.application.services.commands.create_order import CreateOrder
 from main.application.services.commands.get_order_numbers import GetOrderNumbers
+from main.application.services.commands.send_email import SendEmailWithOrder
+from main.application.services.services import CreateOrderService
 from main.domain.entities import Product
 from main.forms import NewOrderForm
 from main.domain.aggregates import Order
@@ -38,46 +41,61 @@ class NewOrderView(LoginRequiredMixin, FormView):
 class AcceptOrderView(LoginRequiredMixin, TemplateView):
     template_name = 'main/accept.html'
     uow = UnitOfWork()
-    get_order_numbers_command = GetOrderNumbers()
+    logger = Logger()
+    get_order_numbers_command = GetOrderNumbers(logger)
     order_numbers = get_order_numbers_command(uow)
 
     def get(self, request, *args, **kwargs):
-        order_number = str(Order.generate_order_number(self.order_numbers))
-        request.session['order_number'] = order_number
-        context = {
-            'title': 'Оформление заказа',
-            'order_number': order_number
-        }
-        return self.render_to_response(context)
+        try:
+            order_number = str(Order.generate_order_number(self.order_numbers))
+            request.session['order_number'] = order_number
+            context = {
+                'title': 'Оформление заказа',
+                'order_number': order_number
+            }
+            return self.render_to_response(context)
+        except Exception:
+            self.logger.error(f'Ошибка на странице подтверждения заказа у пользователя: '
+                              f'{self.request.user.email}')
 
 
 class AcceptOrderDoneView(TemplateView, LoginRequiredMixin):
     template_name = 'main/accept-done.html'
     extra_context = {'title': 'Оформление заказа'}
-    create_order_command = CreateOrder()
+    send_email_with_order = SendEmailWithOrder()
     uow = UnitOfWork()
+    logger = Logger()
+    create_order_command = CreateOrder(logger)
+    create_order_service = CreateOrderService(
+        create_order_command, send_email_with_order, uow, logger
+    )
 
     def post(self, request, **kwargs):
-        order_number = request.session['order_number']
-        order = json.loads(request.POST['order'])
-        order = Order.factory(
-            number=order_number,
-            phone_number=order['phone_number'],
-            user_id=self.request.user.pk,
-            products=[
-                Product.factory(
-                    _id=item['id'],
-                    code=item['code'],
-                    price=item['price']
-                ) for item in order['products']
-            ],
-        )
-        self.create_order_command(self.uow, order)
-        self.extra_context.update({
-            'order_number': order_number,
-            'email': self.request.user.email,
-        })
-        return super().render_to_response({})
+        try:
+            order_number = request.session['order_number']
+            order = json.loads(request.POST['order'])
+            order = Order.factory(
+                number=order_number,
+                phone_number=order['phone_number'],
+                email=self.request.user.email,
+                user_id=self.request.user.pk,
+                products=[
+                    Product.factory(
+                        _id=item['id'],
+                        code=item['code'],
+                        price=item['price']
+                    ) for item in order['products']
+                ],
+            )
+            self.create_order_service.execute(order)
+            self.extra_context.update({
+                'order_number': order_number,
+                'email': self.request.user.email,
+            })
+            return super().render_to_response({})
+        except Exception:
+            self.logger.error(f'Ошибка на странице создания заказа у пользователя '
+                              f'{self.request.user.email}')
 
 
 def contacts(request):
