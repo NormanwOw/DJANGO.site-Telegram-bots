@@ -2,7 +2,7 @@ import random
 from datetime import datetime
 from typing import List, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr
 
 from main.domain.entities import Product
 
@@ -10,6 +10,7 @@ from main.domain.entities import Product
 class Order(BaseModel):
     number: int
     phone_number: str
+    email: EmailStr
     user_id: int
     products: List[Product]
     status: str = 'Оформлен'
@@ -20,12 +21,14 @@ class Order(BaseModel):
     def factory(
         number: int,
         phone_number: str,
+        email: str,
         user_id: int,
         products: List[Product]
     ) -> 'Order':
         return Order(
             number=number,
             phone_number=phone_number,
+            email=email,
             user_id=user_id,
             products=products,
             total_price=sum(product.price for product in products)

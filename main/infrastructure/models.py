@@ -81,11 +81,12 @@ class OrderModel(models.Model):
             if title not in ['ID', 'Дата', 'Номер заказа']:
                 yield title, field.value_to_string(self)
 
-    def to_domain(self) -> Order:
+    def to_domain(self, email: str) -> Order:
         return Order(
             number=self.order_id,
             phone_number=str(self.phone_number),
             user_id=self.user.pk,
+            email=email,
             total_price=self.total_price,
             status=self.status,
             products=[product.to_domain() for product in self.products.all()],
