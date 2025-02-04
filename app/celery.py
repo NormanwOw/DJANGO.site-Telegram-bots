@@ -4,6 +4,8 @@ from celery import Celery
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 
+from main.domain.aggregates import Order
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
 
 app = Celery('app')
@@ -14,15 +16,14 @@ app.autodiscover_tasks()
 
 
 @app.task(bind=True)
-def send_email(self, email: str, context: dict):
-    order_id = context["order_id"]
+def send_email(self, order: Order):
     msg = EmailMessage(
-        subject=f'Оформление заказа №{order_id}',
-        body=render_to_string('users/order-email.html', context=context),
-        to=(email,)
+        subject=f'Оформление заказа №{order.number}',
+        body=render_to_string('users/order-email.html', context={'order': order}),
+        to=(order.email,)
     )
 
     msg.content_subtype = 'html'
     msg.send()
 
-    return f'Order-id:{order_id}, Email:{email}'
+    return f'Order-id:{order.number}, Email:{order.email}'
