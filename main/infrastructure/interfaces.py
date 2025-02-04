@@ -108,3 +108,22 @@ class IProductRepository(ABC):
     @abstractmethod
     def all(cls) -> List[ProductModel]:
         raise NotImplementedError
+
+
+class ILogger(ABC):
+
+    @abstractmethod
+    def info(self, message: str):
+        raise NotImplementedError
+
+    @abstractmethod
+    def error(self, message: str):
+        raise NotImplementedError
+
+    @abstractmethod
+    def warning(self, message: str):
+        raise NotImplementedError
+
+    @abstractmethod
+    def debug(self, message: str):
+        raise NotImplementedError
