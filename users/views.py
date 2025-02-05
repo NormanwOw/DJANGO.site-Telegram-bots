@@ -8,11 +8,12 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView, CreateView, UpdateView
 from django.http import HttpResponse, JsonResponse
 
+from app.settings import DEBUG
 from logger import Logger
 from main.application.services.commands.delete_order import DeleteOrder
 from main.application.services.commands.get_orders import GetOrders
 from main.exceptions import OrderNotFoundException
-from shared.infrastructure.uow import UnitOfWork
+from shared.infrastructure.uow import UnitOfWork, TestUnitOfWork
 from users.application.command.auth_user import AuthUser
 from users.application.command.delete_user import DeleteUser
 from users.forms import LoginForm, RegistrationForm, ProfileForm
@@ -65,7 +66,7 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
     get_orders_command = GetOrders(logger)
     delete_user_command = DeleteUser(logger)
     delete_order_command = DeleteOrder(logger)
-    uow = UnitOfWork()
+    uow = UnitOfWork() if not DEBUG else TestUnitOfWork()
 
     def form_valid(self, form, **kwargs):
         form.save()

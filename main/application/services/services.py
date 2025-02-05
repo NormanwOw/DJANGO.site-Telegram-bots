@@ -23,5 +23,5 @@ class CreateOrderService:
         self.logger.info(f'Получен заказ №{order.number}')
         updated_order = self.create_order(self.uow, order)
         self.logger.info(f'Заказ №{order.number} создан')
-        self.send_email(updated_order)
+        self.send_email(updated_order.model_dump())
         self.logger.info(f'Информация с заказом №{order.number} отправлена на почту {order.email}')

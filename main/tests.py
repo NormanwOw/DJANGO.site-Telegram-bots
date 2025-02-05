@@ -1,7 +1,10 @@
+import json
+
 from django.test import TestCase
 from django.shortcuts import reverse
 
 from main.forms import NewOrderForm
+from main.infrastructure.models import ProductModel, OrderModel
 from users.factories import UserFactory
 
 
@@ -50,28 +53,6 @@ class TestNewOrderView(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertIsInstance(response.context['form'], NewOrderForm)
 
-        payload = {
-            'phone_number': '+79999999999',
-            'bot_shop': True,
-            'admin_panel': True,
-            'database': True,
-        }
-
-        response = self.client.post(reverse('main:new-order'), data=payload)
-        self.assertEquals(response.status_code, 200)
-        self.assertIn(b'ok', response.content)
-
-        payload = {
-            'phone_number': '+7999999',
-            'bot_shop': True,
-            'admin_panel': True,
-            'database': True,
-        }
-
-        response = self.client.post(reverse('main:new-order'), data=payload)
-        self.assertEquals(response.status_code, 400)
-        self.assertIn(b'phone_number', response.content)
-
 
 class TestAcceptOrderView(TestCase):
 
@@ -83,16 +64,8 @@ class TestAcceptOrderView(TestCase):
     def test_accept_order(self):
         user = UserFactory()
         self.client.force_login(user)
-        order = {
-            'admin_panel': True,
-            'bot_shop': True,
-            'database': True,
-            'order_id': '4444444',
-            'phone_number': '+79999999999',
-            'total_price': 0
-        }
         session = self.client.session
-        session['new_order'] = order
+        session['order_number'] = 111111
         session.save()
         response = self.client.get(reverse('main:accept'))
         self.assertEquals(response.status_code, 200)
@@ -100,7 +73,17 @@ class TestAcceptOrderView(TestCase):
 
 class TestAcceptOrderDoneView(TestCase):
 
+    @classmethod
+    def setUpTestData(cls):
+        ProductModel.objects.create(
+            id=1,
+            code='1111',
+            name='Test Product',
+            price=100
+        )
+
     def test_anonym(self):
+        self.client.logout()
         response = self.client.get(reverse('main:accept-done'))
         self.assertEquals(response.status_code, 302)
         self.assertIn('login', response.url)
@@ -108,22 +91,17 @@ class TestAcceptOrderDoneView(TestCase):
     def test_post(self):
         user = UserFactory()
         self.client.force_login(user)
-        order_id = '4444444'
-        order = {
-            'admin_panel': True,
-            'bot_shop': True,
-            'database': True,
-            'order_id': order_id,
-            'phone_number': '+79999999999',
-            'total_price': 0
-        }
         session = self.client.session
-        session['new_order'] = order
+        session['order_number'] = 111111
         session.save()
-        response = self.client.post(reverse('main:accept-done'))
+        payload = {
+            'order': {
+                'phone_number': '+79999999999',
+                'products': [{'id': 1, 'code': '1111', 'price': 100}]
+            },
+        }
+        payload['order'] = json.dumps(payload['order'])
+        response = self.client.post(reverse('main:accept-done'), payload)
         self.assertEquals(response.status_code, 200)
-        context = response.context[1].dicts[3]
-        self.assertEquals(context['order_number'], order_id)
-        self.assertEquals(context['email'], user.email)
-
-
+        order = OrderModel.objects.get(order_id=session['order_number'])
+        self.assertTrue(order)

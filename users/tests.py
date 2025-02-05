@@ -3,16 +3,16 @@ from django.shortcuts import reverse
 from django.contrib.auth.forms import PasswordChangeForm
 from django.utils.http import urlencode
 
-from users.forms import LoginForm, RegistrationForm, ProfileForm
-from users.models import User
-from main.models import Order
+from users.forms import LoginForm, RegistrationForm
+from users.models import UserModel
+from main.infrastructure.models import OrderModel
 
 
 class TestAuth(TestCase):
 
     def setUp(self):
         self.password = 'secret'
-        self.user = User.objects.create_user(
+        self.user = UserModel.objects.create_user(
             username='example', email='example@gmail.com', password=self.password
         )
 
@@ -29,8 +29,8 @@ class TestAuth(TestCase):
         })
         self.assertEquals(response.status_code, 200)
         self.assertIn(b'ok', response.content)
-        user = User.objects.filter(username='example2').first()
-        self.assertIsInstance(user, User)
+        user = UserModel.objects.filter(username='example2').first()
+        self.assertIsInstance(user, UserModel)
         self.assertIn('sessionid', response.cookies.keys())
 
     def test_registration_error(self):
@@ -42,7 +42,7 @@ class TestAuth(TestCase):
         })
         self.assertEquals(response.status_code, 400)
         self.assertIn(b'password_mismatch', response.content)
-        user = User.objects.filter(username='example2').first()
+        user = UserModel.objects.filter(username='example2').first()
         self.assertFalse(user)
         self.assertNotIn('sessionid', response.cookies.keys())
 
@@ -108,31 +108,25 @@ class TestUserProfileView(TestCase):
 
     def setUp(self):
         self.password = 'secret'
-        self.user = User.objects.create_user(
+        self.user = UserModel.objects.create_user(
             username='example', email='example@gmail.com', password=self.password
         )
         self.order = 1111111
-        Order.objects.create(
+        OrderModel.objects.create(
             order_id=self.order,
             user=self.user,
             phone_number='+79999999999',
-            bot_shop=1000,
-            admin_panel=1000,
-            database=1000,
             total_price=3000
         )
-        self.other_user = User.objects.create_user(
+        self.other_user = UserModel.objects.create_user(
             username='other_user', email='other_user@gmail.com', password='secret'
         )
         self.other_order = 2222222
-        Order.objects.create(
+        OrderModel.objects.create(
             order_id=self.other_order,
             user=self.other_user,
-            phone_number='+79999999999',
-            bot_shop=1000,
-            admin_panel=1000,
-            database=1000,
-            total_price=3000
+            phone_number='+78888888888',
+            total_price=1000
         )
 
     def test_profile_anonym(self):
@@ -157,7 +151,7 @@ class TestUserProfileView(TestCase):
             }
         )
         self.assertEquals(response.status_code, 200)
-        user = User.objects.filter(first_name='name')
+        user = UserModel.objects.filter(first_name='name')
         self.assertTrue(user)
 
     def test_profile_update_user_error(self):
@@ -178,7 +172,7 @@ class TestUserProfileView(TestCase):
             urlencode({'remove-order': self.order})
         )
         self.assertEquals(response.status_code, 200)
-        order = Order.objects.filter(order_id=self.order)
+        order = OrderModel.objects.filter(order_id=self.order)
         self.assertFalse(order)
 
     def test_remove_order_error(self):
@@ -191,7 +185,7 @@ class TestUserProfileView(TestCase):
             urlencode({'remove-order': self.other_order})
         )
         self.assertEquals(response.status_code, 404)
-        order = Order.objects.filter(order_id=self.other_order)
+        order = OrderModel.objects.filter(order_id=self.other_order)
         self.assertTrue(order)
 
     def test_profile_remove_user_error(self):
@@ -204,7 +198,7 @@ class TestUserProfileView(TestCase):
             urlencode({'remove-user': True})
         )
         self.assertEquals(response.status_code, 404)
-        user = User.objects.filter(pk=self.other_user.pk)
+        user = UserModel.objects.filter(pk=self.other_user.pk)
         self.assertTrue(user)
 
     def test_profile_remove_user(self):
@@ -217,11 +211,5 @@ class TestUserProfileView(TestCase):
         self.assertEquals(response.status_code, 302)
         self.assertEquals('/', response.url)
 
-        user = User.objects.filter(pk=self.user.pk)
+        user = UserModel.objects.filter(pk=self.user.pk)
         self.assertFalse(user)
-
-        User.objects.create_user(
-            username=self.user.username,
-            email=self.user.email,
-            password=self.password
-        )

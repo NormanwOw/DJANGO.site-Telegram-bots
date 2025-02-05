@@ -16,7 +16,8 @@ app.autodiscover_tasks()
 
 
 @app.task(bind=True)
-def send_email(self, order: Order):
+def send_email(self, order_data: dict):
+    order = Order.model_validate(order_data)
     msg = EmailMessage(
         subject=f'Оформление заказа №{order.number}',
         body=render_to_string('users/order-email.html', context={'order': order}),

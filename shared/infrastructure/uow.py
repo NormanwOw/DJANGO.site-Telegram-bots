@@ -21,3 +21,17 @@ class UnitOfWork(IUnitOfWork):
             return
         transaction.commit()
         transaction.set_autocommit(True)
+
+
+class TestUnitOfWork(IUnitOfWork):
+
+    def __init__(self):
+        self.user_repository = UserRepository()
+        self.order_repository = OrderRepository()
+        self.product_repository = ProductRepository()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, traceback):
+        pass

@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.views.generic import FormView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from app.settings import DEBUG
 from logger import Logger
 from main.application.services.commands.create_order import CreateOrder
 from main.application.services.commands.get_order_numbers import GetOrderNumbers
@@ -13,7 +14,7 @@ from main.application.services.services import CreateOrderService
 from main.domain.entities import Product
 from main.forms import NewOrderForm
 from main.domain.aggregates import Order
-from shared.infrastructure.uow import UnitOfWork
+from shared.infrastructure.uow import UnitOfWork, TestUnitOfWork
 
 
 def index(request):
@@ -40,7 +41,7 @@ class NewOrderView(LoginRequiredMixin, FormView):
 
 class AcceptOrderView(LoginRequiredMixin, TemplateView):
     template_name = 'main/accept.html'
-    uow = UnitOfWork()
+    uow = UnitOfWork() if not DEBUG else TestUnitOfWork()
     logger = Logger()
     get_order_numbers_command = GetOrderNumbers(logger)
     order_numbers = get_order_numbers_command(uow)
@@ -59,11 +60,11 @@ class AcceptOrderView(LoginRequiredMixin, TemplateView):
                               f'{self.request.user.email}')
 
 
-class AcceptOrderDoneView(TemplateView, LoginRequiredMixin):
+class AcceptOrderDoneView(LoginRequiredMixin, TemplateView):
     template_name = 'main/accept-done.html'
     extra_context = {'title': 'Оформление заказа'}
     send_email_with_order = SendEmailWithOrder()
-    uow = UnitOfWork()
+    uow = UnitOfWork() if not DEBUG else TestUnitOfWork()
     logger = Logger()
     create_order_command = CreateOrder(logger)
     create_order_service = CreateOrderService(
