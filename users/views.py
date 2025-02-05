@@ -11,6 +11,7 @@ from django.http import HttpResponse, JsonResponse
 from logger import Logger
 from main.application.services.commands.delete_order import DeleteOrder
 from main.application.services.commands.get_orders import GetOrders
+from main.exceptions import OrderNotFoundException
 from shared.infrastructure.uow import UnitOfWork
 from users.application.command.auth_user import AuthUser
 from users.application.command.delete_user import DeleteUser
@@ -80,7 +81,10 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
 
         remove_order_id = request.GET.get('remove-order')
         if remove_order_id:
-            self.delete_order_command(self.uow, int(remove_order_id))
+            try:
+                self.delete_order_command(self.uow, self.request.user.pk, int(remove_order_id))
+            except OrderNotFoundException:
+                return HttpResponse(status=404)
 
         if request.GET.get('remove-user'):
             self.delete_user_command(self.uow, self.request.user)

@@ -62,7 +62,7 @@ class IOrderRepository(ABC):
 
     @classmethod
     @abstractmethod
-    def delete_by_id(cls, order_id: int):
+    def delete_by_id(cls, user_id: int, order_id: int):
         raise NotImplementedError
 
     @classmethod

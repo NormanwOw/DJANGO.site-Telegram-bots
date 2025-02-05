@@ -16,10 +16,6 @@ class UserRepository(IUserRepository):
         return cls.model.objects.get(pk=user.id)
 
     @classmethod
-    def create(cls, user: User) -> UserModel:
-        raise NotImplementedError
-
-    @classmethod
     def update(cls, user: User, user_model: UserModel) -> UserModel:
         user_model.username = user.username
         user_model.email = user.email
@@ -70,8 +66,9 @@ class OrderRepository(IOrderRepository):
         cls.model.delete(order_model)
 
     @classmethod
-    def delete_by_id(cls, order_id: int):
-        cls.model.objects.filter(order_id=order_id).delete()
+    def delete_by_id(cls, user_id: int, order_id: int):
+        order_id, count = cls.model.objects.filter(order_id=order_id, user_id=user_id).delete()
+        return order_id
 
     @classmethod
     def all(cls) -> List[OrderModel]:

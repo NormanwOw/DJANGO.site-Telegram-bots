@@ -13,11 +13,13 @@ class CreateOrder(CreateCommand):
         try:
             with uow:
                 bot_shop = uow.product_repository.get_by_name('bot_shop')
-                order.total_price += bot_shop.price
+                if bot_shop:
+                    order.total_price += bot_shop.price
                 order_model = uow.order_repository.create(order)
                 code_list = [product.code for product in order.products]
                 products = list(uow.product_repository.get_by_code(code_list))
-                products.append(bot_shop)
+                if bot_shop:
+                    products.append(bot_shop)
                 order_model.products.add(*products)
                 return order_model.to_domain(order.email)
         except Exception:
