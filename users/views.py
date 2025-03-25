@@ -84,6 +84,7 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
         if remove_order_id:
             try:
                 self.delete_order_command(self.uow, self.request.user.pk, int(remove_order_id))
+                return redirect('users:profile', pk=request.user.pk)
             except OrderNotFoundException:
                 return HttpResponse(status=404)
 
